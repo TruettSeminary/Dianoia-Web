@@ -1,3 +1,7 @@
+import {
+  defaultFont
+} from "assets/jss/material-kit-react.jsx";
+
 const modalStyle = {
   modal: {
     borderRadius: "6px"
@@ -41,6 +45,7 @@ const modalStyle = {
     position: "relative"
   },
   modalFooter: {
+    ...defaultFont,
     padding: "15px",
     textAlign: "right",
     paddingTop: "0",

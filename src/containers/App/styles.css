@@ -1,0 +1,12 @@
+.container {
+  display: flex;
+  flex-direction: column; }
+
+.toolbar {
+  flex-basis: auto; }
+
+.content {
+  flex: 1 0 auto; }
+
+.footer {
+  flex-shrink: 0; }
