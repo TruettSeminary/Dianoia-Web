@@ -7,8 +7,6 @@ import ToolbarStyle from './styles';
 import Header from 'md-components/Header/Header'; 
 import HeaderLinks from 'md-components/Header/HeaderLinks'; 
 
-import styles from './styles.scss';
-
 class Toolbar extends React.Component {
 
     render() {
@@ -18,8 +16,7 @@ class Toolbar extends React.Component {
         };
         return (
             <Header
-                absolute
-                color="info"
+                color="success"
                 brand={brand}
                 rightLinks={(<HeaderLinks 
                     user={this.props.user} 

@@ -25,7 +25,7 @@ const headerLinksStyle = theme => ({
     width: "auto",
     margin: "0",
     padding: "0",
-    [theme.breakpoints.down("sm")]: {
+    [theme.breakpoints.down("xl")]: {
       width: "100%",
       "&:after": {
         width: "calc(100% - 30px)",
@@ -56,7 +56,7 @@ const headerLinksStyle = theme => ({
       color: "inherit",
       background: "rgba(200, 200, 200, 0.2)"
     },
-    [theme.breakpoints.down("sm")]: {
+    [theme.breakpoints.down("xl")]: {
       width: "calc(100% - 30px)",
       marginLeft: "15px",
       marginBottom: "8px",
@@ -106,7 +106,7 @@ const headerLinksStyle = theme => ({
   },
   socialIconsButton: {
     top: "4px",
-    [theme.breakpoints.down("sm")]: {
+    [theme.breakpoints.down("xl")]: {
       top: "0"
     }
   },

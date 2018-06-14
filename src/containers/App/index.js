@@ -1,18 +1,16 @@
 // React/Redux
 import React from 'react'; 
 import PropTypes from 'prop-types';
-import { Switch, Route, Redirect } from 'react-router-dom'; 
-import { bindActionCreators, compose } from 'redux';
+import { Switch, Route, withRouter } from 'react-router-dom'; 
+import { compose } from 'redux'; // bindActionCreators
 import { connect } from 'react-redux'; 
 
 // React/Redux Config
 import {
     submitLogin, 
-    loginFailed, 
-    loginSucceeded,
-    logout, 
-    displayLogin, 
-    hideLogin
+    // loginFailed, 
+    // loginSucceeded,
+    logout
 } from './actions';
 
 import reducer from './reducer'; 
@@ -27,6 +25,8 @@ import injectSaga from 'utils/injectSaga';
 import HomePage from 'containers/HomePage';
 import ClassesPage from 'containers/ClassesPage';
 import DecksPage from 'containers/DecksPage';
+import TranslationsPage from 'containers/TranslationsPage'; 
+import InstructionsPage from 'containers/InstructionsPage'; 
 import SettingsPage from 'containers/SettingsPage'; 
 import LandingPage from 'containers/LandingPage'; 
 import FeedbackPage from 'containers/FeedbackPage';
@@ -36,22 +36,23 @@ import RegistrationPage from 'containers/RegistrationPage';
 // Design
 import Toolbar from 'components/Toolbar';
 import Footer from 'components/Footer'; 
+import NotificationProvider from 'containers/NotificationProvider'
 
 
 // Styles
-// import 'styles/main.scss';
 import styles from './styles.js'; 
 
 class App extends React.Component {
+
     render() {
-        console.log(styles); 
         return (
             <div style={styles.container}>
                 <div style={styles.toolbar}>
                     <Toolbar 
                         user={this.props.user} 
                         submitLogin={this.props.submitLogin} 
-                        logout={this.props.logout}/>
+                        logout={this.props.logout}
+                    />
                 </div>
                 <div style={styles.content}>
                     <Switch>
@@ -59,16 +60,20 @@ class App extends React.Component {
                         <Route path="/home" exact render={() => <HomePage {...this.props}/>} />
                         <Route path="/classes" exact render={() => <ClassesPage/>} />
                         <Route path="/decks" exact render={() => <DecksPage/>} />
-                        <Route path="/settings" exact render={() => <SettingsPage/>} />
+                        <Route path="/translations" exact render={() => <TranslationsPage/>} />
+                        <Route path="/instructions" exact render={() => <InstructionsPage/>} />
                         <Route path="/feedback" exact render={() => <FeedbackPage/>} />
+                        <Route path="/settings" exact render={() => <SettingsPage/>} />
                         <Route path="/registration" exact render={() => <RegistrationPage/>} />
                         <Route component={NotFoundPage} />
                     </Switch>
                 </div>
+                <div style={styles.notifications}>
+                    <NotificationProvider/>
+                </div>
                 <div style={styles.footer}>
                     <Footer/>
                 </div>
-                
             </div>
         );
     }
@@ -96,6 +101,7 @@ const withReducer = injectReducer({ key: 'appContainer', reducer});
 const withSaga = injectSaga({key: 'appContainer', saga}); 
 
 export default compose(
+    withRouter,
     withReducer, 
     withSaga, 
     withConnect

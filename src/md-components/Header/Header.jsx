@@ -84,17 +84,17 @@ class Header extends React.Component {
           {leftLinks !== undefined ? brandComponent : null}
           <div className={classes.flex}>
             {leftLinks !== undefined ? (
-              <Hidden smDown implementation="css">
+              <Hidden xlDown implementation="css">
                 {leftLinks}
               </Hidden>
             ) : (
               brandComponent
             )}
           </div>
-          <Hidden smDown implementation="css">
+          <Hidden xlDown implementation="css">
             {rightLinks}
           </Hidden>
-          <Hidden mdUp>
+          {/* <Hidden lgDown> */}
             <IconButton
               color="inherit"
               aria-label="open drawer"
@@ -102,9 +102,9 @@ class Header extends React.Component {
             >
               <Menu />
             </IconButton>
-          </Hidden>
+          {/* </Hidden> */}
         </Toolbar>
-        <Hidden mdUp implementation="css">
+        <Hidden xsUp implementation="css">
           <Drawer
             variant="temporary"
             anchor={"right"}

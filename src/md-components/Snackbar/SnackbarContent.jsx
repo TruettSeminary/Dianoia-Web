@@ -47,6 +47,7 @@ class SnackbarContent extends React.Component {
     };
   }
   closeAlert() {
+    this.props.handleClose(); 
     this.setState({ alert: null });
   }
   render() {
@@ -59,7 +60,8 @@ SnackbarContent.propTypes = {
   message: PropTypes.node.isRequired,
   color: PropTypes.oneOf(["info", "success", "warning", "danger", "primary"]),
   close: PropTypes.bool,
-  icon: PropTypes.func
+  icon: PropTypes.func, 
+  handleClose: PropTypes.func
 };
 
 export default withStyles(snackbarContentStyle)(SnackbarContent);

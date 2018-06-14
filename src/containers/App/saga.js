@@ -1,10 +1,16 @@
-import { fork, call, put, takeLatest, select } from 'redux-saga/effects'; 
+import { fork, call, put, takeLatest } from 'redux-saga/effects'; 
 
-import API from 'utils/API/index'; 
+import { push } from 'connected-react-router'; 
+
+import Dianoia from 'utils/API/index'; 
 import auth from 'utils/auth'; 
 
+import { notify } from 'utils/notification'; 
+
 import {
-    SUBMIT_LOGIN, 
+    SUBMIT_LOGIN,
+    LOGIN_SUBMIT_SUCCESS, 
+    LOGIN_SUBMIT_FAIL, 
     LOGOUT
 } from './constants'; 
 
@@ -12,27 +18,44 @@ import {
 import {
     loginSucceeded, 
     loginFailed, 
-    logoutSucceeded
+    logoutSucceeded, 
+    refreshUser
 } from './actions'; 
 
 
 export function* submitLogin(action) {
     try {
-        const response = yield API.getUser(action.data.email, action.data.password); 
+        const response = yield Dianoia.loginUser(action.data.email, action.data.password); 
         
         if(response.jwt) {
+            // Valid login
+            Dianoia.setJWT(response.jwt); 
+
             // TODO: add a "remember me" porition to saving the authentication 
             yield call(auth.setToken, response.jwt); 
             yield call(auth.setUserInfo, response.user); 
+
+            yield put(loginSucceeded({
+                ...response.user, 
+                jwt: response.jwt
+            })); 
         }
-        
-        yield put(loginSucceeded({
-            ...response.user, 
-            jwt: response.jwt
-        })); 
     } catch(error) {
-        yield put(loginFailed()); 
+        yield put(loginFailed(error)); 
     }
+}
+
+export function* loginSucceededSaga(action) {
+    
+    // update API JWT
+    yield put(refreshUser(action.user)); 
+    // TODO: close login modal
+    yield put(push('/home')); 
+}
+
+export function* loginFailedSaga(action) {
+    // TODO:  check which message should be sent based on action
+    yield call(notify, action.error.response.payload.message, 'danger'); 
 }
 
 export function* logout(action) {
@@ -47,5 +70,7 @@ export function* logout(action) {
 
 export default function* defaultSaga() {
     yield fork(takeLatest, SUBMIT_LOGIN, submitLogin);
+    yield fork(takeLatest, LOGIN_SUBMIT_SUCCESS, loginSucceededSaga);
+    yield fork(takeLatest, LOGIN_SUBMIT_FAIL, loginFailedSaga); 
     yield fork(takeLatest, LOGOUT, logout); 
 }

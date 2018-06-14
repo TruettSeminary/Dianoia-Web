@@ -1,6 +1,7 @@
-import { createStore, applyMiddleware, compose } from 'redux'; 
-import { fromJS } from 'immutable'; 
+import { createStore, applyMiddleware } from 'redux'; 
+import Immutable, { fromJS } from 'immutable'; 
 import { connectRouter, routerMiddleware } from 'connected-react-router/immutable'; 
+import { composeWithDevTools } from 'redux-devtools-extension';
 import createSagaMiddleware from 'redux-saga'; 
 import createReducer from './reducers'; 
 
@@ -16,21 +17,15 @@ export default function configureStore(intitialState = {}, history) {
   ];
 
   const enhancers = [
-      applyMiddleware(...middlewares)
+    applyMiddleware(...middlewares),
   ];
 
-  const composeEnhancers = 
-    process.env.NODE_ENV !== 'production' &&
-    typeof window === 'object' &&
-    window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
-        ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({
-        // TODO Try to remove when `react-router-redux` is out of beta, LOCATION_CHANGE should not be fired more than once after hot reloading
-        // Prevent recomputing reducers for `replaceReducer`
-        shouldHotReload: false,
-        name: `Dianoia`,
-        })
-        : compose;
-
+  const composeEnhancers = composeWithDevTools({
+    name: 'Dianoia', 
+    serialize: {
+      immutable: Immutable
+    }
+  });  
 
   const store = createStore(
     connectRouter(history)(createReducer()), 
@@ -44,7 +39,7 @@ export default function configureStore(intitialState = {}, history) {
 
   if (module.hot) {
     module.hot.accept('./reducers', () => {
-      store.replaceReducer(createReducer(store.injectedReducers));
+      store.replaceReducer(connectRouter(history)(createReducer(store.injectedReducers)));
     });
   }
 

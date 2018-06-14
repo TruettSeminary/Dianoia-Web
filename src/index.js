@@ -5,10 +5,10 @@ import ReactDOM from 'react-dom';
 import { ConnectedRouter } from "connected-react-router/immutable";
 import createHistory from 'history/createBrowserHistory'; 
 
-// import 'sanitize.css/sanitize.css'; 
+import 'sanitize.css/sanitize.css'; 
 import 'whatwg-fetch'; 
 
-// import './index.css';
+import './index.css';
 import registerServiceWorker from './registerServiceWorker';
 
 import App from 'containers/App'; 
@@ -19,7 +19,7 @@ import configureStore from './store';
 const basename = "/"
 const history = createHistory({
   basename
-}); 
+});
 
 // TODO: load hydrated data
 

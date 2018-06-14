@@ -58,13 +58,13 @@ class LoginModal extends React.Component {
                             password:''
                         });
                         this.props.handleCloseModal(); 
-                        this.props.submitLogin(this.state.email, this.state.password); 
+                        this.props.submitLogin(email, password); 
                     }}>
                         <DialogContent
                             id="modal-slide-description"
                             className={classes.modalBody}>
                             <CustomInput
-                                labelText="Email"
+                                labelText="Email (identifier)"
                                 id="email"
                                 inputProps={{
                                     onChange: (event) => this.handleChange(event, 'email')
@@ -101,8 +101,8 @@ class LoginModal extends React.Component {
                         <DialogActions
                             className={classes.modalFooter + " " + classes.modalFooterCenter}>
                             <div>
-                                <div> Forgot your password? Click <span><a href="/forgot-password">here</a></span></div>
-                                <div> New user? Register <span><a href="/registration">here</a></span></div>
+                                <div> Forgot your password? Click <span><a href="" onClick={()=> this.props.pushPage('/forgot-password')}>here</a></span></div>
+                                <div> New user? Register <span><a href="" onClick={()=> this.props.pushPage('/registration')}>here</a></span></div>
                             </div>
 
                         </DialogActions>
@@ -114,6 +114,7 @@ class LoginModal extends React.Component {
 }
 
 LoginModal.propTypes = {
+    pushPage: PropTypes.func.isRequired,
     display: PropTypes.bool.isRequired,
     handleCloseModal: PropTypes.func.isRequired, 
     submitLogin: PropTypes.func.isRequired

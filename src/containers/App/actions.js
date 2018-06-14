@@ -4,11 +4,9 @@ import {
     LOGIN_SUBMIT_SUCCESS, 
     LOGOUT, 
     LOGOUT_SUCCESS,
-    SET_ERRORS, 
+    REFRESH_USER,
     DISPLAY_LOGIN,
-    HIDE_LOGIN,
-    REQUEST_REGISTRATION, 
-    REQUEST_FORGOT_PASSWORD
+    HIDE_LOGIN
 } from './constants';
 
 export function submitLogin(email, password) {
@@ -28,11 +26,14 @@ export function loginSucceeded(user) {
     }
 }
 
-export function loginFailed() {
+export function loginFailed(error) {
     return {
-        type: LOGIN_SUBMIT_FAIL
+        type: LOGIN_SUBMIT_FAIL, 
+        error
     }
 }
+
+
 export function logout() {
     return {
         type: LOGOUT
@@ -42,6 +43,13 @@ export function logout() {
 export function logoutSucceeded(user) {
     return {
         type: LOGOUT_SUCCESS, 
+        user
+    }
+}
+
+export function refreshUser(user) {
+    return {
+        type: REFRESH_USER, 
         user
     }
 }

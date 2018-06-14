@@ -22,7 +22,6 @@ const headerStyle = {
     border: "0",
     borderRadius: "3px",
     padding: "0.625rem 0",
-    marginBottom: "20px",
     color: "#555",
     width: "100%",
     backgroundColor: "#fff",

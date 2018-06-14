@@ -1,10 +1,15 @@
 import { createSelector } from 'reselect'; 
 
-const selectAppContainerDomain = () => (state) => state.get('appContainer');
+const selectAppContainerDomain = () => (state) => {
+    return state.get('appContainer')
+};
+
 
 const makeSelectAppContainer = () => createSelector(
     selectAppContainerDomain(), 
-    (substate) => substate.toJS()
+    (substate) => {
+        return substate.toJS();
+    }
 );
 
 export default makeSelectAppContainer;

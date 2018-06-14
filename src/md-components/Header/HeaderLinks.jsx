@@ -1,8 +1,12 @@
+// TODO: move submitLogin and Logout actions here for cleaner code
+
 /* eslint-disable */
 import React from "react";
 import PropTypes from "prop-types"; 
-// react components for routing our app without refresh
-import { Link } from "react-router-dom";
+
+import { push } from 'connected-react-router'
+import { connect } from 'react-redux';
+import { compose } from 'redux'; 
 
 // material-ui components
 import withStyles from "material-ui/styles/withStyles";
@@ -15,8 +19,11 @@ import {
   AccountCircle,
   Class,
   ExitToApp,
+  Feedback,
+  Info,
   Settings,
-  Subject
+  Subject,
+  ViewCarousel
 } from "@material-ui/icons";
 
 // core components
@@ -51,7 +58,28 @@ class HeaderLinks extends React.Component {
         text: 'Decks',
         href:'/decks', 
         color:'transparent', 
+        icon: (<ViewCarousel className={this.classes.icons} />), 
+        userLoggedIn: true
+      },
+      {
+        text: 'Translations',
+        href:'/translations', 
+        color:'transparent', 
         icon: (<Subject className={this.classes.icons} />), 
+        userLoggedIn: true
+      },
+      {
+        text: 'Instructions',
+        href:'/instructions', 
+        color:'transparent', 
+        icon: (<Info className={this.classes.icons} />), 
+        userLoggedIn: true
+      },
+      {
+        text: 'Feedback',
+        href:'/feedback', 
+        color:'transparent', 
+        icon: (<Feedback className={this.classes.icons} />), 
         userLoggedIn: true
       },
       {
@@ -63,13 +91,14 @@ class HeaderLinks extends React.Component {
       },
       {
         text: 'Logout',
-        href:'', 
+        href:'/', 
         color:'transparent', 
         icon: (<ExitToApp className={this.classes.icons} />), 
         onClick:() => this.props.logout(),
         userLoggedIn: true
       },
       {
+        // TODO: redirect on success login and close sidebar
         text: 'Login',
         href:'', 
         color:'transparent', 
@@ -84,11 +113,16 @@ class HeaderLinks extends React.Component {
     return(
       <ListItem key={link.text} className={this.classes.listItem}>
         <Button
-            href={link.href}
             color={link.color}
             className={this.classes.navLink}
             onClick={() => {
-              if(link.onClick) link.onClick(); 
+              if(link.href) {
+                console.log('pushing'); 
+                this.props.pushPage(link.href); 
+              }
+              if(link.onClick) {
+                link.onClick();
+              } 
             }}>
           {link.icon} {link.text}
         </Button>
@@ -124,7 +158,8 @@ class HeaderLinks extends React.Component {
         <List className={this.classes.list}>
           {renderLinks}
         </List>
-        <LoginModal 
+        <LoginModal
+          pushPage={this.props.pushPage} 
           display={this.state.displayLogin} 
           handleCloseModal={this.handleCloseLoginModal}
           submitLogin={this.props.submitLogin}
@@ -141,5 +176,23 @@ HeaderLinks.propTypes = {
   logout: PropTypes.func
 }
 
+// TODO: propbably run into issues with this
+const mapStateToProps = () => {
+  return {}; 
+}; 
 
-export default withStyles(headerLinksStyle)(HeaderLinks);
+// TODO: move submitLogin and Logout actions here for cleaner code
+const mapDispatchToProps = (dispatch) => {
+  return {
+    pushPage: (route) => {dispatch(push(route))}, 
+    dispatch
+  }
+}
+
+const withConnect = connect(mapStateToProps, mapDispatchToProps);
+
+
+export default compose (
+  withStyles(headerLinksStyle), 
+  withConnect
+)(HeaderLinks); 

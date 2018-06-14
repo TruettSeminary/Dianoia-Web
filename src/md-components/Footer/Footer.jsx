@@ -3,10 +3,13 @@ import React from "react";
 import PropTypes from "prop-types";
 // nodejs library that concatenates classes
 import classNames from "classnames";
-import { List, ListItem, withStyles } from "material-ui";
+import { 
+  List, 
+  // ListItem, 
+  withStyles } from "material-ui";
 
 // @material-ui/icons
-import Favorite from "@material-ui/icons/Favorite";
+// import Favorite from "@material-ui/icons/Favorite";
 
 import footerStyle from "assets/jss/material-kit-react/components/footerStyle.jsx";
 
@@ -25,41 +28,21 @@ function Footer({ ...props }) {
       <div className={classes.container}>
         <div className={classes.left}>
           <List className={classes.list}>
-            <ListItem className={classes.inlineBlock}>
-              <a href="https://www.creative-tim.com/" className={classes.block}>
-                Creative Tim
-              </a>
-            </ListItem>
-            <ListItem className={classes.inlineBlock}>
-              <a
-                href="http://presentation.creative-tim.com/"
-                className={classes.block}
-              >
-                About us
-              </a>
-            </ListItem>
-            <ListItem className={classes.inlineBlock}>
-              <a href="http://blog.creative-tim.com/" className={classes.block}>
-                Blog
-              </a>
-            </ListItem>
-            <ListItem className={classes.inlineBlock}>
+            {/* <ListItem className={classes.inlineBlock}>
               <a
                 href="https://www.creative-tim.com/license"
                 className={classes.block}
               >
                 Licenses
               </a>
-            </ListItem>
+            </ListItem> */}
           </List>
         </div>
         <div className={classes.right}>
-          &copy; {1900 + new Date().getYear()} , made with{" "}
-          <Favorite className={classes.icon} /> by{" "}
-          <a href="http://www.creative-tim.com" className={aClasses}>
-            Creative Tim
-          </a>{" "}
-          for a better web.
+          &copy; {1900 + new Date().getYear()},{" "}
+          <a href="https://church.technology" className={aClasses}>
+            Church.Technology
+          </a>
         </div>
       </div>
     </footer>
