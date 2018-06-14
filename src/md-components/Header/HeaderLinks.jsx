@@ -12,7 +12,6 @@ import { compose } from 'redux';
 import withStyles from "material-ui/styles/withStyles";
 import List from "material-ui/List";
 import ListItem from "material-ui/List/ListItem";
-import Tooltip from "material-ui/Tooltip";
 
 // @material-ui/icons
 import {
@@ -29,11 +28,10 @@ import {
 // core components
 import CustomDropdown from "../CustomDropdown/CustomDropdown.jsx";
 import Button from "../CustomButtons/Button.jsx";
-import IconButton from "../CustomButtons/IconButton.jsx";
 
 import LoginModal from 'components/Login'; 
 
-import headerLinksStyle from "./headerLinksStyle.jsx";
+import headerLinksStyle from "assets/jss/material-kit-react/components/headerLinksStyle.jsx";
 
 
 class HeaderLinks extends React.Component {
