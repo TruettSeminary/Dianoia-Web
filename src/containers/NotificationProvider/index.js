@@ -9,11 +9,7 @@ import {
     closeNotification
 } from './actions'; 
 
-import reducer from './reducer';
 import makeSelectNotificationProvider from './selectors'; 
-
-// React/Redux Utils
-import injectReducer from 'utils/injectReducer';
 
 // Design
 import Notification from 'components/Notification'; 
@@ -57,9 +53,7 @@ const mapDispatchToProps = (dispatch) => {
 }
 
 const withConnect = connect(mapStateToProps, mapDispatchToProps); 
-const withReducer = injectReducer({ key: 'notificationProvider', reducer}); 
 
 export default compose(
-    withReducer, 
     withConnect
 )(NotificationProvider); 

@@ -5,18 +5,8 @@ import { connect } from 'react-redux';
 
 // React/Redux Config
 import {
-    submitRegistration,
-    // registrationSucceeded,
-    // registrationFailed
-} from './actions';
-
-import reducer from './reducer'; 
-import saga from './saga'; 
-import makeSelectRegistrationPage from './selectors'; 
-
-// React/Redux Utils
-import injectReducer from 'utils/injectReducer';
-import injectSaga from 'utils/injectSaga';
+    submitRegistration
+} from 'collections/user/actions';
 
 //Design 
 import GridContainer from 'md-components/Grid/GridContainer';
@@ -244,7 +234,10 @@ class RegistrationPage extends React.Component {
 // RegistrationPage.propTypes = {};
 
 // TODO: add error messages based on props
-const mapStateToProps = makeSelectRegistrationPage(); 
+const mapStateToProps = () => {
+    return {}; 
+}; 
+
 const mapDispatchToProps = (dispatch) => {
     return {
         registerUser: (email, password, first_name, last_name) => {
@@ -254,11 +247,7 @@ const mapDispatchToProps = (dispatch) => {
     }
 }
 const withConnect = connect(mapStateToProps, mapDispatchToProps); 
-const withReducer = injectReducer({ key: 'registrationPage', reducer}); 
-const withSaga = injectSaga({key: 'registrationPage', saga}); 
 
 export default compose(
-    withReducer, 
-    withSaga, 
     withConnect
 )(RegistrationPage); 

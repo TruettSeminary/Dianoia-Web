@@ -2,8 +2,10 @@ import { createStore, applyMiddleware } from 'redux';
 import Immutable, { fromJS } from 'immutable'; 
 import { connectRouter, routerMiddleware } from 'connected-react-router/immutable'; 
 import { composeWithDevTools } from 'redux-devtools-extension';
+
 import createSagaMiddleware from 'redux-saga'; 
 import createReducer from './reducers'; 
+import { sagas } from './sagas'; 
 
 const sagaMiddleware = createSagaMiddleware(); 
 
@@ -20,6 +22,7 @@ export default function configureStore(intitialState = {}, history) {
     applyMiddleware(...middlewares),
   ];
 
+  // Set up compose with Redux Devtools
   const composeEnhancers = composeWithDevTools({
     name: 'Dianoia', 
     serialize: {
@@ -33,13 +36,14 @@ export default function configureStore(intitialState = {}, history) {
     composeEnhancers(...enhancers)
   );
 
-  store.runSaga = sagaMiddleware.run;
-  store.injectedReducers = {}; 
-  store.injectedSagas = {}; 
+  // Start each saga
+  sagas.forEach((saga) => {
+    sagaMiddleware.run(saga); 
+  }); 
 
   if (module.hot) {
     module.hot.accept('./reducers', () => {
-      store.replaceReducer(connectRouter(history)(createReducer(store.injectedReducers)));
+      store.replaceReducer(connectRouter(history)(createReducer()));
     });
   }
 

@@ -1,11 +1,13 @@
 import { combineReducers } from 'redux-immutable'; 
-import appContainer from 'containers/App/reducer'; 
-import registrationPage from 'containers/RegistrationPage/reducer'; 
-import notificationProvider from 'containers/NotificationProvider/reducer'; 
-import classesPage from 'containers/ClassesPage/reducer'; 
-
 import { fromJS } from 'immutable';
 import { LOCATION_CHANGE } from 'connected-react-router';
+
+// Custom Reducers
+import user from 'collections/user/reducer';
+import classes from 'collections/classes/reducer'; 
+import notificationProvider from 'containers/NotificationProvider/reducer'; 
+
+
 
 // Initial routing state
 const routeInitialState = fromJS({
@@ -28,13 +30,11 @@ function router(state = routeInitialState, action) {
 }
 
 
-export default function createReducer(injectedReducers) {
+export default function createReducer() {
     return combineReducers({
         router,
-        appContainer,
-        registrationPage,
-        classesPage,
-        notificationProvider,
-        ...injectedReducers
+        user,
+        classes,
+        notificationProvider
     }); 
 }

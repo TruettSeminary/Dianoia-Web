@@ -144,7 +144,7 @@ class HeaderLinks extends React.Component {
   render() {
 
     const renderLinks = this.links.filter((link) => {
-      let userLoggedIn = (this.props.user.jwt !== null && this.props.user.jwt !== ""); 
+      let userLoggedIn = (this.props.userJWT !== null && this.props.userJWT !== ""); 
       return link.userLoggedIn == userLoggedIn; 
     }).map((link) => {
       return this.formLink(link);
@@ -169,7 +169,7 @@ class HeaderLinks extends React.Component {
 }
 
 HeaderLinks.propTypes = {
-  user: PropTypes.object.isRequired, 
+  userJWT: PropTypes.string.isRequired, 
   submitLogin: PropTypes.func, 
   logout: PropTypes.func
 }

@@ -1,0 +1,99 @@
+import {
+    SUBMIT_LOGIN,
+    LOGIN_SUBMIT_FAIL,
+    LOGIN_SUBMIT_SUCCESS, 
+    LOGOUT, 
+    LOGOUT_SUCCESS,
+    REFRESH_USER,
+    REFRESH_USER_CLASSES, 
+    REFRESH_USER_DECKS, 
+    SUBMIT_REGISTRATION, 
+    REGISTRATION_SUBMIT_SUCCESS,
+    REGISTRATION_SUBMIT_FAIL
+} from './constants';
+
+export function submitLogin(email, password) {
+    return {
+        type: SUBMIT_LOGIN, 
+        data: {
+            email, 
+            password
+        }
+    }
+}
+
+export function loginSucceeded(user) {
+    return {
+        type: LOGIN_SUBMIT_SUCCESS,
+        user
+    }
+}
+
+export function loginFailed(error) {
+    return {
+        type: LOGIN_SUBMIT_FAIL, 
+        error
+    }
+}
+
+
+export function logout() {
+    return {
+        type: LOGOUT
+    }
+}
+
+export function logoutSucceeded(user) {
+    return {
+        type: LOGOUT_SUCCESS, 
+        user
+    }
+}
+
+export function refreshUser(user) {
+    return {
+        type: REFRESH_USER, 
+        user
+    }
+}
+
+export function refreshUserClasses(userClasses) {
+    return {
+        type: REFRESH_USER_CLASSES, 
+        userClasses
+    }
+}
+
+export function refreshUserDecks(userDecks) {
+    return {
+        type: REFRESH_USER_DECKS, 
+        userDecks
+    }
+}
+
+
+export function submitRegistration(email, password, first_name, last_name) {
+    return {
+        type: SUBMIT_REGISTRATION, 
+        data: {
+            email, 
+            password, 
+            first_name, 
+            last_name
+        }
+    };
+}
+
+export function registrationSucceeded(user) {
+    return {
+        type: REGISTRATION_SUBMIT_SUCCESS,
+        user
+    }
+}
+
+export function registrationFailed(error) {
+    return {
+        type: REGISTRATION_SUBMIT_FAIL,
+        error
+    }
+}

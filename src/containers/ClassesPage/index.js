@@ -2,21 +2,14 @@ import React from 'react';
 import { compose } from 'redux'; 
 import { connect } from 'react-redux'; 
 
-import reducer from './reducer'; 
-import saga from './saga'; 
 import makeSelectClassesPage from './selectors'; 
 
-// React/Redux Utils
-import injectReducer from 'utils/injectReducer';
-import injectSaga from 'utils/injectSaga';
 
-import {
-    getAllClasses,
-    addClassToUser, 
-    removeClassFromUser
-} from './actions'; 
-
-import auth from 'utils/auth'; 
+// import {
+//     getAllClasses,
+//     addClassToUser, 
+//     removeClassFromUser
+// } from './actions'; 
 
 // Design
 import Button from 'md-components/CustomButtons/Button'; 
@@ -26,7 +19,7 @@ class ClassesPage extends React.Component {
 
     constructor(props) {
         super(props); 
-        this.user = auth.getUserInfo(); 
+        this.user = {}
 
         this.props.getAllClasses(); 
     }
@@ -70,19 +63,15 @@ const mapStateToProps = makeSelectClassesPage();
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        getAllClasses: () => {dispatch(getAllClasses())},
-        addClassToUser: (class_id) => { dispatch(addClassToUser(class_id)) },
-        removeClassFromUser: (class_id) => { dispatch(removeClassFromUser(class_id))},
+        getAllClasses: () => {},
+        addClassToUser: (class_id) => {},
+        removeClassFromUser: (class_id) => {},
         dispatch
     }
 }
 
 const withConnect = connect(mapStateToProps, mapDispatchToProps); 
-const withReducer = injectReducer({ key: 'classesPage', reducer});
-const withSaga = injectSaga({ key: 'classesPage', saga}); 
 
 export default compose(
-    withReducer, 
-    withSaga,
     withConnect
 )(ClassesPage); 
