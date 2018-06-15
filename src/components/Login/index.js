@@ -5,12 +5,9 @@ import withStyles from 'material-ui/styles/withStyles';
 
 import Slide from "material-ui/transitions/Slide";
 import Dialog from "material-ui/Dialog";
-// import DialogTitle from "material-ui/Dialog/DialogTitle";
 import DialogContent from "material-ui/Dialog/DialogContent";
 import DialogActions from "material-ui/Dialog/DialogActions";
-// import IconButton from "material-ui/IconButton";
 
-// import { Close } from '@material-ui/icons';
 
 import Button from 'md-components/CustomButtons/Button'; 
 import CustomInput from 'md-components/CustomInput/CustomInput'; 

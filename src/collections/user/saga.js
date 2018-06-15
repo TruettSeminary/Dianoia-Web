@@ -2,7 +2,6 @@ import { fork, call, put, takeLatest } from 'redux-saga/effects';
 
 // Utils
 import Dianoia from 'utils/API/index'; 
-import auth from 'utils/auth'; 
 
 // App "Connections" 
 import { push } from 'connected-react-router'; 
@@ -15,10 +14,12 @@ import {
     LOGOUT,
     SUBMIT_REGISTRATION,
     REGISTRATION_SUBMIT_SUCCESS, 
-    REGISTRATION_SUBMIT_FAIL
+    REGISTRATION_SUBMIT_FAIL,
+    UPDATE_JWT
 } from './constants'; 
 
 import {
+    updateJWT,
     loginSucceeded, 
     loginFailed, 
     logoutSucceeded, 
@@ -27,18 +28,32 @@ import {
     registrationFailed
 } from './actions'; 
 
+import {
+    getAllClasses
+} from 'collections/classes/actions'
+
+import {
+    getAllUserDecks
+} from 'collections/decks/actions'; 
+
+export function* updateJWTSaga(action) {
+    try {
+        yield Dianoia.setJWT(action.jwt);
+    } catch(error) {
+
+    }
+}
+
 export function* submitLoginSaga(action) {
     try {
         const response = yield Dianoia.loginUser(action.data.email, action.data.password); 
         
         if(response.jwt) {
             // Valid login
-            Dianoia.setJWT(response.jwt); 
+            
+            yield put(updateJWT(response.jwt));
 
             // TODO: add a "remember me" porition to saving the authentication 
-            yield call(auth.setToken, response.jwt); 
-            yield call(auth.setUserInfo, response.user); 
-
             yield put(loginSucceeded({
                 ...response.user, 
                 jwt: response.jwt
@@ -59,6 +74,10 @@ export function* loginSucceededSaga(action) {
     // TODO: figure out how to update current page
     // --> Might be something in the app that watches the page? 
     yield put(push('/home')); 
+
+    // Get all page data that requires authentication
+    yield put(getAllClasses()); 
+    yield put(getAllUserDecks()); 
 }
 
 export function* loginFailedSaga(action) {
@@ -68,9 +87,9 @@ export function* loginFailedSaga(action) {
 
 export function* logoutSaga(action) {
     try {
-        yield call(auth.clearToken); 
-        yield call(auth.clearUserInfo);
+        // TODO: clean this up
         yield put(logoutSucceeded({jwt: ''}))
+        yield put(updateJWT('')); 
     } catch(error) {
         
     }
@@ -86,14 +105,13 @@ export function* submitRegistrationSaga(action) {
         );
 
         if(response.jwt) {
-            yield call(auth.setToken, response.jwt); 
-            yield call(auth.setUserInfo, response.user); 
+            // TODO: find better place for this
+            Dianoia.setJWT(response.jwt);
+            yield put(registrationSucceeded({
+                ...response.user, 
+                jwt: response.jwt
+            })); 
         }
-
-        yield put(registrationSucceeded({
-            ...response.user, 
-            jwt: response.jwt
-        })); 
 
     } catch(error) {
         yield put(registrationFailed(error)); 
@@ -116,6 +134,7 @@ export function* registrationFailedSaga(action) {
 }
 
 export default function* defaultSaga() {
+    yield fork(takeLatest, UPDATE_JWT, updateJWTSaga); 
     yield fork(takeLatest, SUBMIT_LOGIN, submitLoginSaga);
     yield fork(takeLatest, LOGIN_SUBMIT_SUCCESS, loginSucceededSaga);
     yield fork(takeLatest, LOGIN_SUBMIT_FAIL, loginFailedSaga); 

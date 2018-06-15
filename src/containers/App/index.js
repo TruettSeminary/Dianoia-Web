@@ -8,6 +8,7 @@ import { compose } from 'redux'; // bindActionCreators
 import HomePage from 'containers/HomePage';
 import ClassesPage from 'containers/ClassesPage';
 import DecksPage from 'containers/DecksPage';
+import StudyDeckPage from 'containers/StudyDeckPage'; 
 import TranslationsPage from 'containers/TranslationsPage'; 
 import InstructionsPage from 'containers/InstructionsPage'; 
 import SettingsPage from 'containers/SettingsPage'; 
@@ -37,8 +38,9 @@ class App extends React.Component {
                     <Switch>
                         <Route path="/" exact render={() => <LandingPage/>} />
                         <Route path="/home" exact render={() => <HomePage {...this.props}/>} />
-                        {/* <Route path="/classes" exact render={() => <ClassesPage/>} /> */}
-                        <Route path="/decks" exact render={() => <DecksPage/>} />
+                        <Route path="/classes" exact render={() => <ClassesPage/>} />
+                        <Route path="/deck/study/:_id" exact render={() => <StudyDeckPage/>} />
+                        <Route path="/deck/:_id" exact render={() => <DecksPage/>} />
                         <Route path="/translations" exact render={() => <TranslationsPage/>} />
                         <Route path="/instructions" exact render={() => <InstructionsPage/>} />
                         <Route path="/feedback" exact render={() => <FeedbackPage/>} />

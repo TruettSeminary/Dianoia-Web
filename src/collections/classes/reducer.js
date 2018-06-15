@@ -11,7 +11,7 @@ const initialState = fromJS(classes);
 function classesReducer(state = initialState, action) {
     switch(action.type) {
         case REFRESH_CLASSES:
-            return state.set('classes', action.data.classes); 
+            return fromJS(action.data.classes); 
         default:
             return state; 
     }

@@ -1,15 +1,30 @@
 import { createSelector } from 'reselect'; 
 
-const selectClassesPageDomain = () => (state) => {
-    return state.get('classesPage')
-};
+import {
+    userBasicInfoSelector, 
+    userClassesSelector, 
+    userDecksSelector
+} from 'collections/user/selectors'; 
+
+import {
+    allClassesSelector
+} from 'collections/classes/selectors'
 
 
-const makeSelectClassesPage= () => createSelector(
-    selectClassesPageDomain(), 
-    (substate) => {
-        return substate.toJS();
+const classesPageSelector = () => createSelector(
+    [userBasicInfoSelector, userClassesSelector, userDecksSelector, allClassesSelector], 
+    (userInfo, userClasses, userDecks, classes) => {
+        return {
+            user: {
+                ...userInfo, 
+                classes: userClasses, 
+                decks: userDecks
+            },
+            classes 
+        }
     }
 );
 
-export default makeSelectClassesPage;
+export {
+    classesPageSelector
+};

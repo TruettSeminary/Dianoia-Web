@@ -1,4 +1,5 @@
 import {
+    UPDATE_JWT,
     SUBMIT_LOGIN,
     LOGIN_SUBMIT_FAIL,
     LOGIN_SUBMIT_SUCCESS, 
@@ -11,6 +12,13 @@ import {
     REGISTRATION_SUBMIT_SUCCESS,
     REGISTRATION_SUBMIT_FAIL
 } from './constants';
+
+export function updateJWT(jwt) {
+    return {
+        type: UPDATE_JWT, 
+        jwt
+    }
+}
 
 export function submitLogin(email, password) {
     return {

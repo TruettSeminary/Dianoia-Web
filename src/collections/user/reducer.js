@@ -1,5 +1,4 @@
-import { fromJS } from 'immutable'; 
-import auth from 'utils/auth'; 
+import { fromJS } from 'immutable';
 
 import {
     LOGOUT_SUCCESS,
@@ -10,8 +9,6 @@ import {
 
 // TODO: figure out how to hydrate user and current state from cache
 
-const cachedJWT = auth.getToken(); 
-
 const user = {
     _id: '', 
     email: '', 
@@ -21,8 +18,7 @@ const user = {
     decks: [],
     notes: [],
     settings: {},
-    jwt: cachedJWT ? cachedJWT : '',
-    ...auth.getUserInfo()
+    jwt: ''
 }
 
 const initialState = fromJS(user); 
@@ -36,9 +32,9 @@ function userReducer(state = initialState, action) {
             return state.mergeDeep(action.user); 
         case REFRESH_USER_CLASSES: 
             // todo: determine if this is the right way to handle this
-            return state.set('classes', action.userClasses); 
+            return state.set('classes', fromJS(action.userClasses)); 
         case REFRESH_USER_DECKS:
-            return state.set('decks', action.userDecks);
+            return state.set('decks', fromJS(action.userDecks));
         default: 
             return state; 
       }

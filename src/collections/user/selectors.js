@@ -1,26 +1,31 @@
 import { createSelector } from 'reselect'; 
 
-const getUser = () => (state) => state.get('user'); 
+const getUser = () => (state) => state.user.toJS(); 
 
 const userBasicInfoSelector = createSelector(
     getUser(), 
-    (userInfo) => {
+    (user) => {
         return {
-            first_name: userInfo.get('first_name'), 
-            last_name: userInfo.get('last_name'),
-            jwt: userInfo.get('jwt')
+            first_name: user.first_name,
+            last_name: user.last_name,
+            _id: user._id,
+            jwt: user.jwt
         }
     }
 ); 
 
 const userClassesSelector = createSelector(
     getUser(), 
-    (userClasses) => userClasses.toJS()
+    (user) => {
+        return user.classes;
+    }
 ); 
 
 const userDecksSelector = createSelector(
     getUser(), 
-    (userDecks) => userDecks.toJS()
+    (user) => {
+        return user.decks;
+    }
 )
 
 export {

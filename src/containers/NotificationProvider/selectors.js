@@ -1,14 +1,14 @@
 import { createSelector } from 'reselect'; 
 
 const selectNotificationProviderDomain = () => (state) => {
-    return state.get('notificationProvider')
+    return state.notificationProvider;
 };
 
 
 const makeSelectNotificationProvider = () => createSelector(
     selectNotificationProviderDomain(), 
     (substate) => {
-        return substate.toJS();
+        return substate.toJS(); 
     }
 );
 

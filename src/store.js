@@ -1,7 +1,11 @@
 import { createStore, applyMiddleware } from 'redux'; 
-import Immutable, { fromJS } from 'immutable'; 
-import { connectRouter, routerMiddleware } from 'connected-react-router/immutable'; 
+import { connectRouter, routerMiddleware } from 'connected-react-router';  
 import { composeWithDevTools } from 'redux-devtools-extension';
+
+import { persistStore, persistReducer } from 'redux-persist';
+import localforage from 'localforage'; 
+// import storage from 'redux-persist/lib/storage'; 
+import immutableTransform from 'redux-persist-transform-immutable';
 
 import createSagaMiddleware from 'redux-saga'; 
 import createReducer from './reducers'; 
@@ -9,7 +13,17 @@ import { sagas } from './sagas';
 
 const sagaMiddleware = createSagaMiddleware(); 
 
-export default function configureStore(intitialState = {}, history) {
+// TODO: determine which level of merging needs to take place
+const persistConfig = {
+  key: 'root', 
+  storage: localforage,
+  blacklist: ['router', 'notificationProvider'],
+  transforms: [immutableTransform({
+    blacklist: ['router']
+  })]
+}
+
+export default function configureStore(history) {
   // Create the store with two middlewares
   // 1. sagaMiddleware: Makes redux-sagas work
   // 2. routerMiddleware: Syncs the location/URL path to the state
@@ -24,29 +38,25 @@ export default function configureStore(intitialState = {}, history) {
 
   // Set up compose with Redux Devtools
   const composeEnhancers = composeWithDevTools({
-    name: 'Dianoia', 
-    serialize: {
-      immutable: Immutable
-    }
+    name: 'Dianoia'
   });  
 
-  const store = createStore(
-    connectRouter(history)(createReducer()), 
-    fromJS(intitialState), 
+  const routerRootReducer = connectRouter(history)(createReducer());
+
+  const persistedReducer = persistReducer(persistConfig, routerRootReducer); 
+
+  let store = createStore(
+    persistedReducer,
     composeEnhancers(...enhancers)
   );
+
+  let persistor = persistStore(store); 
 
   // Start each saga
   sagas.forEach((saga) => {
     sagaMiddleware.run(saga); 
   }); 
 
-  if (module.hot) {
-    module.hot.accept('./reducers', () => {
-      store.replaceReducer(connectRouter(history)(createReducer()));
-    });
-  }
-
-  return store; 
+  return {store, persistor}; 
 
 }

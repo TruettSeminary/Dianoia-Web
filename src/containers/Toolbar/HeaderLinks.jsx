@@ -1,17 +1,28 @@
-// TODO: move submitLogin and Logout actions here for cleaner code
-
 /* eslint-disable */
 import React from "react";
 import PropTypes from "prop-types"; 
-
-import { push } from 'connected-react-router'
 import { connect } from 'react-redux';
 import { compose } from 'redux'; 
 
+import { push } from 'connected-react-router'
+
+import { 
+  submitLogin, 
+  logout
+} from 'collections/user/actions'; 
+
+import {
+  headerLinkSelector
+} from './selectors'
+
 // material-ui components
-import withStyles from "material-ui/styles/withStyles";
 import List from "material-ui/List";
 import ListItem from "material-ui/List/ListItem";
+import CustomDropdown from "md-components/CustomDropdown/CustomDropdown.jsx";
+import Button from "md-components/CustomButtons/Button.jsx";
+
+// Custom Components
+import LoginModal from 'components/Login'; 
 
 // @material-ui/icons
 import {
@@ -25,12 +36,7 @@ import {
   ViewCarousel
 } from "@material-ui/icons";
 
-// core components
-import CustomDropdown from "../CustomDropdown/CustomDropdown.jsx";
-import Button from "../CustomButtons/Button.jsx";
-
-import LoginModal from 'components/Login'; 
-
+import withStyles from "material-ui/styles/withStyles";
 import headerLinksStyle from "assets/jss/material-kit-react/components/headerLinksStyle.jsx";
 
 
@@ -43,8 +49,96 @@ class HeaderLinks extends React.Component {
       displayLogin: false, 
       ...props
     }; 
+  }
 
-    this.links = [
+  formButton(link) {
+    return (<Button
+        color='transparent'
+        className={this.classes.navLink}
+        onClick={() => {
+          if(link.href) {
+            this.props.pushPage(link.href); 
+          }
+          if(link.onClick) {
+            link.onClick();
+          } 
+        }}>
+      {link.icon} {link.text}
+    </Button>); 
+  }
+
+  formDropDown(link) {
+    const formDropDownList = () => {
+      return link.content.map((item)=> {
+        return (
+          <a
+            className={this.classes.dropdownLink}
+            href=''
+            onClick={(e) => {
+              e.preventDefault(); 
+              console.log('clicking'); 
+              this.props.pushPage(item.href); 
+              
+            }}
+          >
+          {item.text}</a>
+        );
+      }); 
+    };
+
+    return ( 
+      <CustomDropdown
+      buttonText={link.text}
+      buttonProps={{
+        className: this.classes.navLink,
+        color: link.color
+      }}
+      dropdownList={formDropDownList()}
+      />);
+  }
+
+  formLink(link) {
+    const formContent = () => {
+      if(!link.content) {
+        return this.formButton(link); 
+      }
+      else {
+        return this.formDropDown(link); 
+      }
+    }
+
+    return(
+      <ListItem key={link.text} className={this.classes.listItem}>
+        {formContent()}
+      </ListItem>
+    );
+  }
+
+  handleOpenLoginModel = () => {
+    this.setState({
+      displayLogin: true
+    });
+  }
+
+  handleCloseLoginModal = () => {
+    this.setState({
+      displayLogin: false
+    });
+  }
+
+
+  render() {
+
+    const deckLinks = this.props.user.decks.map((deck) => {
+      // TODO: find a more effeciant way of doing this
+
+      return {
+        text: deck.name, 
+        href: `/deck/${deck._id}`
+      }
+    }); 
+
+    const links = [
       {
         text: 'Classes',
         href:'/classes', 
@@ -56,6 +150,7 @@ class HeaderLinks extends React.Component {
         text: 'Decks',
         href:'/decks', 
         color:'transparent', 
+        content: deckLinks,
         icon: (<ViewCarousel className={this.classes.icons} />), 
         userLoggedIn: true
       },
@@ -105,46 +200,10 @@ class HeaderLinks extends React.Component {
         userLoggedIn: false
       }
     ];  
-  }
-
-  formLink(link) {
-    return(
-      <ListItem key={link.text} className={this.classes.listItem}>
-        <Button
-            color={link.color}
-            className={this.classes.navLink}
-            onClick={() => {
-              if(link.href) {
-                console.log('pushing'); 
-                this.props.pushPage(link.href); 
-              }
-              if(link.onClick) {
-                link.onClick();
-              } 
-            }}>
-          {link.icon} {link.text}
-        </Button>
-      </ListItem>
-    );
-  }
-
-  handleOpenLoginModel = () => {
-    this.setState({
-      displayLogin: true
-    });
-  }
-
-  handleCloseLoginModal = () => {
-    this.setState({
-      displayLogin: false
-    });
-  }
 
 
-  render() {
-
-    const renderLinks = this.links.filter((link) => {
-      let userLoggedIn = (this.props.userJWT !== null && this.props.userJWT !== ""); 
+    const renderLinks = links.filter((link) => {
+      let userLoggedIn = (this.props.user.jwt !== null && this.props.user.jwt !== ""); 
       return link.userLoggedIn == userLoggedIn; 
     }).map((link) => {
       return this.formLink(link);
@@ -168,21 +227,21 @@ class HeaderLinks extends React.Component {
   
 }
 
-HeaderLinks.propTypes = {
-  userJWT: PropTypes.string.isRequired, 
-  submitLogin: PropTypes.func, 
-  logout: PropTypes.func
-}
+HeaderLinks.propTypes = {}
 
-// TODO: propbably run into issues with this
-const mapStateToProps = () => {
-  return {}; 
-}; 
+const mapStateToProps = headerLinkSelector(); 
 
-// TODO: move submitLogin and Logout actions here for cleaner code
 const mapDispatchToProps = (dispatch) => {
   return {
-    pushPage: (route) => {dispatch(push(route))}, 
+    pushPage: (route) => {
+      dispatch(push(route))
+    },
+    submitLogin: (identifier, password) => {
+      dispatch(submitLogin(identifier, password)); 
+    }, 
+    logout: () => {
+      dispatch(logout()); 
+    },
     dispatch
   }
 }

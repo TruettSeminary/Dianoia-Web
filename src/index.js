@@ -2,18 +2,34 @@
 import { Provider } from 'react-redux'; 
 import React from 'react'; 
 import ReactDOM from 'react-dom'; 
-import { ConnectedRouter } from "connected-react-router/immutable";
+import { ConnectedRouter } from "connected-react-router";
 import createHistory from 'history/createBrowserHistory'; 
+
+import { PersistGate } from 'redux-persist/integration/react'; 
 
 import 'sanitize.css/sanitize.css'; 
 import 'whatwg-fetch'; 
-
+import 'assets/scss/material-kit-react.css'; 
 import './index.css';
 import registerServiceWorker from './registerServiceWorker';
 
 import App from 'containers/App'; 
+import Loading from 'components/Loading'; 
 
 import configureStore from './store'; 
+
+import {
+    getAllClasses
+} from 'collections/classes/actions'; 
+
+import {
+    getAllUserDecks
+} from 'collections/decks/actions'; 
+
+import {
+    updateJWT
+} from 'collections/user/actions'; 
+
 
 // Create redux store with history
 const basename = "/"
@@ -21,20 +37,36 @@ const history = createHistory({
   basename
 });
 
-// TODO: load hydrated data
+const { store, persistor} = configureStore(history); 
 
-const store = configureStore({}, history); 
 /* eslint-enable */
 
+const onBeforeLift = () => { 
+    const state = store.getState();   
+    if(state.user) {
+        const jwt = state.user.toJS().jwt; 
+        store.dispatch(updateJWT(jwt)); 
+        
+        // Refresh Data
+        store.dispatch(getAllClasses()); 
+        store.dispatch(getAllUserDecks()); 
+    } 
+}
 
 ReactDOM.render(
     (<Provider store={store}>
-        <ConnectedRouter history={history}>
-            <App />
-        </ConnectedRouter>
+        <PersistGate loading={<Loading />} 
+            persistor={persistor}
+            onBeforeLift={onBeforeLift}
+            >
+            <ConnectedRouter history={history}>
+                <App />
+            </ConnectedRouter>
+        </PersistGate>
     </Provider>), 
     document.getElementById('root')
 );
+
 
 
 

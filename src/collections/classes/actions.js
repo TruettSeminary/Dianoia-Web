@@ -13,11 +13,11 @@ export function getAllClasses() {
     };
 }
 
-export function addClassToUser(userClasses, class_id) {
+export function addClassToUser(user, class_id) {
     return {
         type: ADD_CLASS_TO_USER, 
         data: {
-            userClasses,
+            user,
             class_id
         }
     }
@@ -32,21 +32,22 @@ export function addClassToUserSucceeded(userClasses) {
     }
 }
 
-export function removeClassFromUser(userClasses, class_id) {
+export function removeClassFromUser(user, class_id) {
     return {
         type: REMOVE_CLASS_FROM_USER, 
         data: {
-            userClasses,
+            user,
             class_id
         }
     }
 }
 
-export function removeClassFromUserSucceeded(userClasses) {
+export function removeClassFromUserSucceeded(userClasses, userDecks) {
     return {
         type: REMOVE_CLASS_FROM_USER_SUCCESS, 
         data: {
-            userClasses
+            userClasses, 
+            userDecks
         }
     }
 }
