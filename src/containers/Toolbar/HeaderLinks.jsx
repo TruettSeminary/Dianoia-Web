@@ -76,7 +76,6 @@ class HeaderLinks extends React.Component {
             href=''
             onClick={(e) => {
               e.preventDefault(); 
-              console.log('clicking'); 
               this.props.pushPage(item.href); 
               
             }}
@@ -201,9 +200,9 @@ class HeaderLinks extends React.Component {
       }
     ];  
 
-
+    const userLoggedIn = (this.props.user.jwt !== null && this.props.user.jwt !== ""); 
     const renderLinks = links.filter((link) => {
-      let userLoggedIn = (this.props.user.jwt !== null && this.props.user.jwt !== ""); 
+      
       return link.userLoggedIn == userLoggedIn; 
     }).map((link) => {
       return this.formLink(link);
@@ -212,6 +211,7 @@ class HeaderLinks extends React.Component {
   
     return (
       <div>
+        {userLoggedIn ? <h4>Hello, {this.props.user.first_name}!</h4> : '' }
         <List className={this.classes.list}>
           {renderLinks}
         </List>

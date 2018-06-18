@@ -50,6 +50,9 @@ const onBeforeLift = () => {
         // Refresh Data
         store.dispatch(getAllClasses()); 
         store.dispatch(getAllUserDecks()); 
+
+        // TODO: figure out how to get user info (without necessarily having the JWT already set)
+        // store.dispatch(getUserInfo()); 
     } 
 }
 

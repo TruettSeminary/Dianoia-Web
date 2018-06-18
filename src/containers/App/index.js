@@ -7,8 +7,9 @@ import { compose } from 'redux'; // bindActionCreators
 // Page Containers
 import HomePage from 'containers/HomePage';
 import ClassesPage from 'containers/ClassesPage';
-import DecksPage from 'containers/DecksPage';
+import DeckPage from 'containers/DeckPage';
 import StudyDeckPage from 'containers/StudyDeckPage'; 
+import CardPage from 'containers/CardPage'; 
 import TranslationsPage from 'containers/TranslationsPage'; 
 import InstructionsPage from 'containers/InstructionsPage'; 
 import SettingsPage from 'containers/SettingsPage'; 
@@ -39,8 +40,11 @@ class App extends React.Component {
                         <Route path="/" exact render={() => <LandingPage/>} />
                         <Route path="/home" exact render={() => <HomePage {...this.props}/>} />
                         <Route path="/classes" exact render={() => <ClassesPage/>} />
-                        <Route path="/deck/study/:_id" exact render={() => <StudyDeckPage/>} />
-                        <Route path="/deck/:_id" exact render={() => <DecksPage/>} />
+                        <Route path="/deck/study/:deck_id" exact render={() => <StudyDeckPage/>} />
+                        <Route path="/deck/:deck_id" exact render={(props) => {
+                            return <DeckPage deck_id={props.match.params.deck_id}/>
+                        }}/>
+                        <Route path="/card/:card_id" exact render={() => <CardPage/>} />
                         <Route path="/translations" exact render={() => <TranslationsPage/>} />
                         <Route path="/instructions" exact render={() => <InstructionsPage/>} />
                         <Route path="/feedback" exact render={() => <FeedbackPage/>} />

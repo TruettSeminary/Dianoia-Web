@@ -1,16 +1,16 @@
 import React from 'react'; 
 
-class DecksPage extends React.Component {
+class CardPage extends React.Component {
 
     render() {
         return (
             <div>
                 <div>
-                    Decks Page yo
+                    Card Page yo
                 </div>
             </div>
         );
     }
 }
 
-export default DecksPage; 
+export default CardPage; 
