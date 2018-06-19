@@ -40,11 +40,15 @@ class App extends React.Component {
                         <Route path="/" exact render={() => <LandingPage/>} />
                         <Route path="/home" exact render={() => <HomePage {...this.props}/>} />
                         <Route path="/classes" exact render={() => <ClassesPage/>} />
-                        <Route path="/deck/study/:deck_id" exact render={() => <StudyDeckPage/>} />
+                        <Route path="/deck/study/:deck_id" exact render={(props) => {
+                            return <StudyDeckPage deck_id={props.match.params.deck_id}/>
+                        }}/>
                         <Route path="/deck/:deck_id" exact render={(props) => {
                             return <DeckPage deck_id={props.match.params.deck_id}/>
                         }}/>
-                        <Route path="/card/:card_id" exact render={() => <CardPage/>} />
+                        <Route path="/card/:card_id" exact render={(props) => {
+                            return <CardPage card_id={props.match.params.card_id}/>
+                        }}/>
                         <Route path="/translations" exact render={() => <TranslationsPage/>} />
                         <Route path="/instructions" exact render={() => <InstructionsPage/>} />
                         <Route path="/feedback" exact render={() => <FeedbackPage/>} />

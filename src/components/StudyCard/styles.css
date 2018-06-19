@@ -1,0 +1,69 @@
+.studyCardContainer {
+  transition: all 100ms ease-in-out;
+  position: absolute;
+  height: 65vh;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  padding-top: 20px;
+  text-align: center;
+  z-index: -1; }
+  .studyCardContainer:nth-child(1) {
+    z-index: 5;
+    bottom: 72px;
+    width: 80vw; }
+  .studyCardContainer:nth-child(2) {
+    z-index: 4;
+    bottom: 60px;
+    width: 72vw; }
+  .studyCardContainer:nth-child(3) {
+    z-index: 3;
+    bottom: 48px;
+    width: 64vw; }
+  .studyCardContainer:nth-child(4) {
+    z-index: 2;
+    bottom: 36px;
+    width: 56vw; }
+  .studyCardContainer:nth-child(5) {
+    z-index: 1;
+    bottom: 24px;
+    width: 48vw; }
+
+.hammerContainer {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  -webkit-transition: -webkit-transform 0.75s;
+  -moz-transition: -moz-transform 0.75s;
+  -o-transition: -o-transform 0.75s;
+  transition: transform 0.75s;
+  -webkit-transform-style: preserve-3d;
+  -moz-transform-style: preserve-3d;
+  -o-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+  -webkit-transform-origin: 50% 50%; }
+
+.flipped {
+  -webkit-transform: rotateY(180deg);
+  -moz-transform: rotateY(180deg);
+  -o-transform: rotateY(180deg);
+  transform: rotateY(180deg); }
+
+.back {
+  -webkit-transform: rotateY(180deg);
+  -moz-transform: rotateY(180deg);
+  -o-transform: rotateY(180deg);
+  transform: rotateY(180deg); }
+
+.studyCard {
+  display: block;
+  height: 100% !important;
+  backface-visibility: hidden;
+  position: absolute !important;
+  overflow: hidden; }
+
+.cardText {
+  height: 100%;
+  padding-top: 7rem;
+  font-size: 15vw;
+  line-height: 15vw; }

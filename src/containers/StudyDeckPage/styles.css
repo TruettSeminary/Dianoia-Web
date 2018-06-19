@@ -1,0 +1,10 @@
+.studyContainer {
+  height: 75vh;
+  padding-left: 2rem;
+  padding-right: 2rem;
+  position: relative; }
+
+.studylist {
+  padding-top: 2rem;
+  height: 100%;
+  width: 100%; }

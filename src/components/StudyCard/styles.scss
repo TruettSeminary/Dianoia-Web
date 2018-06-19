@@ -1,0 +1,94 @@
+$defaultDiff: 12px; 
+$defaultWidth: 80vw; 
+$defaultMin: 8vw;
+
+.studyCardContainer {
+    transition: all 100ms ease-in-out;
+    position: absolute;
+    height: 65vh;
+
+    left: 0; 
+    right: 0; 
+    margin: 0 auto;
+    padding-top: 20px; 
+    text-align: center;
+    // width: 20rem;
+    z-index: -1;
+
+    &:nth-child(1) {
+        z-index: 5;
+        bottom: ($defaultDiff * 6);
+        width: $defaultWidth - $defaultMin * 0;
+    }
+
+    &:nth-child(2) {
+        z-index: 4;
+        bottom: ($defaultDiff * 5);
+        width: $defaultWidth - $defaultMin * 1;
+    }
+
+    &:nth-child(3) {
+        z-index: 3; 
+        bottom: ($defaultDiff * 4);
+        width: $defaultWidth - $defaultMin * 2;
+    }
+
+    &:nth-child(4) {
+        z-index: 2;
+        bottom: ($defaultDiff * 3);
+        width: $defaultWidth - $defaultMin * 3;
+    }
+
+    &:nth-child(5) {
+        z-index: 1;
+        bottom: ($defaultDiff * 2);
+        width: $defaultWidth - $defaultMin * 4;
+    }
+
+}
+
+.hammerContainer {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    -webkit-transition: -webkit-transform 0.75s;
+    -moz-transition: -moz-transform 0.75s;
+    -o-transition: -o-transform 0.75s;
+    transition: transform 0.75s;
+    -webkit-transform-style: preserve-3d;
+    -moz-transform-style: preserve-3d;
+    -o-transform-style: preserve-3d;
+    transform-style: preserve-3d;
+    -webkit-transform-origin: 50% 50%;
+}
+
+.flipped {
+    -webkit-transform: rotateY( 180deg );
+    -moz-transform: rotateY( 180deg );
+    -o-transform: rotateY( 180deg );
+    transform: rotateY( 180deg );
+}
+
+.back {
+    -webkit-transform: rotateY( 180deg );
+    -moz-transform: rotateY( 180deg );
+    -o-transform: rotateY( 180deg );
+    transform: rotateY( 180deg );
+}
+
+.studyCard {
+    display: block;
+    height: 100% !important;
+    backface-visibility: hidden;
+
+    position: absolute !important; 
+    overflow: hidden; 
+}
+
+.cardText {
+    
+    height: 100%;
+    padding-top: 7rem;
+    font-size: 15vw; 
+    line-height: 15vw;
+}
