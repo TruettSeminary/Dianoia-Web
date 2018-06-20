@@ -1,15 +1,15 @@
 import { createSelector } from 'reselect'; 
 
 import {
-    allUserDecksSelector
-} from 'collections/decks/selectors'; 
+    userDecksPopulatedSelector
+} from 'collections/user/selectors'; 
 
 import {
     allCardsSelector
 } from 'collections/cards/selectors'; 
 
 const deckPageSelector = () => createSelector(
-    [allUserDecksSelector, allCardsSelector], 
+    [userDecksPopulatedSelector, allCardsSelector], 
     (decks, cards) => {
         return {
             decks,

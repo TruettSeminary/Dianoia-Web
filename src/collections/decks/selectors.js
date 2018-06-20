@@ -2,7 +2,7 @@ import { createSelector } from 'reselect';
 
 const getDecks = () => (state) => state.decks.toJS();
 
-const allUserDecksSelector = createSelector(
+const allDecksSelector = createSelector(
     getDecks(), 
     (decks) => {
         if(decks.toJS) return decks.toJS(); 
@@ -10,6 +10,17 @@ const allUserDecksSelector = createSelector(
     }
 )
 
+const allDecksMapSelector = createSelector(
+    [allDecksSelector], 
+    (decks) => {
+        return decks.reduce((mappedDecks, deck) => {
+            mappedDecks[deck._id] = deck;
+            return mappedDecks; 
+        }, {});
+    }
+)
+
 export {
-    allUserDecksSelector
+    allDecksSelector, 
+    allDecksMapSelector
 }; 

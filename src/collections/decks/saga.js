@@ -62,11 +62,16 @@ export function* removeDeckFromUserSaga(action) {
     }
 }
 
-
+// action.data.userDecks --> decks that belong to the current user
 export function* deckModificationSuccessSaga(action) {
     try {
+        // Update the user state
         yield put(refreshUserDecks(action.data.userDecks));
+
+        // update the decks state
         yield put(getAllUserDecks());  
+
+
         // TODO: update cards when a deck is added/removed
         yield put(getAllCards()); 
     } catch(error) {

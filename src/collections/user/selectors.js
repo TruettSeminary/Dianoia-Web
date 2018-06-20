@@ -1,5 +1,9 @@
 import { createSelector } from 'reselect'; 
 
+import {
+    allDecksMapSelector
+} from 'collections/decks/selectors'; 
+
 const getUser = () => (state) => state.user.toJS(); 
 
 const userBasicInfoSelector = createSelector(
@@ -28,8 +32,18 @@ const userDecksSelector = createSelector(
     }
 )
 
+const userDecksPopulatedSelector = createSelector(
+    [allDecksMapSelector, userDecksSelector], 
+    (allDecks, userDecks) => {
+        return userDecks.map((deck)=> {
+            return allDecks[deck]; 
+        });
+    }
+); 
+
 export {
     userBasicInfoSelector,
     userClassesSelector, 
-    userDecksSelector
+    userDecksSelector, 
+    userDecksPopulatedSelector
 }; 

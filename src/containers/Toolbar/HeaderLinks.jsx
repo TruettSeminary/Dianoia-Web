@@ -71,16 +71,9 @@ class HeaderLinks extends React.Component {
     const formDropDownList = () => {
       return link.content.map((item)=> {
         return (
-          <a
-            className={this.classes.dropdownLink}
-            href=''
-            onClick={(e) => {
-              e.preventDefault(); 
-              this.props.pushPage(item.href); 
-              
-            }}
-          >
-          {item.text}</a>
+          <div onClick={() => this.props.pushPage(item.href)}>
+            {item.text}
+          </div>
         );
       }); 
     };
@@ -88,6 +81,7 @@ class HeaderLinks extends React.Component {
     return ( 
       <CustomDropdown
       buttonText={link.text}
+      buttonIcon={() => link.icon} 
       buttonProps={{
         className: this.classes.navLink,
         color: link.color
@@ -135,7 +129,16 @@ class HeaderLinks extends React.Component {
         text: deck.name, 
         href: `/deck/${deck._id}`
       }
-    }); 
+    });
+
+    const studyDeckLinks = this.props.user.decks.map((deck) => {
+      // TODO: find a more effeciant way of doing this
+
+      return {
+        text: deck.name, 
+        href: `/deck/study/${deck._id}`
+      }
+    });  
 
     const links = [
       {
@@ -154,33 +157,41 @@ class HeaderLinks extends React.Component {
         userLoggedIn: true
       },
       {
-        text: 'Translations',
-        href:'/translations', 
+        text: 'Study',
+        href:'/decks/study', 
         color:'transparent', 
-        icon: (<Subject className={this.classes.icons} />), 
+        content: studyDeckLinks,
+        icon: (<ViewCarousel className={this.classes.icons} />), 
         userLoggedIn: true
       },
-      {
-        text: 'Instructions',
-        href:'/instructions', 
-        color:'transparent', 
-        icon: (<Info className={this.classes.icons} />), 
-        userLoggedIn: true
-      },
-      {
-        text: 'Feedback',
-        href:'/feedback', 
-        color:'transparent', 
-        icon: (<Feedback className={this.classes.icons} />), 
-        userLoggedIn: true
-      },
-      {
-        text: 'Settings',
-        href:'/settings', 
-        color:'transparent', 
-        icon: (<Settings className={this.classes.icons} />), 
-        userLoggedIn: true
-      },
+      // {
+      //   text: 'Translations',
+      //   href:'/translations', 
+      //   color:'transparent', 
+      //   icon: (<Subject className={this.classes.icons} />), 
+      //   userLoggedIn: true
+      // },
+      // {
+      //   text: 'Instructions',
+      //   href:'/instructions', 
+      //   color:'transparent', 
+      //   icon: (<Info className={this.classes.icons} />), 
+      //   userLoggedIn: true
+      // },
+      // {
+      //   text: 'Feedback',
+      //   href:'/feedback', 
+      //   color:'transparent', 
+      //   icon: (<Feedback className={this.classes.icons} />), 
+      //   userLoggedIn: true
+      // },
+      // {
+      //   text: 'Settings',
+      //   href:'/settings', 
+      //   color:'transparent', 
+      //   icon: (<Settings className={this.classes.icons} />), 
+      //   userLoggedIn: true
+      // },
       {
         text: 'Logout',
         href:'/', 

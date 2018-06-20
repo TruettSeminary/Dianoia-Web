@@ -4,6 +4,8 @@ import React from 'react';
 import { compose } from 'redux'; 
 import { connect } from 'react-redux';
 
+import { Router } from 'utils/router'; 
+
 import { toolbarSelector } from './selectors'; 
 
 
@@ -16,7 +18,12 @@ class Toolbar extends React.Component {
     render() {
         const brand = {
             title: 'Dianoia', 
-            href: this.props.user.jwt && this.props.user.jwt !== "" ? '/home' : '/'
+            href: '',
+            onClick: (e) => {
+                e.preventDefault(); 
+                const href = this.props.user.jwt && this.props.user.jwt !== "" ? '/home' : '/'; 
+                Router.pushPage(href);
+            }
         };
         return (
             <Header

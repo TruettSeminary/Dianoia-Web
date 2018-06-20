@@ -113,7 +113,10 @@ class CustomDropdown extends React.Component {
                       return (
                         <Divider
                           key={key}
-                          onClick={this.handleClose}
+                          onClick={(e) => {
+                            this.handleClose(e);
+                            prop.props.onClick && prop.props.onClick();
+                          }}
                           className={classes.dropdownDividerItem}
                         />
                       );
@@ -121,7 +124,10 @@ class CustomDropdown extends React.Component {
                     return (
                       <MenuItem
                         key={key}
-                        onClick={this.handleClose}
+                        onClick={(e) => {
+                          this.handleClose(e);
+                          prop.props.onClick && prop.props.onClick();
+                        }}
                         className={dropdownItem}
                       >
                         {prop}

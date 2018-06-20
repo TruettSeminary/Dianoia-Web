@@ -1,6 +1,8 @@
 import { createSelector } from 'reselect'; 
-import { userBasicInfoSelector } from 'collections/user/selectors'; 
-import { allUserDecksSelector } from 'collections/decks/selectors'; 
+import { 
+    userBasicInfoSelector,
+    userDecksPopulatedSelector 
+} from 'collections/user/selectors'; 
 
 const toolbarSelector = () => createSelector(
     [userBasicInfoSelector], 
@@ -14,12 +16,12 @@ const toolbarSelector = () => createSelector(
 );
 
 const headerLinkSelector = () => createSelector(
-    [userBasicInfoSelector, allUserDecksSelector], 
-    (userBasicInfo, userDecks, classes) => {
+    [userBasicInfoSelector, userDecksPopulatedSelector], 
+    (userBasicInfo, decks) => {
         return {
             user: {
                 ...userBasicInfo, 
-                decks: userDecks
+                decks
             }
         }
     }

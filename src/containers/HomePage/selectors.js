@@ -1,11 +1,11 @@
 import { createSelector } from 'reselect'; 
 
 import {
-    allUserDecksSelector
-} from 'collections/decks/selectors'; 
+    userDecksPopulatedSelector
+} from 'collections/user/selectors'; 
 
 const homePageSelector = () => createSelector(
-    [allUserDecksSelector], 
+    [userDecksPopulatedSelector], 
     (decks) => {
         return {
             decks
