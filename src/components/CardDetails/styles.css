@@ -1,0 +1,11 @@
+.cardDetails {
+  flex-grow: 1;
+  width: 100%; }
+
+.tabsRoot {
+  background-color: #ff9800; }
+
+.tabContainer {
+  padding-top: 1rem;
+  height: 10rem;
+  overflow: scroll; }

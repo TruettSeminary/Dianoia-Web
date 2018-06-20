@@ -3,9 +3,12 @@ $defaultWidth: 100%;
 $defaultMin: 10%;
 
 .studyContainer {
-    height: 75vh;
     padding-left: 2rem;
     padding-right: 2rem;
+}
+
+.cardContainer {
+    height: 40vh;
     position: relative;
 }
 
@@ -13,5 +16,8 @@ $defaultMin: 10%;
     padding-top: 2rem;
     height: 100%;
     width: 100%;
+}
 
+.cardDetails {
+    padding-top: 2rem;
 }

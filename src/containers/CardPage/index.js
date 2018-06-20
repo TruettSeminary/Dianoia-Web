@@ -13,12 +13,11 @@ import {
 } from 'collections/notes/actions'; 
 
 // Design
-import NoteEditor from 'components/NoteEditor'; 
-
-import GridContainer from "md-components/Grid/GridContainer.jsx";
-import GridItem from "md-components/Grid/GridItem.jsx";
+import CardDetails from 'components/CardDetails'; 
 
 import './styles.css'; 
+
+const DEFAULT_DETAILS_SELECTION = 1; 
 
 class CardPage extends React.Component {
 
@@ -35,6 +34,8 @@ class CardPage extends React.Component {
     }
 
     getNote() {
+        // TODO: consider updating the selector to be more like the StudyDeck page 
+        // i.e. note is mapped to card._id
         const note = this.props.notes.reduce((foundNote, note) => {
             if(note.card === this.props.card_id) {
                 return note; 
@@ -52,7 +53,10 @@ class CardPage extends React.Component {
     render() {
 
         const card = this.getCard(this.props.card); 
-        const note = this.getNote(this.props.notes); 
+        const note = this.getNote(this.props.notes);
+        
+        const detailsSelection = this.props.details ? 
+            Number(this.props.details) : DEFAULT_DETAILS_SELECTION;  
 
         if(!card) {
             return (<h4>Sorry, no card was found</h4>);
@@ -65,15 +69,12 @@ class CardPage extends React.Component {
                 <br/>
                 <h4>Card Back:</h4>
                 <h1>{card.back_text}</h1>
-                <GridContainer>
-                    <GridItem xs={12} sm={12} md={6} lg={4} xl={3}>
-                        <NoteEditor 
-                            note={note}
-                            addUserNote={this.props.addUserNote}
-                            updateUserNote={this.props.updateUserNote}
-                        />
-                    </GridItem>
-                </GridContainer>
+                <CardDetails 
+                    card={card} 
+                    note={note}
+                    value={detailsSelection}
+                />
+
             </div>
         );
     }

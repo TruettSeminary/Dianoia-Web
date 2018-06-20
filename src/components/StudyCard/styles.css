@@ -1,7 +1,7 @@
 .studyCardContainer {
   transition: all 100ms ease-in-out;
   position: absolute;
-  height: 65vh;
+  height: 35vh;
   left: 0;
   right: 0;
   margin: 0 auto;
@@ -28,6 +28,8 @@
     z-index: 1;
     bottom: 24px;
     width: 48vw; }
+  .studyCardContainer:nth-child(n+5) {
+    display: none; }
 
 .hammerContainer {
   width: 100%;
@@ -64,6 +66,6 @@
 
 .cardText {
   height: 100%;
-  padding-top: 7rem;
+  padding-top: 5rem;
   font-size: 15vw;
   line-height: 15vw; }

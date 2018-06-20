@@ -17,10 +17,7 @@ const studyDeckPageSelector = () => createSelector(
     (decks, cards, notes) => {
         return {
             decks,
-            cards: cards.reduce((newCards, card) => {
-                newCards[card._id] = card; 
-                return newCards; 
-            }, {}), 
+            cards, 
             notes: notes.reduce((newNotes, note) => {
                 newNotes[note.card] = note; 
                 return newNotes; 

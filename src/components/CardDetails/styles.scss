@@ -1,0 +1,16 @@
+@import 'assets/scss/core/_variables.scss';
+
+.cardDetails {
+    flex-grow: 1; 
+    width: 100%;
+}
+
+.tabsRoot {
+    background-color: $brand-warning
+}
+
+.tabContainer {
+    padding-top: 1rem;
+    height: 10rem;
+    overflow: scroll;
+}

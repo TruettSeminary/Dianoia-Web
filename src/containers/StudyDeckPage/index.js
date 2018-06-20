@@ -10,10 +10,16 @@ import {
     updateUserNote
 } from 'collections/notes/actions'; 
 
+import { CardQueue } from './CardQueue'; 
+
 // Design
 // import GridContainer from 'md-components/Grid/GridContainer'; 
 // import GridItem from 'md-components/Grid/GridItem'; 
-import StudyCard from 'components/StudyCard'
+// import Button from 'md-components/CustomButtons/Button';
+
+
+import StudyCard from 'components/StudyCard';
+import CardDetails from 'components/CardDetails'; 
 
 import './styles.css'; 
 
@@ -23,18 +29,35 @@ class StudyDeckPage extends React.Component {
         super(props);
 
         this.state = {
-            displayCards: this.generateCards()
+            cardQueue: this.getCardQueue()
         }
+    }
+
+    componentWillUpdate(prevProps) {
+        // TODO: 
+        // - create new queue
+        // compare with current queue
+        // update current queue (without replacing top (current) card so user does not recognize the change)
+    }
+
+    getCardQueue() {
+        // TODO: add queue here?
+        return this.props.cards.reduce((cardQueue, card) => {
+            if(card.decks.includes(this.props.deck_id)) {
+                cardQueue.insert(card); 
+            }
+
+            return cardQueue; 
+        }, new CardQueue()); 
     }
 
     generateCards() {
         // TODO: add priority queue support for card score
-        return Object.keys(this.props.cards).map((card, index, arr) => {
-            const studyCard = this.props.cards[card]; 
+        return this.state.cardQueue.getQueue().map((card) => {
             return (
                 <StudyCard 
-                    key={studyCard._id}
-                    card={studyCard}
+                    key={card._id}
+                    card={card}
                     onSwipe={
                         () => this.dismissTopCard(true)
                     } 
@@ -47,22 +70,52 @@ class StudyDeckPage extends React.Component {
     }
 
     dismissTopCard(correct) {
-        const displayCards = this.state.displayCards; 
-        const topCard = displayCards.shift(); 
-        displayCards.push(topCard); 
+        // TODO: determine how to adjust card score in this process
+
+
+        const cardQueue = this.state.cardQueue; 
+        const topCard = cardQueue.poll(); 
+
+        cardQueue.insert(topCard); 
         this.setState({
-            displayCards
+            cardQueue
         })
+    }
+
+    generateCardDetails() {
+        // TODO: update note here to work with card scoreing in the rest of the page
+        const card = this.state.cardQueue.peek(); 
+        let note = this.props.notes[card._id]; 
+        if(!note) {
+            note = {
+                card_id: card._id,
+                note: '',
+                cardScore : 0
+            }
+        }
+        return (<CardDetails 
+            card={card} 
+            note={note}
+            value={false}
+        />);
     }
 
     render() {
 
         return (
-            <div className='studyContainer'>
-                <div className='studyList'>
-                    {this.state.displayCards}
+            <div className="studyContainer">
+                <div className='cardContainer'>
+                    <div className='studyList'>
+                        {this.generateCards()}
+                    </div>
+                </div>
+                <div className="cardDetails">
+                    {/* // TODO: put card details to the right/left of the cards on a wider screen
+                    // TODO: adjust card size on larger screen */}
+                    {this.generateCardDetails()}
                 </div>
             </div>
+
         );
     }
 }

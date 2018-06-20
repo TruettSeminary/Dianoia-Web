@@ -43,11 +43,14 @@ class App extends React.Component {
                         <Route path="/deck/study/:deck_id" exact render={(props) => {
                             return <StudyDeckPage deck_id={props.match.params.deck_id}/>
                         }}/>
-                        <Route path="/deck/:deck_id" exact render={(props) => {
+                        <Route path="/deck/:deck_id/" exact render={(props) => {
                             return <DeckPage deck_id={props.match.params.deck_id}/>
                         }}/>
-                        <Route path="/card/:card_id" exact render={(props) => {
-                            return <CardPage card_id={props.match.params.card_id}/>
+                        <Route path="/card/:card_id/:details?" render={(props) => {
+                            return (<CardPage 
+                                card_id={props.match.params.card_id}
+                                details={props.match.params.details}
+                            />); 
                         }}/>
                         <Route path="/translations" exact render={() => <TranslationsPage/>} />
                         <Route path="/instructions" exact render={() => <InstructionsPage/>} />

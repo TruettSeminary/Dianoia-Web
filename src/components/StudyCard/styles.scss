@@ -5,7 +5,7 @@ $defaultMin: 8vw;
 .studyCardContainer {
     transition: all 100ms ease-in-out;
     position: absolute;
-    height: 65vh;
+    height: 35vh;
 
     left: 0; 
     right: 0; 
@@ -43,6 +43,10 @@ $defaultMin: 8vw;
         z-index: 1;
         bottom: ($defaultDiff * 2);
         width: $defaultWidth - $defaultMin * 4;
+    }
+
+    &:nth-child(n+5){
+        display: none;
     }
 
 }
@@ -88,7 +92,7 @@ $defaultMin: 8vw;
 .cardText {
     
     height: 100%;
-    padding-top: 7rem;
+    padding-top: 5rem;
     font-size: 15vw; 
     line-height: 15vw;
 }
