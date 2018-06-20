@@ -44,6 +44,9 @@ class NoteEditor extends React.Component {
                         inputProps={{
                             onChange: this.handleNoteValueChange,
                             multiline: true,
+                            classes: {
+                                root: 'input'
+                            },
                             value: this.state.noteText
                         }}
                         formControlProps = {{
