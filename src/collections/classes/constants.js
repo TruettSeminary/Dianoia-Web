@@ -9,3 +9,4 @@ export const REMOVE_CLASS_FROM_USER_SUCCESS = 'classes/REMOVE_CLASS_FROM_USER_SU
 export const REMOVE_CLASS_FROM_USER_FAIL = 'classes/REMOVE_CLASS_FROM_USER_FAIL';
 
 export const REFRESH_CLASSES = 'classes/REFRESH_CLASSES'; 
+export const RESET_CLASSES = 'classes/RESET_CLASSES'; 

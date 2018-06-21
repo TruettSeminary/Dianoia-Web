@@ -3,7 +3,8 @@ import { fromJS } from 'immutable';
 import {
     REFRESH_ALL_USER_NOTES, 
     ADD_NEW_NOTE_SUCCESS, 
-    UPDATE_USER_NOTE_SUCCESS
+    UPDATE_USER_NOTE_SUCCESS,
+    RESET_NOTES
 } from './constants'; 
 
 const notes = []; 
@@ -24,6 +25,8 @@ function notesReducer(state = initialState, action) {
                 }
                 else return note; 
              })); 
+        case RESET_NOTES: 
+             return initialState; 
         default: 
             return state; 
     }

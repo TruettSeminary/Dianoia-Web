@@ -1,5 +1,6 @@
 export const GET_ALL_USER_DECKS = 'decks/GET_ALL_USER_DECKS'; 
 export const REFRESH_ALL_USER_DECKS = 'decks/REFRESH_ALL_USER_DECKS'; 
+export const RESET_DECKS = 'decks/RESET_DECKS'; 
 
 export const ADD_DECK_TO_USER = 'decks/ADD_DECK_TO_USER'; 
 export const ADD_DECK_TO_USER_SUCCESS = 'decks/ADD_DECK_TO_USER_SUCCESS'; 

@@ -5,7 +5,7 @@ export const LOGIN_SUBMIT_SUCCESS = 'user/LOGIN_SUBMIT_SUCCESS';
 export const LOGIN_SUBMIT_FAIL = 'user/LOGIN_SUBMIT_FAIL'; 
 
 export const LOGOUT = 'user/LOGOUT'; 
-export const LOGOUT_SUCCESS = "user/LOGOUT_SUCCESS"; 
+export const RESET_USER= "user/RESET_USER"; 
 
 export const REFRESH_USER = 'user/REFRESH_USER';
 export const REFRESH_USER_CLASSES = 'user/REFRESH_USER_CLASSES'; 

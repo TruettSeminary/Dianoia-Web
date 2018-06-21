@@ -1,10 +1,10 @@
 import { fromJS } from 'immutable';
 
 import {
-    LOGOUT_SUCCESS,
     REFRESH_USER, 
     REFRESH_USER_CLASSES, 
-    REFRESH_USER_DECKS
+    REFRESH_USER_DECKS, 
+    RESET_USER
 } from './constants';
 
 // TODO: figure out how to hydrate user and current state from cache
@@ -26,8 +26,6 @@ const initialState = fromJS(user);
 
 function userReducer(state = initialState, action) {
     switch(action.type) {
-        case LOGOUT_SUCCESS: 
-            return initialState.set({jwt: ''}); 
         case REFRESH_USER: 
             return state.mergeDeep(action.user); 
         case REFRESH_USER_CLASSES: 
@@ -35,6 +33,8 @@ function userReducer(state = initialState, action) {
             return state.set('classes', fromJS(action.userClasses)); 
         case REFRESH_USER_DECKS:
             return state.set('decks', fromJS(action.userDecks));
+        case RESET_USER: 
+            return initialState; 
         default: 
             return state; 
       }

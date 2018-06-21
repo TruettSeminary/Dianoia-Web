@@ -22,19 +22,24 @@ import {
     updateJWT,
     loginSucceeded, 
     loginFailed, 
-    logoutSucceeded, 
     refreshUser,
     registrationSucceeded, 
-    registrationFailed
+    registrationFailed, 
+    resetUser
 } from './actions'; 
 
 import {
-    getAllClasses
+    getAllClasses,
+    resetClasses
 } from 'collections/classes/actions'
 
 import {
-    getAllUserDecks
+    getAllUserDecks,
+    resetDecks
 } from 'collections/decks/actions'; 
+
+import { resetCards } from 'collections/cards/actions'; 
+import { resetNotes } from 'collections/notes/actions'; 
 
 export function* updateJWTSaga(action) {
     try {
@@ -88,8 +93,12 @@ export function* loginFailedSaga(action) {
 export function* logoutSaga(action) {
     try {
         // TODO: clean this up
-        yield put(logoutSucceeded({jwt: ''}))
         yield put(updateJWT('')); 
+        yield put(resetUser()); 
+        yield put(resetClasses());
+        yield put(resetDecks());
+        yield put(resetCards());
+        yield put(resetNotes()); 
     } catch(error) {
         
     }

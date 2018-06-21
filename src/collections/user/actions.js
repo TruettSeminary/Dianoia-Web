@@ -3,14 +3,14 @@ import {
     SUBMIT_LOGIN,
     LOGIN_SUBMIT_FAIL,
     LOGIN_SUBMIT_SUCCESS, 
-    LOGOUT, 
-    LOGOUT_SUCCESS,
+    LOGOUT,
     REFRESH_USER,
     REFRESH_USER_CLASSES, 
     REFRESH_USER_DECKS, 
     SUBMIT_REGISTRATION, 
     REGISTRATION_SUBMIT_SUCCESS,
-    REGISTRATION_SUBMIT_FAIL
+    REGISTRATION_SUBMIT_FAIL,
+    RESET_USER
 } from './constants';
 
 export function updateJWT(jwt) {
@@ -51,10 +51,9 @@ export function logout() {
     }
 }
 
-export function logoutSucceeded(user) {
+export function resetUser() {
     return {
-        type: LOGOUT_SUCCESS, 
-        user
+        type: RESET_USER
     }
 }
 

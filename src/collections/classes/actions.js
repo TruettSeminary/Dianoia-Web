@@ -4,7 +4,8 @@ import {
     REMOVE_CLASS_FROM_USER, 
     REFRESH_CLASSES,
     ADD_CLASS_TO_USER_SUCCESS, 
-    REMOVE_CLASS_FROM_USER_SUCCESS
+    REMOVE_CLASS_FROM_USER_SUCCESS,
+    RESET_CLASSES
 } from './constants';
 
 export function getAllClasses() {
@@ -58,5 +59,11 @@ export function refreshClasses(classes) {
         data: {
             classes
         }
+    }
+}
+
+export function resetClasses() {
+    return {
+        type: RESET_CLASSES
     }
 }

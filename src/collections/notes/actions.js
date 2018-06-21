@@ -4,7 +4,8 @@ import {
     ADD_NEW_USER_NOTE, 
     ADD_NEW_NOTE_SUCCESS, 
     UPDATE_USER_NOTE, 
-    UPDATE_USER_NOTE_SUCCESS
+    UPDATE_USER_NOTE_SUCCESS,
+    RESET_NOTES
 } from './constants'; 
 
 export function getAllUserNotes() {
@@ -65,5 +66,11 @@ export function updateUserNoteSucceeded(note) {
         data: {
             note
         }
+    }
+}
+
+export function resetNotes() {
+    return {
+        type: RESET_NOTES
     }
 }

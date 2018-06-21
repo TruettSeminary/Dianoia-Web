@@ -4,7 +4,8 @@ import {
     ADD_DECK_TO_USER_SUCCESS,
     REMOVE_DECK_FROM_USER_SUCCESS,
     GET_ALL_USER_DECKS,
-    REFRESH_ALL_USER_DECKS
+    REFRESH_ALL_USER_DECKS,
+    RESET_DECKS
 } from './constants';
 
 export function getAllUserDecks() {
@@ -58,5 +59,11 @@ export function refreshAllUserDecks(decks) {
         data: {
             decks
         }
+    }
+}
+
+export function resetDecks() {
+    return {
+        type: RESET_DECKS
     }
 }
