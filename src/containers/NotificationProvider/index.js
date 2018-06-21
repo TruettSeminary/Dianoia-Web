@@ -12,7 +12,7 @@ import {
 import makeSelectNotificationProvider from './selectors'; 
 
 // Design
-import Notification from 'components/Notification'; 
+import Notification from './Notification'; 
 import Clearfix from 'md-components/Clearfix/Clearfix';
 
 class NotificationProvider extends React.Component {

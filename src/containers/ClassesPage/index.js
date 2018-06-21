@@ -17,7 +17,7 @@ import {
 } from 'collections/decks/actions'
 
 // Design
-import ClassCard from 'components/ClassCard'; 
+import ClassCard from './ClassCard'; 
 import GridContainer from 'md-components/Grid/GridContainer'; 
 import GridItem from 'md-components/Grid/GridItem'; 
 

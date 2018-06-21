@@ -12,7 +12,7 @@ import Button from 'md-components/CustomButtons/Button';
 import GridContainer from 'md-components/Grid/GridContainer'; 
 import GridItem from 'md-components/Grid/GridItem'; 
 
-import DeckCard from 'components/DeckCard'; 
+import DeckCard from './DeckCard'; 
 
 import './styles.css'; 
 

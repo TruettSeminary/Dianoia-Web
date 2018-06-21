@@ -18,7 +18,7 @@ import { CardQueue } from './CardQueue';
 // import Button from 'md-components/CustomButtons/Button';
 
 
-import StudyCard from 'components/StudyCard';
+import StudyCard from './StudyCard';
 import CardDetails from 'components/CardDetails'; 
 
 import './styles.css'; 
