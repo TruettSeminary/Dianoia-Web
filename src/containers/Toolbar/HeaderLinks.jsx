@@ -5,11 +5,10 @@ import { connect } from 'react-redux';
 import { compose } from 'redux'; 
 
 import { push } from 'connected-react-router'
+import { logout } from 'collections/user/actions'; 
+import { openLoginModal } from 'collections/ui/actions';  
 
-import { 
-  submitLogin, 
-  logout
-} from 'collections/user/actions'; 
+
 
 import {
   headerLinkSelector
@@ -22,7 +21,7 @@ import CustomDropdown from "md-components/CustomDropdown/CustomDropdown.jsx";
 import Button from "md-components/CustomButtons/Button.jsx";
 
 // Custom Components
-import LoginModal from 'components/Login'; 
+import LoginModal from 'containers/Login'; 
 
 // @material-ui/icons
 import {
@@ -107,19 +106,6 @@ class HeaderLinks extends React.Component {
     );
   }
 
-  handleOpenLoginModel = () => {
-    this.setState({
-      displayLogin: true
-    });
-  }
-
-  handleCloseLoginModal = () => {
-    this.setState({
-      displayLogin: false
-    });
-  }
-
-
   render() {
 
     const deckLinks = this.props.user.decks.map((deck) => {
@@ -201,12 +187,11 @@ class HeaderLinks extends React.Component {
         userLoggedIn: true
       },
       {
-        // TODO: redirect on success login and close sidebar
         text: 'Login',
         href:'', 
         color:'transparent', 
         icon: (<AccountCircle className={this.classes.icons} />),
-        onClick: this.handleOpenLoginModel, 
+        onClick: this.props.openLoginModal, 
         userLoggedIn: false
       }
     ];  
@@ -226,12 +211,7 @@ class HeaderLinks extends React.Component {
         <List className={this.classes.list}>
           {renderLinks}
         </List>
-        <LoginModal
-          pushPage={this.props.pushPage} 
-          display={this.state.displayLogin} 
-          handleCloseModal={this.handleCloseLoginModal}
-          submitLogin={this.props.submitLogin}
-          ></LoginModal>
+        <LoginModal/>
       </div>
     );
   }
@@ -245,11 +225,11 @@ const mapStateToProps = headerLinkSelector();
 const mapDispatchToProps = (dispatch) => {
   return {
     pushPage: (route) => {
-      dispatch(push(route))
+      dispatch(push(route));
     },
-    submitLogin: (identifier, password) => {
-      dispatch(submitLogin(identifier, password)); 
-    }, 
+    openLoginModal: () => {
+      dispatch(openLoginModal());
+    },
     logout: () => {
       dispatch(logout()); 
     },

@@ -35,6 +35,9 @@ const userDecksSelector = createSelector(
 const userDecksPopulatedSelector = createSelector(
     [allDecksMapSelector, userDecksSelector], 
     (allDecks, userDecks) => {
+        // Decks have not been populated yet
+        if(!Object.keys(allDecks).length) return []; 
+
         return userDecks.map((deck)=> {
             return allDecks[deck]; 
         });

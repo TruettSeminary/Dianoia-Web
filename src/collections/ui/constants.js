@@ -1,0 +1,2 @@
+export const OPEN_LOGIN_MODAL = 'ui/OPEN_LOGIN_MODAL';
+export const CLOSE_LOGIN_MODAL = 'ui/CLOSE_LOGIN_MODAL';

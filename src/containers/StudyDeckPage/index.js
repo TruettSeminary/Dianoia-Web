@@ -85,6 +85,8 @@ class StudyDeckPage extends React.Component {
     generateCardDetails() {
         // TODO: update note here to work with card scoreing in the rest of the page
         const card = this.state.cardQueue.peek(); 
+        if(!card) return (<h4>Retrieving cards</h4>);
+
         let note = this.props.notes[card._id]; 
         if(!note) {
             note = {

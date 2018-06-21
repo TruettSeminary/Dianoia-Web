@@ -5,8 +5,8 @@ import Dianoia from 'utils/API/index';
 
 // App "Connections" 
 import { push } from 'connected-react-router'; 
-import { notify } from 'utils/notification'; 
 
+// Constants
 import {
     SUBMIT_LOGIN,
     LOGIN_SUBMIT_SUCCESS, 
@@ -18,6 +18,10 @@ import {
     UPDATE_JWT
 } from './constants'; 
 
+// Actions
+import { notify } from 'utils/notification'; 
+import { closeLoginModal } from 'collections/ui/actions'; 
+
 import {
     updateJWT,
     loginSucceeded, 
@@ -28,18 +32,10 @@ import {
     resetUser
 } from './actions'; 
 
-import {
-    getAllClasses,
-    resetClasses
-} from 'collections/classes/actions'
-
-import {
-    getAllUserDecks,
-    resetDecks
-} from 'collections/decks/actions'; 
-
-import { resetCards } from 'collections/cards/actions'; 
-import { resetNotes } from 'collections/notes/actions'; 
+import { getAllClasses, resetClasses } from 'collections/classes/actions'
+import { getAllUserDecks, resetDecks } from 'collections/decks/actions'; 
+import { getAllCards,resetCards } from 'collections/cards/actions'; 
+import { getAllUserNotes, resetNotes } from 'collections/notes/actions'; 
 
 export function* updateJWTSaga(action) {
     try {
@@ -74,15 +70,16 @@ export function* loginSucceededSaga(action) {
     
     // update API JWT
     yield put(refreshUser(action.user)); 
-    // TODO: close login modal
 
-    // TODO: figure out how to update current page
-    // --> Might be something in the app that watches the page? 
-    yield put(push('/home')); 
+    // update location and UI
+    yield put(push('/home'));
+    yield put(closeLoginModal());  
 
     // Get all page data that requires authentication
     yield put(getAllClasses()); 
     yield put(getAllUserDecks()); 
+    yield put(getAllCards());
+    yield put(getAllUserNotes()); 
 }
 
 export function* loginFailedSaga(action) {

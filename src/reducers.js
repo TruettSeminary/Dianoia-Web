@@ -8,7 +8,7 @@ import cards from 'collections/cards/reducer';
 import notes from 'collections/notes/reducer'; 
 
 import notificationProvider from 'containers/NotificationProvider/reducer'; 
-
+import ui from 'collections/ui/reducer'; 
 
 export default function createReducer() {
     return combineReducers({
@@ -17,6 +17,7 @@ export default function createReducer() {
         decks, 
         cards,
         notes,
-        notificationProvider
+        notificationProvider, 
+        ui
     }); 
 }

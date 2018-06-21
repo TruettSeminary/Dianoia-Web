@@ -1,13 +1,21 @@
 import React from 'react'; 
+import { connect } from 'react-redux';
+import { compose } from 'redux'; 
 import PropTypes from 'prop-types';
 
 import withStyles from 'material-ui/styles/withStyles'; 
 
+import { submitLogin } from 'collections/user/actions'; 
+import { closeLoginModal } from 'collections/ui/actions';
+import { push } from 'connected-react-router'; 
+
+import { loginSelector } from './selectors'; 
+
+// Design
 import Slide from "material-ui/transitions/Slide";
 import Dialog from "material-ui/Dialog";
 import DialogContent from "material-ui/Dialog/DialogContent";
 import DialogActions from "material-ui/Dialog/DialogActions";
-
 
 import Button from 'md-components/CustomButtons/Button'; 
 import CustomInput from 'md-components/CustomInput/CustomInput'; 
@@ -42,9 +50,9 @@ class LoginModal extends React.Component {
             <div>
                 <Dialog 
                     classes={{root: classes.center, paper: classes.modal}}
-                    open={this.props.display}
+                    open={this.props.displayLoginModal}
                     TransitionComponent={Transition}
-                    onClose={() => this.props.handleCloseModal()}>
+                    onClose={() => this.props.closeLoginModal()}>
 
                     <form onSubmit={(event) => {
                         event.preventDefault(); 
@@ -54,7 +62,6 @@ class LoginModal extends React.Component {
                             email: '', 
                             password:''
                         });
-                        this.props.handleCloseModal(); 
                         this.props.submitLogin(email, password); 
                     }}>
                         <DialogContent
@@ -86,7 +93,7 @@ class LoginModal extends React.Component {
                         <DialogActions
                             className={classes.modalFooter + " " + classes.modalFooterCenter}>
                             <div>
-                                <Button onClick={() => this.props.handleCloseModal()}> Never mind </Button>
+                                <Button onClick={() => this.props.closeLoginModal()}> Never mind </Button>
                                 <Button
                                     type="submit"
                                     color="success">
@@ -110,11 +117,28 @@ class LoginModal extends React.Component {
     }
 }
 
-LoginModal.propTypes = {
-    pushPage: PropTypes.func.isRequired,
-    display: PropTypes.bool.isRequired,
-    handleCloseModal: PropTypes.func.isRequired, 
-    submitLogin: PropTypes.func.isRequired
+LoginModal.propTypes = {}
+
+const mapStateToProps = loginSelector(); 
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    pushPage: (route) => {
+      dispatch(push(route))
+    },
+    submitLogin: (identifier, password) => {
+      dispatch(submitLogin(identifier, password)); 
+    },
+    closeLoginModal: () => {
+        dispatch(closeLoginModal());
+    },
+    dispatch
+  }
 }
 
-export default withStyles(modalStyle)(LoginModal); 
+const withConnect = connect(mapStateToProps, mapDispatchToProps);
+
+export default compose (
+    withStyles(modalStyle), 
+    withConnect
+  )(LoginModal); 
