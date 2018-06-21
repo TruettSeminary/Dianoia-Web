@@ -56,8 +56,8 @@ class LoginModal extends React.Component {
 
                     <form onSubmit={(event) => {
                         event.preventDefault(); 
-                        const email = this.state.email;
-                        const password = this.state.password;
+                        const email = this.state.email.trim().toLowerCase();
+                        const password = this.state.password.trim();
                         this.setState({
                             email: '', 
                             password:''

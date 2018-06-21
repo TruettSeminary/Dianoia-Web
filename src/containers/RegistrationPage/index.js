@@ -50,7 +50,7 @@ class RegistrationPage extends React.Component {
         if(this.canSubmit()) {
             const first_name = this.state.first_name.trim(); 
             const last_name = this.state.last_name.trim();
-            const email = this.state.email.trim();
+            const email = this.state.email.trim().toLowerCase() 
             const password = this.state.password.trim(); 
 
             this.props.registerUser(email, password, first_name, last_name); 
@@ -74,7 +74,7 @@ class RegistrationPage extends React.Component {
 
         if(email !== null && confirmed_email !== null) {
 
-            if(email === confirmed_email && email !== '') {
+            if(email.trim().toLowerCase() === confirmed_email.trim().toLowerCase() && email.trim() !== '') {
                 // email match; True for success field, false for error
                 return field === "success" ? true : false; 
             }
@@ -96,7 +96,7 @@ class RegistrationPage extends React.Component {
 
         if(password !== null && confirmed_password !== null) {
             // both fields have been submitted
-            if(password === confirmed_password && password !== '') {
+            if(password.trim() === confirmed_password.trim() && password.trim() !== '') {
                 // email match; True for success field, false for error
                 return field === "success" ? true : false; 
             }
