@@ -127,6 +127,10 @@ export function* submitRegistrationSaga(action) {
 export function* registrationSucceededSaga(action) {
     try {
         yield put(refreshUser(action.user)); 
+        yield put(getAllClasses()); 
+        yield put(getAllUserDecks()); 
+        yield put(getAllCards());
+        yield put(getAllUserNotes()); 
         yield put(push('/home'));
     } catch(error) {
         console.error(error); 

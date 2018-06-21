@@ -105,8 +105,24 @@ class LoginModal extends React.Component {
                         <DialogActions
                             className={classes.modalFooter + " " + classes.modalFooterCenter}>
                             <div>
-                                <div> Forgot your password? Click <span><a href="" onClick={()=> this.props.pushPage('/forgot-password')}>here</a></span></div>
-                                <div> New user? Register <span><a href="" onClick={()=> this.props.pushPage('/registration')}>here</a></span></div>
+                                <div> 
+                                    Forgot your password? Click 
+                                    <a href="" onClick={()=> {
+                                        this.props.closeLoginModal();
+                                        this.props.pushPage('/forgot-password')
+                                    }}>
+                                        {` here`}
+                                    </a>
+                                </div>
+                                <div> 
+                                    New user? Register
+                                    <a href="" onClick={()=> {
+                                        this.props.closeLoginModal();
+                                        this.props.pushPage('/registration');
+                                    }}>
+                                        {` here`}
+                                    </a>
+                                </div>
                             </div>
 
                         </DialogActions>
