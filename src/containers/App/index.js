@@ -1,8 +1,13 @@
 // React/Redux
 import React from 'react'; 
 import PropTypes from 'prop-types';
-import { Switch, Route, withRouter } from 'react-router-dom'; 
+import { Switch, Route, Redirect, withRouter } from 'react-router-dom'; 
 import { compose } from 'redux'; // bindActionCreators
+import { connect } from 'react-redux';
+
+import {
+    appSelector
+} from './selectors'; 
 
 // Page Containers
 import HomePage from 'containers/HomePage';
@@ -27,9 +32,21 @@ import NotificationProvider from 'containers/NotificationProvider'
 // Styles
 import styles from './styles.js'; 
 
+
+
 class App extends React.Component {
 
+
     render() {
+
+        const PrivateRoute = ({ component: Component, ...rest }) => {
+            return(<Route {...rest} render={(props) => {
+                return ( this.props.user.jwt && this.props.user.jwt !== ""
+                ? <Component {...props} />
+                : <Redirect to='/' />);
+            }}/>);
+        }
+
         return (
             <div style={styles.container}>
                 <div style={styles.toolbar}>
@@ -38,25 +55,27 @@ class App extends React.Component {
                 <div style={styles.content}>
                     <Switch>
                         <Route path="/" exact render={() => <LandingPage/>} />
-                        <Route path="/home" exact render={() => <HomePage {...this.props}/>} />
-                        <Route path="/classes" exact render={() => <ClassesPage/>} />
-                        <Route path="/deck/study/:deck_id" exact render={(props) => {
+
+                        <PrivateRoute path="/home" exact component={() => <HomePage {...this.props}/>} />
+                        <PrivateRoute path="/classes" exact component={() => <ClassesPage/>} />
+                        <PrivateRoute path="/deck/study/:deck_id" exact component={(props) => {
                             return <StudyDeckPage deck_id={props.match.params.deck_id}/>
                         }}/>
-                        <Route path="/deck/:deck_id/" exact render={(props) => {
+                        <PrivateRoute path="/deck/:deck_id/" exact component={(props) => {
                             return <DeckPage deck_id={props.match.params.deck_id}/>
                         }}/>
-                        <Route path="/card/:card_id/:details?" render={(props) => {
+                        <PrivateRoute path="/card/:card_id/:details?" component={(props) => {
                             return (<CardPage 
                                 card_id={props.match.params.card_id}
                                 details={props.match.params.details}
                             />); 
                         }}/>
-                        <Route path="/translations" exact render={() => <TranslationsPage/>} />
-                        <Route path="/instructions" exact render={() => <InstructionsPage/>} />
-                        <Route path="/feedback" exact render={() => <FeedbackPage/>} />
-                        <Route path="/settings" exact render={() => <SettingsPage/>} />
+                        <PrivateRoute path="/translations" exact component={() => <TranslationsPage/>} />
+
+                        <PrivateRoute path="/feedback" exact component={() => <FeedbackPage/>} />
+                        <PrivateRoute path="/settings" exact component={() => <SettingsPage/>} />
                         <Route path="/registration" exact render={() => <RegistrationPage/>} />
+                        <Route path="/instructions" exact render={() => <InstructionsPage/>} />
                         <Route component={NotFoundPage} />
                     </Switch>
                 </div>
@@ -77,7 +96,17 @@ App.contextTypes = {
 
 App.propTypes = {}; 
 
+const mapStateToProps = appSelector(); 
+
+const mapDispatchToProps = (dispatch) =>  {
+    return {
+        dispatch
+    }
+};
+
+const withConnect = connect(mapStateToProps, mapDispatchToProps); 
 
 export default compose(
+    withConnect,
     withRouter
 )(App); 
