@@ -5,6 +5,8 @@ import { Switch, Route, Redirect, withRouter } from 'react-router-dom';
 import { compose } from 'redux'; // bindActionCreators
 import { connect } from 'react-redux';
 
+import qs from 'query-string'; 
+
 import {
     appSelector
 } from './selectors'; 
@@ -22,6 +24,8 @@ import LandingPage from 'containers/LandingPage';
 import FeedbackPage from 'containers/FeedbackPage';
 import NotFoundPage from 'containers/NotFoundPage'; 
 import RegistrationPage from 'containers/RegistrationPage'; 
+import ForgotPasswordPage from 'containers/ForgotPasswordPage'; 
+import ResetPasswordPage from 'containers/ResetPasswordPage'; 
 
 // Design
 import Toolbar from 'containers/Toolbar';
@@ -75,6 +79,11 @@ class App extends React.Component {
                         <PrivateRoute path="/feedback" exact component={() => <FeedbackPage/>} />
                         <PrivateRoute path="/settings" exact component={() => <SettingsPage/>} />
                         <Route path="/registration" exact render={() => <RegistrationPage/>} />
+                        <Route path="/forgot-password" exact render={() => <ForgotPasswordPage/>} />
+                        <Route path="/reset-password/" exact render={(props) => {
+                            const code = qs.parse(props.location.search).code
+                            return(<ResetPasswordPage code={code}/>); 
+                        }}/>
                         <Route path="/instructions" exact render={() => <InstructionsPage/>} />
                         <Route component={NotFoundPage} />
                     </Switch>

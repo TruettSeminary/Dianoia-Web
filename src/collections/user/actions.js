@@ -10,7 +10,13 @@ import {
     SUBMIT_REGISTRATION, 
     REGISTRATION_SUBMIT_SUCCESS,
     REGISTRATION_SUBMIT_FAIL,
-    RESET_USER
+    RESET_USER, 
+    SUBMIT_FORGOT_PASSWORD,
+    SUBMIT_FORGOT_PASSWORD_SUCCESS,
+    SUBMIT_FORGOT_PASSWORD_FAIL,
+    SUBMIT_RESET_PASSWORD,
+    SUBMIT_RESET_PASSWORD_SUCCESS,
+    SUBMIT_RESET_PASSWORD_FAIL
 } from './constants';
 
 export function updateJWT(jwt) {
@@ -101,6 +107,53 @@ export function registrationSucceeded(user) {
 export function registrationFailed(error) {
     return {
         type: REGISTRATION_SUBMIT_FAIL,
+        error
+    }
+}
+
+export function submitForgotPassword(email) {
+    return {
+        type: SUBMIT_FORGOT_PASSWORD, 
+        data: {
+            email
+        }
+    }
+}
+
+export function submitForgotPasswordSucceeded() {
+    return {
+        type: SUBMIT_FORGOT_PASSWORD_SUCCESS
+    }
+}
+
+export function submitForgotPasswordFailed(error) {
+    return {
+        type: SUBMIT_FORGOT_PASSWORD_FAIL,
+        error
+    }
+}
+
+export function submitResetPassword(code, password, passwordConfirmation) {
+    return {
+        type: SUBMIT_RESET_PASSWORD, 
+        data: {
+            code,
+            password, 
+            passwordConfirmation
+        }
+    }
+}
+
+export function submitResetPasswordSucceeded(user) {
+    return {
+        type: SUBMIT_RESET_PASSWORD_SUCCESS, 
+        user
+    }
+}
+
+export function submitResetPasswordFailed(error) {
+    return {
+        type: SUBMIT_RESET_PASSWORD_FAIL,
         error
     }
 }

@@ -38,14 +38,6 @@ class RegistrationPage extends React.Component {
         this.setState(newState); 
     }
 
-    registrationSuccess() {
-        // redirect to home page and login user
-    }
-
-    registrationFail() {
-
-    }
-
     submitRegistrationForm() {
         if(this.canSubmit()) {
             const first_name = this.state.first_name.trim(); 

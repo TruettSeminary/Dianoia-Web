@@ -1,7 +1,7 @@
 import React from 'react'; 
 import { connect } from 'react-redux';
 import { compose } from 'redux'; 
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 
 import withStyles from 'material-ui/styles/withStyles'; 
 
@@ -133,7 +133,7 @@ class LoginModal extends React.Component {
     }
 }
 
-LoginModal.propTypes = {}
+// LoginModal.propTypes = {}
 
 const mapStateToProps = loginSelector(); 
 

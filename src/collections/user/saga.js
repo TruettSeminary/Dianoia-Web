@@ -1,3 +1,5 @@
+// TODO: remove redudancy in sagas
+
 import { fork, call, put, takeLatest } from 'redux-saga/effects'; 
 
 // Utils
@@ -15,7 +17,12 @@ import {
     SUBMIT_REGISTRATION,
     REGISTRATION_SUBMIT_SUCCESS, 
     REGISTRATION_SUBMIT_FAIL,
-    UPDATE_JWT
+    UPDATE_JWT,
+    SUBMIT_FORGOT_PASSWORD,
+    SUBMIT_FORGOT_PASSWORD_FAIL,
+    SUBMIT_RESET_PASSWORD,
+    SUBMIT_RESET_PASSWORD_SUCCESS,
+    SUBMIT_RESET_PASSWORD_FAIL
 } from './constants'; 
 
 // Actions
@@ -29,7 +36,10 @@ import {
     refreshUser,
     registrationSucceeded, 
     registrationFailed, 
-    resetUser
+    resetUser,
+    submitForgotPasswordFailed,
+    submitResetPasswordSucceeded,
+    submitResetPasswordFailed
 } from './actions'; 
 
 import { getAllClasses, resetClasses } from 'collections/classes/actions'
@@ -139,17 +149,80 @@ export function* registrationSucceededSaga(action) {
 
 export function* registrationFailedSaga(action) {
     yield call(notify, action.error.response.payload.message, 'danger'); 
-    // TODO: update update registration state based on this 
-    // i.e. show error if email is taken
+}
+
+export function* submitForgotPasswordSaga(action) {
+    
+    try {
+        const resetURL = window.location.origin + '/reset-password'; 
+
+        const response = yield Dianoia.sendForgotPasswordLink(action.data.email, resetURL); 
+        if(response.ok) {
+            yield call(notify, `A reset token has been sent to ${action.data.email}`, 'success')
+        } else {
+            throw new Error('Something went wrong sending email');
+        }
+    } catch(error) {
+        yield put(submitForgotPasswordFailed(error))
+    }
+}
+
+export function* submitForgotPasswordFailedSaga(action) {
+    yield call(notify, action.error.response.payload.message, 'danger'); 
+}
+
+export function* submitResetPasswordSaga(action) {
+    try {
+        const {code, password, passwordConfirmation } = action.data; 
+        console.log(code); 
+        const response = yield Dianoia.resetPassword(code, password, passwordConfirmation);
+        if(response.jwt) {
+            Dianoia.setJWT(response.jwt);
+            yield put(submitResetPasswordSucceeded({
+                ...response.user, 
+                jwt: response.jwt
+            })); 
+        }
+
+    } catch(error) {
+        yield put(submitResetPasswordFailed(error))
+    }
+}
+
+export function* submitResetPasswordSucceededSaga(action) {
+    try {
+        yield put(refreshUser(action.user)); 
+        yield put(getAllClasses()); 
+        yield put(getAllUserDecks()); 
+        yield put(getAllCards());
+        yield put(getAllUserNotes()); 
+        yield put(push('/home'));
+    } catch(error) {
+        console.error(error); 
+    }
+}
+
+
+export function* submitResetPasswordFailedSaga(action) {
+    yield call(notify, action.error.response.payload.message, 'danger'); 
 }
 
 export default function* defaultSaga() {
     yield fork(takeLatest, UPDATE_JWT, updateJWTSaga); 
+
     yield fork(takeLatest, SUBMIT_LOGIN, submitLoginSaga);
     yield fork(takeLatest, LOGIN_SUBMIT_SUCCESS, loginSucceededSaga);
     yield fork(takeLatest, LOGIN_SUBMIT_FAIL, loginFailedSaga); 
     yield fork(takeLatest, LOGOUT, logoutSaga);
+
     yield fork(takeLatest, SUBMIT_REGISTRATION, submitRegistrationSaga); 
     yield fork(takeLatest, REGISTRATION_SUBMIT_SUCCESS, registrationSucceededSaga);
     yield fork(takeLatest, REGISTRATION_SUBMIT_FAIL, registrationFailedSaga);  
+
+    yield fork(takeLatest, SUBMIT_FORGOT_PASSWORD, submitForgotPasswordSaga);
+    yield fork(takeLatest, SUBMIT_FORGOT_PASSWORD_FAIL, submitForgotPasswordFailedSaga); 
+
+    yield fork(takeLatest, SUBMIT_RESET_PASSWORD, submitResetPasswordSaga); 
+    yield fork(takeLatest, SUBMIT_RESET_PASSWORD_SUCCESS, submitResetPasswordSucceededSaga); 
+    yield fork(takeLatest, SUBMIT_RESET_PASSWORD_FAIL, submitResetPasswordFailedSaga); 
 }
