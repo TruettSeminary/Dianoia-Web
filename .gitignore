@@ -22,3 +22,6 @@ yarn-debug.log*
 yarn-error.log*
 public/config.js
 favicon_package_v0.16
+.env.development
+.env.production
+.vscode/sftp.json
