@@ -3,10 +3,6 @@ import React from 'react';
 
 import { Router } from 'utils/router'; 
 
-
-// Design
-// import Button from 'md-components/CustomButtons/Button'; 
-
 import './styles.css'; 
 
 class LandingPage extends React.Component {

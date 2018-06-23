@@ -4,7 +4,6 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 
 import { persistStore, persistReducer } from 'redux-persist';
 import localforage from 'localforage'; 
-// import storage from 'redux-persist/lib/storage'; 
 import immutableTransform from 'redux-persist-transform-immutable';
 
 import createSagaMiddleware from 'redux-saga'; 
