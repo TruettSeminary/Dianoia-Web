@@ -25,3 +25,4 @@ favicon_package_v0.16
 .env.development
 .env.production
 .vscode/sftp.json
+*.css

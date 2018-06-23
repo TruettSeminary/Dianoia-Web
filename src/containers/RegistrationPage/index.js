@@ -15,7 +15,7 @@ import Button from 'md-components/CustomButtons/Button';
 import CustomInput from 'md-components/CustomInput/CustomInput'; 
 
 
-import styles from './styles'; 
+import './styles.css'; 
 
 class RegistrationPage extends React.Component {
 
@@ -104,7 +104,7 @@ class RegistrationPage extends React.Component {
 
     render() {
         return (
-            <div style={styles.container}>
+            <div className="registrationContainer">
                 <GridContainer justify="center">
                     <GridItem xs={12} sm={12} md={6} lg={6} xl={4}>
                         Please provide some information to register as a new user with Dianoia. 

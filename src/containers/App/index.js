@@ -34,7 +34,7 @@ import NotificationProvider from 'containers/NotificationProvider'
 
 
 // Styles
-import styles from './styles.js'; 
+import './styles.css'; 
 
 
 
@@ -52,11 +52,11 @@ class App extends React.Component {
         }
 
         return (
-            <div style={styles.container}>
-                <div style={styles.toolbar}>
+            <div className="appContainer">
+                <div className="toolbar">
                     <Toolbar />
                 </div>
-                <div style={styles.content}>
+                <div className="content">
                     <Switch>
                         <Route path="/" exact render={() => <LandingPage/>} />
 
@@ -88,10 +88,10 @@ class App extends React.Component {
                         <Route component={NotFoundPage} />
                     </Switch>
                 </div>
-                <div style={styles.notifications}>
+                <div className="notifications">
                     <NotificationProvider/>
                 </div>
-                <div style={styles.footer}>
+                <div className="footer">
                     <Footer/>
                 </div>
             </div>

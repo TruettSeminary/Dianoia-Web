@@ -14,7 +14,7 @@ import Add from '@material-ui/icons/Add';
 import Remove from '@material-ui/icons/Remove'; 
 
 // Styles
-import styles from './styles'; 
+import './styles.css'; 
 
 
 class ClassCard extends React.Component {
@@ -78,7 +78,7 @@ class ClassCard extends React.Component {
                     <CardHeader color="info">
                         <GridContainer>
                             <GridItem xs={6} sm={6} md={8}>
-                                <h4 style={styles.name}>{this.props.clazz.name}</h4>
+                                <h4 className="className">{this.props.clazz.name}</h4>
                             </GridItem>
                             <GridItem xs={3} sm={3} md={3}>
                                 <Button
