@@ -26,3 +26,5 @@ favicon_package_v0.16
 .env.production
 .vscode/sftp.json
 *.css
+deploy-hook.js
+webhook

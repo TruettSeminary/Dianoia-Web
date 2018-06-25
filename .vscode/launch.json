@@ -17,6 +17,16 @@
                 "webpack:///./~/*": "${webRoot}/node_modules/*",
                 "meteor://💻app/*": "${webRoot}/*"
             }
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Launch Webhook",
+            "program": "${workspaceFolder}/webhook/deploy-hook.js",
+            "outputCapture": "std",
+            "runtimeArgs": [
+                "--preserve-symlinks"
+            ]
         }
     ]
 }
