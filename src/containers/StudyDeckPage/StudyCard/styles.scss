@@ -89,10 +89,15 @@ $defaultMin: 8vw;
     overflow: hidden; 
 }
 
+.studyCardBody {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 .cardText {
     
     height: 100%;
-    padding-top: 5rem;
-    font-size: 15vw; 
+    font-size: 12vw; 
     line-height: 15vw;
 }

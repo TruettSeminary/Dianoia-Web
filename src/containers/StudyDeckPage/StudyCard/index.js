@@ -47,7 +47,7 @@ class StudyCard extends React.Component {
                     <div 
                     className={`hammerContainer ${this.state.flipped ? 'flipped' : ''}`}>
                         <Card className='studyCard front'>
-                            <CardBody >
+                            <CardBody className="studyCardBody" >
                                 <div className='cardText'>
                                     {this.props.card.front_text}
                                 </div>
@@ -55,7 +55,7 @@ class StudyCard extends React.Component {
                         </Card>
 
                         <Card className='studyCard back'>
-                            <CardBody >
+                            <CardBody className="studyCardBody">
                                 <div className='cardText'>
                                     {this.props.card.back_text}
                                 </div>
