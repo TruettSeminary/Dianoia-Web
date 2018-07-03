@@ -20,7 +20,7 @@
   ],
   "theme_color": "#4caf50",
   "background_color": "#ffffff",
-  "start_url": "https://dianoia.church.technology",
+  "start_url": "/home",
   "display": "standalone",
   "orientation" : "portrait"
 }
