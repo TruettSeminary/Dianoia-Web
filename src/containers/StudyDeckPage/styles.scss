@@ -1,23 +1,42 @@
-$defaultDiff: 12px; 
-$defaultWidth: 100%; 
-$defaultMin: 10%;
+@import 'assets/scss/core/variables';
 
 .studyContainer {
     padding-left: 2rem;
     padding-right: 2rem;
+
+    display:flex;
+    @media (max-width: map-get($grid-breakpoints,"md")) {
+       flex-direction: column;
+    }
 }
 
 .cardContainer {
+    flex-shrink:0;
+    flex-grow:0;
+
+    width: 50%;
+    min-width:300px;
     height: 40vh;
     position: relative;
+
+    @media (max-width: map-get($grid-breakpoints,"md")) {
+        width: 100%;
+     }
+}
+
+.studyCardDetails {
+    flex-shrink:1;
+    flex-grow:1;
+
+    padding-top: 2rem;
+    @media (min-width: map-get($grid-breakpoints,"md")) {
+        margin-left: 2rem;
+     }
+    
 }
 
 .studylist {
     padding-top: 2rem;
     height: 100%;
     width: 100%;
-}
-
-.cardDetails {
-    padding-top: 2rem;
 }

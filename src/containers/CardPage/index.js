@@ -63,7 +63,7 @@ class CardPage extends React.Component {
         }
 
         return (
-            <div className="cardContainer">
+            <div className="cardPageContainer">
                 <h4>Card Front:</h4>
                 <h1>{card.front_text}</h1>
                 <br/>

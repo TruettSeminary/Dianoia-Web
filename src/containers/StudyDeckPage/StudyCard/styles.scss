@@ -1,6 +1,6 @@
 $defaultDiff: 12px; 
-$defaultWidth: 80vw; 
-$defaultMin: 8vw;
+$defaultWidth: 300px; 
+$defaultMin: 20px;
 
 .studyCardContainer {
     transition: all 100ms ease-in-out;
@@ -13,6 +13,7 @@ $defaultMin: 8vw;
     padding-top: 20px; 
     text-align: center;
     // width: 20rem;
+    max-width:80vw;
     z-index: -1;
 
     &:nth-child(1) {
@@ -98,6 +99,6 @@ $defaultMin: 8vw;
 .cardText {
     
     height: 100%;
-    font-size: 12vw; 
-    line-height: 15vw;
+    font-size: 32px; 
+    line-height: 45px;
 }

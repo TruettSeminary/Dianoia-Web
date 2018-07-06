@@ -111,7 +111,7 @@ class StudyDeckPage extends React.Component {
                         {this.generateCards()}
                     </div>
                 </div>
-                <div className="cardDetails">
+                <div className="studyCardDetails">
                     {/* // TODO: put card details to the right/left of the cards on a wider screen
                     // TODO: adjust card size on larger screen */}
                     {this.generateCardDetails()}
