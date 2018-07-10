@@ -57,6 +57,7 @@ class CardDetails extends React.Component {
         })
     }
 
+    // TODO: update to use shouldComponentUpdate
     componentWillUpdate(prevProps, prevState) {
         if(prevProps.card._id !== this.props.card._id) {
             // we have a new card

@@ -1,7 +1,8 @@
 // React/Redux
 import React from 'react'; 
 import PropTypes from 'prop-types';
-import { Switch, Route, Redirect, withRouter } from 'react-router-dom'; 
+import { Switch, Route, withRouter } from 'react-router-dom'; 
+import PrivateRoute from './PrivateRoute';
 import { compose } from 'redux'; // bindActionCreators
 import { connect } from 'react-redux';
 
@@ -43,14 +44,6 @@ class App extends React.Component {
 
     render() {
 
-        const PrivateRoute = ({ component: Component, ...rest }) => {
-            return(<Route {...rest} render={(props) => {
-                return ( this.props.user.jwt && this.props.user.jwt !== ""
-                ? <Component {...props} />
-                : <Redirect to='/' />);
-            }}/>);
-        }
-
         return (
             <div className="appContainer">
                 <div className="toolbar">
@@ -60,24 +53,24 @@ class App extends React.Component {
                     <Switch>
                         <Route path="/" exact render={() => <LandingPage/>} />
 
-                        <PrivateRoute path="/home" exact component={() => <HomePage {...this.props}/>} />
-                        <PrivateRoute path="/classes" exact component={() => <ClassesPage/>} />
-                        <PrivateRoute path="/deck/study/:deck_id" exact component={(props) => {
+                        <PrivateRoute path="/home" auth={this.props.user.jwt} exact  render={() => <HomePage {...this.props}/>} />
+                        <PrivateRoute path="/classes" auth={this.props.user.jwt} exact render={() => <ClassesPage/>} />
+                        <PrivateRoute path="/deck/study/:deck_id" auth={this.props.user.jwt} exact  render={(props) => {
                             return <StudyDeckPage deck_id={props.match.params.deck_id}/>
                         }}/>
-                        <PrivateRoute path="/deck/:deck_id/" exact component={(props) => {
+                        <PrivateRoute path="/deck/:deck_id/" exact auth={this.props.user.jwt} render={(props) => {
                             return <DeckPage deck_id={props.match.params.deck_id}/>
                         }}/>
-                        <PrivateRoute path="/card/:card_id/:details?" component={(props) => {
+                        <PrivateRoute path="/card/:card_id/:details?" auth={this.props.user.jwt} render={(props) => {
                             return (<CardPage 
                                 card_id={props.match.params.card_id}
                                 details={props.match.params.details}
                             />); 
                         }}/>
-                        <PrivateRoute path="/translations" exact component={() => <TranslationsPage/>} />
+                        <PrivateRoute path="/translations" exact auth={this.props.user.jwt} render={() => <TranslationsPage/>} />
 
-                        <PrivateRoute path="/feedback" exact component={() => <FeedbackPage/>} />
-                        <PrivateRoute path="/settings" exact component={() => <SettingsPage/>} />
+                        <PrivateRoute path="/feedback" exact auth={this.props.user.jwt} render={() => <FeedbackPage/>} />
+                        <PrivateRoute path="/settings" exact auth={this.props.user.jwt} render={() => <SettingsPage/>} />
                         <Route path="/registration" exact render={() => <RegistrationPage/>} />
                         <Route path="/forgot-password" exact render={() => <ForgotPasswordPage/>} />
                         <Route path="/reset-password/" exact render={(props) => {
