@@ -24,7 +24,6 @@ import {
     ThumbUp
   } from "@material-ui/icons";
   
-
 import StudyCard from './StudyCard';
 import CardDetails from 'components/CardDetails'; 
 

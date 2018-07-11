@@ -3,6 +3,9 @@ import { PropTypes } from 'prop-types';
 
 import Card from "md-components/Card/Card.jsx";
 import CardBody from "md-components/Card/CardBody.jsx";
+import CardFooter from 'md-components/Card/CardFooter.jsx'; 
+
+import AudioPlayer from 'components/AudioPlayer'; 
 
 import Hammer from 'react-hammerjs'; 
 
@@ -46,7 +49,12 @@ class StudyCard extends React.Component {
             <div className='studyCardContainer'>
                 <Hammer
                     direction="DIRECTION_ALL"
-                    onTap={() => {this.flipCard()}}
+                    onTap={(event) => {
+                        // prevent card flip when clicking audio button
+                        if(!["svg", "path", "BUTTON"].includes(event.target.nodeName)) {
+                            this.flipCard();
+                        }
+                    }}
                     onSwipeUp={() => {
                         this.swipeUp();
                     }}
@@ -62,6 +70,9 @@ class StudyCard extends React.Component {
                                     {this.props.card.front_text}
                                 </div>
                             </CardBody>
+                            <CardFooter className="studyCardFooter">
+                                {this.props.card.pronunciation ? (<AudioPlayer audioSource={this.props.card.pronunciation.url} />) : ''}
+                            </CardFooter>
                         </Card>
 
                         <Card className='studyCard back'>
