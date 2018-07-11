@@ -18,6 +18,18 @@ class StudyCard extends React.Component {
         }
     }
 
+    swipeUp() {
+        console.log('swipeUp');
+        this.props.onCorrectDismiss(); 
+        this.setFlip(false); 
+    }
+
+    swipeDown() {
+        console.log('swipeDown');
+        this.props.onIncorrectDismiss();
+        this.setFlip(false); 
+    }
+
     setFlip(val) {
         this.setState({
             flipped: val
@@ -35,15 +47,13 @@ class StudyCard extends React.Component {
                 <Hammer
                     direction="DIRECTION_ALL"
                     onTap={() => {this.flipCard()}}
-                    onSwipe={() => {
-                        this.props.onSwipe();
-                        this.setFlip(false); 
+                    onSwipeUp={() => {
+                        this.swipeUp();
                     }}
-                    onDoubleTap={() => { 
-                        this.props.onDoubleTap()
-                        this.setFlip(false); 
+                    onSwipeDown={() =>{
+                        this.swipeDown();
                     }}
-                    >
+                >
                     <div 
                     className={`hammerContainer ${this.state.flipped ? 'flipped' : ''}`}>
                         <Card className='studyCard front'>
@@ -70,8 +80,8 @@ class StudyCard extends React.Component {
 
 StudyCard.propTypes = {
     card: PropTypes.object.isRequired, 
-    onDoubleTap: PropTypes.func,
-    onSwipe: PropTypes.func
+    onCorrectDismiss: PropTypes.func,
+    onIncorrectDismiss: PropTypes.func
 }
 
 export default StudyCard; 

@@ -58,10 +58,10 @@ class StudyDeckPage extends React.Component {
                 <StudyCard 
                     key={card._id}
                     card={card}
-                    onSwipe={
+                    onCorrectDismiss={
                         () => this.dismissTopCard(true)
                     } 
-                    onDoubleTap={
+                    onIncorrectDismiss={
                         () => this.dismissTopCard(false)
                     }
                 />
