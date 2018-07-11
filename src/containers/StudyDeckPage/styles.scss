@@ -21,7 +21,7 @@
 
     @media (max-width: map-get($grid-breakpoints,"md")) {
         width: 100%;
-     }
+    }
 }
 
 .studyCardDetails {
@@ -35,8 +35,27 @@
     
 }
 
-.studylist {
+.studyList {
     padding-top: 2rem;
     height: 100%;
     width: 100%;
 }
+
+.dismissActions {
+
+    height: 150px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+
+    .actionItem {
+        font-size: 40px;
+    }
+
+    .correct {
+        margin-right: 75px;
+    }
+
+}
+

@@ -15,8 +15,15 @@ import { CardQueue } from './CardQueue';
 // Design
 // import GridContainer from 'md-components/Grid/GridContainer'; 
 // import GridItem from 'md-components/Grid/GridItem'; 
-// import Button from 'md-components/CustomButtons/Button';
+import Button from 'md-components/CustomButtons/Button';
+import Hidden from "material-ui/Hidden";
 
+// @material-ui/icons
+import {
+    ThumbDown,
+    ThumbUp
+  } from "@material-ui/icons";
+  
 
 import StudyCard from './StudyCard';
 import CardDetails from 'components/CardDetails'; 
@@ -110,6 +117,16 @@ class StudyDeckPage extends React.Component {
                     <div className='studyList'>
                         {this.generateCards()}
                     </div>
+                <Hidden smDown>
+                    <div className="dismissActions">
+                        <Button className="actionItem correct" color="info" justIcon round onClick={() => this.dismissTopCard(true)}>
+                            <ThumbUp/>
+                        </Button>
+                        <Button className="actionItem incorrect" color="danger" justIcon round onClick={() => this.dismissTopCard(false)}>
+                            <ThumbDown/>
+                        </Button>
+                    </div>
+                </Hidden>
                 </div>
                 <div className="studyCardDetails">
                     {this.generateCardDetails()}
