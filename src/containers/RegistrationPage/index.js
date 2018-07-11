@@ -11,6 +11,7 @@ import {
 //Design 
 import GridContainer from 'md-components/Grid/GridContainer';
 import GridItem from 'md-components/Grid/GridItem'; 
+import Hidden from "material-ui/Hidden";
 import Button from 'md-components/CustomButtons/Button'; 
 import CustomInput from 'md-components/CustomInput/CustomInput'; 
 
@@ -103,12 +104,16 @@ class RegistrationPage extends React.Component {
     }
 
     render() {
+        const addPadding = (<Hidden smDown><GridItem md={2} lg={2} xl={2}></GridItem></Hidden>);
         return (
             <div className="registrationContainer">
                 <GridContainer justify="center">
-                    <GridItem xs={12} sm={12} md={6} lg={6} xl={4}>
+                    {addPadding}
+                    <GridItem xs={12} sm={12} md={8} lg={8} xl={8}>
                         Please provide some information to register as a new user with Dianoia. 
                     </GridItem>
+                    {addPadding}
+                    {addPadding}
                     <GridItem xs={12} sm={12} md={4} lg={4} xl={4}>
                         <CustomInput
                             labelText="First Name"
@@ -125,8 +130,8 @@ class RegistrationPage extends React.Component {
                             }}
                         ></CustomInput>
                     </GridItem>
-                    <GridItem xs={12} sm={12} md={12} lg={12} xl={12}>
-                    <CustomInput
+                    <GridItem xs={12} sm={12} md={4} lg={4} xl={4}>
+                        <CustomInput
                             labelText="Last Name"
                             id="last_name"
                             type="text"
@@ -141,8 +146,10 @@ class RegistrationPage extends React.Component {
                             }}
                         ></CustomInput>
                     </GridItem>
-                    <GridItem xs={12} sm={12} md={12} lg={12} xl={12}>
-                    <CustomInput
+                    {addPadding}
+                    {addPadding}
+                    <GridItem xs={12} sm={12} md={4} lg={4} xl={4}>
+                        <CustomInput
                             labelText="Email"
                             id="email"
                             type="email"
@@ -157,8 +164,8 @@ class RegistrationPage extends React.Component {
                             }}
                         ></CustomInput>
                     </GridItem>
-                    <GridItem xs={12} sm={12} md={12} lg={12} xl={12}>
-                    <CustomInput
+                    <GridItem xs={12} sm={12} md={4} lg={4} xl={4}>
+                        <CustomInput
                             labelText="Confirm Email"
                             id="email"
                             type="email"
@@ -173,8 +180,10 @@ class RegistrationPage extends React.Component {
                             }}
                         ></CustomInput>
                     </GridItem>
-                    <GridItem xs={12} sm={12} md={12} lg={12} xl={12}>
-                    <CustomInput
+                    {addPadding}
+                    {addPadding}
+                    <GridItem xs={12} sm={12} md={4} lg={4} xl={4}>
+                        <CustomInput
                             labelText="Password"
                             id="password"
                             type="password"
@@ -189,7 +198,7 @@ class RegistrationPage extends React.Component {
                             }}
                         ></CustomInput>
                     </GridItem>
-                    <GridItem xs={12} sm={12} md={12} lg={12} xl={12}>
+                    <GridItem xs={12} sm={12} md={4} lg={4} xl={4}>
                         <CustomInput
                             labelText="Confirm Password"
                             id="confrim_password"
@@ -205,10 +214,12 @@ class RegistrationPage extends React.Component {
                             }}
                         ></CustomInput>
                     </GridItem>
+                    {addPadding}
                     {/* <GridItem xs={12} sm={12} md={12} lg={12} xl={12}>
                         I Agree to the terms of use
                     </GridItem> */}
-                    <GridItem xs={12} sm={12} md={12} lg={12} xl={12}>
+                    {addPadding}
+                    <GridItem xs={12} sm={12} md={8} lg={8} xl={8}>
                         <Button
                             onClick={() => this.submitRegistrationForm()}
                             disabled={!this.canSubmit()}
@@ -217,6 +228,7 @@ class RegistrationPage extends React.Component {
                             Reigster
                         </Button>
                     </GridItem>
+                    {addPadding}
                 </GridContainer>
             </div>
         );
