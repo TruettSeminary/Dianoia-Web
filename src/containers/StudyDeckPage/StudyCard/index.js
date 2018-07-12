@@ -3,6 +3,9 @@ import { PropTypes } from 'prop-types';
 
 import Card from "md-components/Card/Card.jsx";
 import CardBody from "md-components/Card/CardBody.jsx";
+import CardFooter from 'md-components/Card/CardFooter.jsx'; 
+
+import AudioPlayer from 'components/AudioPlayer'; 
 
 import Hammer from 'react-hammerjs'; 
 
@@ -16,6 +19,18 @@ class StudyCard extends React.Component {
         this.state = {
             flipped : false
         }
+    }
+
+    swipeUp() {
+        console.log('swipeUp');
+        this.props.onCorrectDismiss(); 
+        this.setFlip(false); 
+    }
+
+    swipeDown() {
+        console.log('swipeDown');
+        this.props.onIncorrectDismiss();
+        this.setFlip(false); 
     }
 
     setFlip(val) {
@@ -34,16 +49,19 @@ class StudyCard extends React.Component {
             <div className='studyCardContainer'>
                 <Hammer
                     direction="DIRECTION_ALL"
-                    onTap={() => {this.flipCard()}}
-                    onSwipe={() => {
-                        this.props.onSwipe();
-                        this.setFlip(false); 
+                    onTap={(event) => {
+                        // prevent card flip when clicking audio button
+                        if(!["svg", "path", "BUTTON"].includes(event.target.nodeName)) {
+                            this.flipCard();
+                        }
                     }}
-                    onDoubleTap={() => { 
-                        this.props.onDoubleTap()
-                        this.setFlip(false); 
+                    onSwipeUp={() => {
+                        this.swipeUp();
                     }}
-                    >
+                    onSwipeDown={() =>{
+                        this.swipeDown();
+                    }}
+                >
                     <div 
                     className={`hammerContainer ${this.state.flipped ? 'flipped' : ''}`}>
                         <Card className='studyCard front'>
@@ -52,6 +70,9 @@ class StudyCard extends React.Component {
                                     {this.props.card.front_text}
                                 </div>
                             </CardBody>
+                            <CardFooter className="studyCardFooter">
+                                {this.props.card.pronunciation ? (<AudioPlayer audioSource={this.props.card.pronunciation.url} />) : ''}
+                            </CardFooter>
                         </Card>
 
                         <Card className='studyCard back'>
@@ -70,8 +91,8 @@ class StudyCard extends React.Component {
 
 StudyCard.propTypes = {
     card: PropTypes.object.isRequired, 
-    onDoubleTap: PropTypes.func,
-    onSwipe: PropTypes.func
+    onCorrectDismiss: PropTypes.func,
+    onIncorrectDismiss: PropTypes.func
 }
 
 export default StudyCard; 

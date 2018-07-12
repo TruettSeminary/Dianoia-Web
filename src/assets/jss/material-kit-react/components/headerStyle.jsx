@@ -3,7 +3,7 @@
 // #############################
 
 import {
-  container,
+  // container,
   defaultFont,
   primaryColor,
   infoColor,
@@ -40,7 +40,7 @@ const headerStyle = {
     position: "fixed"
   },
   container: {
-    ...container,
+    // ...container,
     minHeight: "50px",
     flex: "1",
     alignItems: "center",
