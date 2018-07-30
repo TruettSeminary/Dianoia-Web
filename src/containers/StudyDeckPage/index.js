@@ -39,11 +39,16 @@ class StudyDeckPage extends React.Component {
         }
     }
 
-    componentWillUpdate(prevProps) {
-        // TODO: 
-        // - create new queue
-        // compare with current queue
-        // update current queue (without replacing top (current) card so user does not recognize the change)
+    // TODO: 
+    // - create new queue
+    // compare with current queue
+    // update current queue (without replacing top (current) card so user does not recognize the change)
+    componentDidUpdate(prevProps) {
+        if(prevProps.deck_id !== this.props.deck_id) {
+            this.setState({
+                cardQueue: this.getCardQueue()
+            }); 
+        }
     }
 
     getCardQueue() {
