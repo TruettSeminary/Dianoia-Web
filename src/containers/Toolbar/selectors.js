@@ -4,6 +4,8 @@ import {
     userDecksPopulatedSelector 
 } from 'collections/user/selectors'; 
 
+import { sideMenuUI } from 'collections/ui/selectors';
+
 const toolbarSelector = () => createSelector(
     [userBasicInfoSelector], 
     (userBasicInfo) => {
@@ -27,7 +29,14 @@ const headerLinkSelector = () => createSelector(
     }
 ); 
 
+
+const sideMenuSelector = () => createSelector(
+    [sideMenuUI],
+    (sideMenuUI) => sideMenuUI
+);
+
 export {
     toolbarSelector, 
-    headerLinkSelector
+    headerLinkSelector, 
+    sideMenuSelector
 }; 
