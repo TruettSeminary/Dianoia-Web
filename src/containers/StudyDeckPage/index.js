@@ -10,7 +10,10 @@ import {
     updateUserNote
 } from 'collections/notes/actions'; 
 
-import { CardQueue } from './CardQueue'; 
+import { 
+    CardQueue,
+    QUEUE_STRATEGY 
+} from './CardQueue/CardQueue'; 
 
 // Design
 // import GridContainer from 'md-components/Grid/GridContainer'; 
@@ -34,9 +37,25 @@ class StudyDeckPage extends React.Component {
     constructor (props) {
         super(props);
 
-        this.state = {
-            cardQueue: this.getCardQueue()
+        this.init = () => {
+            const cards = this.props.cards.reduce((cards, card) => {
+                if(card.decks.includes(this.props.deck_id)) {
+                    if(!card.note) card.note = {}; 
+                    if(!card.note.card_score) card.note.card_score = 0; 
+    
+                    cards.push(card); 
+                }
+    
+                return cards; 
+            }, []); 
+
+            this.state = {
+                cards,
+                cardQueue: this.getCardQueue(cards)
+            }
         }
+
+        this.init(); 
     }
 
     // TODO: 
@@ -45,24 +64,16 @@ class StudyDeckPage extends React.Component {
     // update current queue (without replacing top (current) card so user does not recognize the change)
     componentDidUpdate(prevProps) {
         if(prevProps.deck_id !== this.props.deck_id) {
-            this.setState({
-                cardQueue: this.getCardQueue()
-            }); 
+            this.init(); 
         }
     }
 
-    getCardQueue() {
-        // TODO: add queue here?
-        return this.props.cards.reduce((cardQueue, card) => {
-            if(card.decks.includes(this.props.deck_id)) {
-                cardQueue.insert(card); 
-            }
-
-            return cardQueue; 
-        }, new CardQueue()); 
+    getCardQueue(cards) {
+        return new CardQueue(cards, QUEUE_STRATEGY.PRIORITY); 
     }
 
     generateCards() {
+        console.log(this.state.cardQueue); 
         // TODO: add priority queue support for card score
         return this.state.cardQueue.getQueue().map((card) => {
             return (
@@ -82,15 +93,16 @@ class StudyDeckPage extends React.Component {
 
     dismissTopCard(correct) {
         // TODO: determine how to adjust card score in this process
-
-
         const cardQueue = this.state.cardQueue; 
         const topCard = cardQueue.poll(); 
+         
+        // TODO make this work with actual card note
+        if(correct) topCard.note.card_score += 3; 
+        else topCard.note.card_score += 1; 
 
         cardQueue.insert(topCard); 
-        this.setState({
-            cardQueue
-        })
+
+        this.setState({})
     }
 
     generateCardDetails() {
@@ -98,7 +110,7 @@ class StudyDeckPage extends React.Component {
         const card = this.state.cardQueue.peek(); 
         if(!card) return (<h4>Retrieving cards</h4>);
 
-        let note = this.props.notes[card._id]; 
+        let note = card.note; 
         if(!note) {
             note = {
                 card_id: card._id,

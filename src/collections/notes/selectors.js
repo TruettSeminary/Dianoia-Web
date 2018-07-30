@@ -10,6 +10,21 @@ const allUserNotesSelector = createSelector(
     }
 )
 
+const allUserNotesMappedToCardsSelector = createSelector(
+    getNotes(), 
+    (stateNotes) => {
+        let notes = stateNotes; 
+        if(stateNotes.toJS) notes = stateNotes.toJS(); 
+
+        return notes.reduce((newNotes, note) => {
+            newNotes[note.card] = note; 
+            return newNotes; 
+        }, {})
+        
+    }
+)
+
 export {
-    allUserNotesSelector
+    allUserNotesSelector,
+    allUserNotesMappedToCardsSelector
 };

@@ -8,6 +8,7 @@
     "dianoia-js": "0.1.0",
     "history": "4.7.2",
     "immutable": "3.8.2",
+    "js-priority-queue": "0.1.5",
     "localforage": "1.7.1",
     "material-ui": "1.0.0-beta.45",
     "moment": "2.22.1",

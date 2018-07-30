@@ -9,19 +9,22 @@ import {
 } from 'collections/cards/selectors'; 
 
 import {
-    allUserNotesSelector
+    allUserNotesMappedToCardsSelector
 } from 'collections/notes/selectors'
 
 const studyDeckPageSelector = () => createSelector(
-    [userDecksPopulatedSelector, allCardsSelector, allUserNotesSelector], 
+    [userDecksPopulatedSelector, allCardsSelector, allUserNotesMappedToCardsSelector], 
     (decks, cards, notes) => {
         return {
             decks,
-            cards, 
-            notes: notes.reduce((newNotes, note) => {
-                newNotes[note.card] = note; 
-                return newNotes; 
-            }, {})
+            notes, 
+            cards: cards.map((card) => {
+                const note = notes[card._id];
+                if(note) {
+                    card.note = note; 
+                }
+                return card; 
+            })
         }
     }
 ); 
