@@ -31,10 +31,6 @@ import {
 } from 'collections/cards/actions'; 
 
 import {
-    getAllUserNotes
-} from 'collections/notes/actions';
-
-import {
     updateJWT
 } from 'collections/user/actions'; 
 
@@ -60,7 +56,6 @@ const onBeforeLift = () => {
             store.dispatch(getAllClasses()); 
             store.dispatch(getAllUserDecks()); 
             store.dispatch(getAllCards()); 
-            store.dispatch(getAllUserNotes()); 
         }
 
         // TODO: figure out how to get user info (without necessarily having the JWT already set)

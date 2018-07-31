@@ -5,11 +5,6 @@ import { connect } from 'react-redux';
 
 import { studyDeckPageSelector } from './selectors'; 
 
-import {
-    addUserNote, 
-    updateUserNote
-} from 'collections/notes/actions'; 
-
 import { 
     CardQueue,
     QUEUE_STRATEGY 
@@ -28,7 +23,7 @@ import {
   } from "@material-ui/icons";
   
 import StudyCard from './StudyCard';
-import CardDetails from 'components/CardDetails'; 
+import CardDetails from 'containers/CardDetails'; 
 
 import './styles.css'; 
 
@@ -37,25 +32,21 @@ class StudyDeckPage extends React.Component {
     constructor (props) {
         super(props);
 
-        this.init = () => {
-            const cards = this.props.cards.reduce((cards, card) => {
-                if(card.decks.includes(this.props.deck_id)) {
-                    if(!card.note) card.note = {}; 
-                    if(!card.note.card_score) card.note.card_score = 0; 
-    
-                    cards.push(card); 
-                }
-    
-                return cards; 
-            }, []); 
+        this.getCardState = () => {
+            const deck = this.props.decks[this.props.deck_id]; 
+            if(!deck) return {}; // We don't have a deck!
 
-            this.state = {
-                cards,
+            const cards = deck.cards.map((card_id) => {
+                return this.props.cards[card_id]; 
+            }) 
+
+            return {
+                cards, 
                 cardQueue: this.getCardQueue(cards)
             }
         }
 
-        this.init(); 
+        this.state = this.getCardState(); 
     }
 
     // TODO: 
@@ -64,7 +55,7 @@ class StudyDeckPage extends React.Component {
     // update current queue (without replacing top (current) card so user does not recognize the change)
     componentDidUpdate(prevProps) {
         if(prevProps.deck_id !== this.props.deck_id) {
-            this.init(); 
+            this.setState(this.getCardState()); 
         }
     }
 
@@ -73,7 +64,6 @@ class StudyDeckPage extends React.Component {
     }
 
     generateCards() {
-        console.log(this.state.cardQueue); 
         // TODO: add priority queue support for card score
         return this.state.cardQueue.getQueue().map((card) => {
             return (
@@ -91,37 +81,27 @@ class StudyDeckPage extends React.Component {
         });
     }
 
-    dismissTopCard(correct) {
+    dismissTopCard(isCorrect) {
         // TODO: determine how to adjust card score in this process
         const cardQueue = this.state.cardQueue; 
         const topCard = cardQueue.poll(); 
          
         // TODO make this work with actual card note
-        if(correct) topCard.note.card_score += 3; 
+        if(isCorrect) topCard.note.card_score += 3; 
         else topCard.note.card_score += 1; 
 
         cardQueue.insert(topCard); 
 
-        this.setState({})
+        this.setState({});
     }
 
     generateCardDetails() {
-        // TODO: update note here to work with card scoreing in the rest of the page
         const card = this.state.cardQueue.peek(); 
         if(!card) return (<h4>Retrieving cards</h4>);
 
-        let note = card.note; 
-        if(!note) {
-            note = {
-                card_id: card._id,
-                note: '',
-                cardScore : 0
-            }
-        }
         return (<CardDetails 
-            card={card} 
-            note={note}
-            value={false}
+            card={card}
+            selectedDetail={false}
         />);
     }
 
@@ -159,12 +139,6 @@ const mapStateToProps = studyDeckPageSelector();
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        addUserNote: (note) => {
-            dispatch(addUserNote(note));
-        },
-        updateUserNote: (note) => {
-            dispatch(updateUserNote(note)); 
-        },
         dispatch
     }
 }; 

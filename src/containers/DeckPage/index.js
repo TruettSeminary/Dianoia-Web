@@ -38,16 +38,15 @@ class DeckPage extends React.Component {
     }
 
     render() {
-        const cards = this.props.cards.filter((card)  => {
-            return card.decks.includes(this.props.deck_id); 
-        }); 
 
-        const deck = this.props.decks.reduce((foundDeck, deck) => {
-            if(!foundDeck && deck._id === this.props.deck_id) {
-                foundDeck = deck; 
-            }
-            return foundDeck; 
-        }, null); 
+        const deck = this.props.decks[this.props.deck_id]; 
+
+        // TODO: get better error message
+        if(!deck) return (<h4> No deck this this id found </h4>); 
+
+        const cards = deck.cards.map((card_id) => {
+            return this.props.cards[card_id]; 
+        }); 
 
         return (
             <div className="deckContainer">

@@ -22,7 +22,14 @@ export class PriorityQueue {
     }
 
     peek() {
-        return this.queue.peek(); 
+        try{
+            const top = this.queue.peek(); 
+            return top; 
+        }
+        catch(err) {
+            // If there is an empty queue, catch the error
+            return null; 
+        }
     }
 
     insert(card) {

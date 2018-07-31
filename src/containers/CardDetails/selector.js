@@ -2,9 +2,9 @@ import { createSelector } from 'reselect';
 
 import {
     allCardsSelector
-} from 'collections/cards/selectors';
+} from 'collections/cards/selectors'; 
 
-const cardPageSelector = () => createSelector(
+const cardDetailsSelector = () => createSelector(
     [allCardsSelector], 
     (cards) => {
         return {
@@ -14,5 +14,5 @@ const cardPageSelector = () => createSelector(
 ); 
 
 export {
-    cardPageSelector
+    cardDetailsSelector
 };

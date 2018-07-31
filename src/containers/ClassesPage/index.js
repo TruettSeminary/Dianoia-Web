@@ -68,7 +68,7 @@ class ClassesPage extends React.Component {
         // TODO: sort classes in alpha order
         let userClasses = []; 
         let otherClasses = []; 
-        this.props.classes.forEach((clazz) =>  {
+        Object.values(this.props.classes).forEach((clazz) =>  {
             if(this.props.user.classes.includes(`${clazz._id}`)) {
                 userClasses.push(clazz);
             } 

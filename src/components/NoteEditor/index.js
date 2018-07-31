@@ -1,3 +1,4 @@
+// TODO: add support for markdown in notes area
 import React from 'react'; 
 import { PropTypes } from 'prop-types'; 
 
@@ -31,8 +32,7 @@ class NoteEditor extends React.Component {
             note: this.state.noteText
         }
 
-        if(!newNote._id) this.props.addUserNote(newNote); 
-        else this.props.updateUserNote(newNote); 
+        this.props.addOrUpdateUserNote(newNote); 
     }
 
     render() {
@@ -70,8 +70,7 @@ class NoteEditor extends React.Component {
 
 NoteEditor.propTypes = {
     note: PropTypes.object.isRequired, 
-    addUserNote: PropTypes.func.isRequired,
-    updateUserNote: PropTypes.func.isRequired
+    addOrUpdateUserNote: PropTypes.func.isRequired
 }
 
 export default NoteEditor; 

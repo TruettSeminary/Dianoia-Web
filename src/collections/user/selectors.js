@@ -1,7 +1,7 @@
 import { createSelector } from 'reselect'; 
 
 import {
-    allDecksMapSelector
+    allDecksSelector
 } from 'collections/decks/selectors'; 
 
 const getUser = () => (state) => state.user.toJS(); 
@@ -25,6 +25,7 @@ const userClassesSelector = createSelector(
     }
 ); 
 
+// Returns array of deck id's user is subscribed to
 const userDecksSelector = createSelector(
     getUser(), 
     (user) => {
@@ -32,8 +33,10 @@ const userDecksSelector = createSelector(
     }
 )
 
+// returns an object of deck id's mapped to decks 
+// the user is subscribed to
 const userDecksPopulatedSelector = createSelector(
-    [allDecksMapSelector, userDecksSelector], 
+    [allDecksSelector, userDecksSelector], 
     (allDecks, userDecks) => {
         // Decks have not been populated yet
         if(!Object.keys(allDecks).length) return []; 
@@ -44,9 +47,22 @@ const userDecksPopulatedSelector = createSelector(
     }
 ); 
 
+// TODO: eventually move everything to this version of user decks
+const userDecksMappedSelector = createSelector(
+    [allDecksSelector, userDecksSelector], 
+    (allDecks, userDecks) => {
+
+        return userDecks.reduce((decks, deck_id)=> {
+            decks[deck_id] = allDecks[deck_id]; 
+            return decks; 
+        }, {});
+    }
+);
+
 export {
     userBasicInfoSelector,
     userClassesSelector, 
     userDecksSelector, 
-    userDecksPopulatedSelector
+    userDecksPopulatedSelector,
+    userDecksMappedSelector
 }; 

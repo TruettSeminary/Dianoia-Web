@@ -1,7 +1,7 @@
 import { createSelector } from 'reselect'; 
 
 import {
-    userDecksPopulatedSelector
+    userDecksMappedSelector
 } from 'collections/user/selectors'; 
 
 import {
@@ -9,7 +9,7 @@ import {
 } from 'collections/cards/selectors'; 
 
 const deckPageSelector = () => createSelector(
-    [userDecksPopulatedSelector, allCardsSelector], 
+    [userDecksMappedSelector, allCardsSelector], 
     (decks, cards) => {
         return {
             decks,

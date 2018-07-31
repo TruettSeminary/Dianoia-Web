@@ -4,9 +4,12 @@ import { compose } from 'redux';
 import { connect } from 'react-redux';
 
 import {
-    addUserNote, 
-    updateUserNote
-} from 'collections/notes/actions'; 
+    addOrUpdateUserNote
+} from 'collections/cards/notes/actions'; 
+
+import {
+    cardDetailsSelector
+} from './selector'; 
 
 
 // Design
@@ -26,9 +29,7 @@ import {
     LocalMovies
 } from '@material-ui/icons';
 
-
 import './styles.css'; 
-
 
 function TabContainer(props) {
     return (
@@ -47,33 +48,34 @@ class CardDetails extends React.Component {
     constructor(props) {
         super(props); 
         this.state = {
-            value : this.props.value
+            selectedDetail : this.props.selectedDetail
         }
     }
 
     handlChange = (event, value) => {
         this.setState({
-            value
+            selectedDetail: value
         })
     }
 
     // TODO: update to use shouldComponentUpdate
-    componentWillUpdate(prevProps, prevState) {
+    componentWillUpdate(prevProps) {
         if(prevProps.card._id !== this.props.card._id) {
             // we have a new card
             this.setState({
-                value: this.props.value
+                selectedDetail: this.props.selectedDetail
             })
         }
     }
  
     render() {
-        const { value } = this.state; 
-        const { card, note } = this.props;
+        const { selectedDetail } = this.state; 
+        const card  = this.props.cards[this.props.card._id]; 
+
         return (
             <div className="cardDetails">
                 <AppBar position="static">
-                    <Tabs value={value}
+                    <Tabs value={selectedDetail}
                             fullWidth
                             classes={{root: 'tabsRoot'}}
                             onChange={this.handlChange} scrollable scrollButtons="off"
@@ -85,25 +87,24 @@ class CardDetails extends React.Component {
                         {card.video_link && <Tab icon={<LocalMovies />} />} 
                     </Tabs>
                 </AppBar>
-                {value === 0 && <TabContainer>
+                {selectedDetail === 0 && <TabContainer>
                     { card.part_of_speech ? <h4>Part of speech: {card.part_of_speech}</h4> : ''}
                     { card.number_of_occurances ? <h4>Number of occurances: {card.number_of_occurances}</h4> : ''}
                     { card.noted_scripture ? <h4>Noted Scripture: {card.noted_scripture}</h4> : ''}
                 </TabContainer>}
-                {value === 1 && <TabContainer>
+                {selectedDetail === 1 && <TabContainer>
                     <NoteEditor
-                        note={note}
-                        addUserNote={this.props.addUserNote}
-                        updateUserNote={this.props.updateUserNote}
+                        note={card.note}
+                        addOrUpdateUserNote={this.props.addOrUpdateUserNote}
                     />
                 </TabContainer>}
-                {value === 2 && <TabContainer>
+                {selectedDetail === 2 && <TabContainer>
                     <ReactMarkdown source={card.devotional}/>
                 </TabContainer>}
-                {value === 3 && <TabContainer>
+                {selectedDetail === 3 && <TabContainer>
                     An image
                     </TabContainer>}
-                {value === 4 && <TabContainer>
+                {selectedDetail === 4 && <TabContainer>
                     A Video
                 </TabContainer>}
             </div>
@@ -114,21 +115,15 @@ class CardDetails extends React.Component {
 
 CardDetails.propTypes = {
     card: PropTypes.object.isRequired,
-    note: PropTypes.object.isRequired, 
-    value: PropTypes.any
+    selectedDetail: PropTypes.any
 }
 
-const mapStateToProps = () => {
-    return {}
-}
+const mapStateToProps = cardDetailsSelector(); 
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        addUserNote: (note) => {
-            dispatch(addUserNote(note));
-        },
-        updateUserNote: (note) => {
-            dispatch(updateUserNote(note)); 
+        addOrUpdateUserNote: (note) => {
+            dispatch(addOrUpdateUserNote(note));
         },
         dispatch
     }

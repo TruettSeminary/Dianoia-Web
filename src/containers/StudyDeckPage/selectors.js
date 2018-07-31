@@ -1,30 +1,19 @@
 import { createSelector } from 'reselect'; 
 
 import {
-    userDecksPopulatedSelector
+    userDecksMappedSelector
 } from 'collections/user/selectors'; 
 
 import {
     allCardsSelector
 } from 'collections/cards/selectors'; 
 
-import {
-    allUserNotesMappedToCardsSelector
-} from 'collections/notes/selectors'
-
 const studyDeckPageSelector = () => createSelector(
-    [userDecksPopulatedSelector, allCardsSelector, allUserNotesMappedToCardsSelector], 
-    (decks, cards, notes) => {
+    [userDecksMappedSelector, allCardsSelector], 
+    (decks, cards) => {
         return {
             decks,
-            notes, 
-            cards: cards.map((card) => {
-                const note = notes[card._id];
-                if(note) {
-                    card.note = note; 
-                }
-                return card; 
-            })
+            cards
         }
     }
 ); 
