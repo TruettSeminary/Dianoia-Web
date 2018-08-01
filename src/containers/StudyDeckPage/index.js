@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 // import { PropTypes } from 'prop-types'; 
 
 import { studyDeckPageSelector } from './selectors'; 
+import { addOrUpdateUserNote } from 'collections/cards/notes/actions'; 
 
 import { 
     CardQueue,
@@ -63,9 +64,9 @@ class StudyDeckPage extends React.Component {
         return new CardQueue(cards, QUEUE_STRATEGY.PRIORITY); 
     }
 
-    generateCards() {
+    generateCards(cardQueue) {
         // TODO: add priority queue support for card score
-        return this.state.cardQueue.getQueue().map((card) => {
+        return cardQueue.map((card) => {
             return (
                 <StudyCard 
                     key={card._id}
@@ -90,8 +91,9 @@ class StudyDeckPage extends React.Component {
         if(isCorrect) topCard.note.card_score += 3; 
         else topCard.note.card_score += 1; 
 
-        cardQueue.insert(topCard); 
+        this.props.addOrUpdateUserNote(topCard.note); 
 
+        cardQueue.insert(topCard); 
         this.setState({});
     }
 
@@ -111,7 +113,7 @@ class StudyDeckPage extends React.Component {
             <div className="studyContainer">
                 <div className='cardContainer'>
                     <div className='studyList'>
-                        {this.generateCards()}
+                        {this.generateCards(this.state.cardQueue.getQueue())}
                     </div>
                 <Hidden smDown>
                     <div className="dismissActions">
@@ -139,6 +141,9 @@ const mapStateToProps = studyDeckPageSelector();
 
 const mapDispatchToProps = (dispatch) => {
     return {
+        addOrUpdateUserNote: (note) => {
+            dispatch(addOrUpdateUserNote(note)); 
+        },
         dispatch
     }
 }; 
