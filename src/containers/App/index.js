@@ -18,7 +18,7 @@ import ClassesPage from 'containers/ClassesPage';
 import DeckPage from 'containers/DeckPage';
 import StudyDeckPage from 'containers/StudyDeckPage'; 
 import CardPage from 'containers/CardPage'; 
-import TranslationsPage from 'containers/TranslationsPage'; 
+import TranslationDeckPage from 'containers/TranslationDeckPage'; 
 import InstructionsPage from 'containers/InstructionsPage'; 
 import SettingsPage from 'containers/SettingsPage'; 
 import LandingPage from 'containers/LandingPage'; 
@@ -67,7 +67,7 @@ class App extends React.Component {
                                 details={props.match.params.details}
                             />); 
                         }}/>
-                        <PrivateRoute path="/translations" exact auth={this.props.user.jwt} render={() => <TranslationsPage/>} />
+                        <PrivateRoute path="/translations" exact auth={this.props.user.jwt} render={() => <TranslationDeckPage/>} />
 
                         <PrivateRoute path="/feedback" exact auth={this.props.user.jwt} render={() => <FeedbackPage/>} />
                         <PrivateRoute path="/settings" exact auth={this.props.user.jwt} render={() => <SettingsPage/>} />

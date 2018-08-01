@@ -35,7 +35,8 @@ import {
   Info,
   Settings,
   Subject,
-  ViewCarousel
+  ViewCarousel,
+  ViewList
 } from "@material-ui/icons";
 
 import withStyles from "material-ui/styles/withStyles";
@@ -114,7 +115,6 @@ class HeaderLinks extends React.Component {
   }
 
   render() {
-
     const deckLinks = this.props.user.decks.map((deck) => {
       // TODO: find a more effeciant way of doing this
 
@@ -146,7 +146,7 @@ class HeaderLinks extends React.Component {
         href:'/decks', 
         color:'transparent', 
         content: deckLinks,
-        icon: (<ViewCarousel className={this.classes.icons} />), 
+        icon: (<ViewList className={this.classes.icons} />), 
         userLoggedIn: true
       },
       {
@@ -157,13 +157,13 @@ class HeaderLinks extends React.Component {
         icon: (<ViewCarousel className={this.classes.icons} />), 
         userLoggedIn: true
       },
-      // {
-      //   text: 'Translations',
-      //   href:'/translations', 
-      //   color:'transparent', 
-      //   icon: (<Subject className={this.classes.icons} />), 
-      //   userLoggedIn: true
-      // },
+      {
+        text: 'Translations',
+        href:'/translations', 
+        color:'transparent', 
+        icon: (<Subject className={this.classes.icons} />), 
+        userLoggedIn: true
+      },
       // {
       //   text: 'Instructions',
       //   href:'/instructions', 

@@ -1,0 +1,3 @@
+export const GET_ALL_TRANSLATIONS = 'translations/GET_ALL_TRANSLATIONS'; 
+export const REFRESH_ALL_TRANSLATIONS = 'translations/REFRESH_ALL_TRANSlATIONS'; 
+export const RESET_TRANSLATIONS = 'translations/REFRESH_ALL_TRANSLATIONS'; 
