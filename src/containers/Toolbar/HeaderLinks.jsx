@@ -115,23 +115,17 @@ class HeaderLinks extends React.Component {
   }
 
   render() {
-    const deckLinks = this.props.user.decks.map((deck) => {
-      // TODO: find a more effeciant way of doing this
 
-      return {
-        text: deck.name, 
-        href: `/deck/${deck._id}`
-      }
-    });
-
-    const studyDeckLinks = this.props.user.decks.map((deck) => {
-      // TODO: find a more effeciant way of doing this
-
-      return {
-        text: deck.name, 
-        href: `/deck/study/${deck._id}`
-      }
-    });  
+    const generateDeckLinks = (path) => {
+      return this.props.user.decks.map((deck) => {
+        // TODO: find a more effeciant way of doing this
+  
+        return {
+          text: deck.name, 
+          href: `${path}/${deck._id}`
+        }
+      });
+    }
 
     const links = [
       {
@@ -145,7 +139,7 @@ class HeaderLinks extends React.Component {
         text: 'Decks',
         href:'/decks', 
         color:'transparent', 
-        content: deckLinks,
+        content: generateDeckLinks('/decks'),
         icon: (<ViewList className={this.classes.icons} />), 
         userLoggedIn: true
       },
@@ -153,14 +147,15 @@ class HeaderLinks extends React.Component {
         text: 'Study',
         href:'/decks/study', 
         color:'transparent', 
-        content: studyDeckLinks,
+        content: generateDeckLinks('/decks/study'),
         icon: (<ViewCarousel className={this.classes.icons} />), 
         userLoggedIn: true
       },
       {
         text: 'Translations',
-        href:'/translations', 
-        color:'transparent', 
+        href:'/decks/translations', 
+        color:'transparent',
+        content: generateDeckLinks('/deck/translations'), 
         icon: (<Subject className={this.classes.icons} />), 
         userLoggedIn: true
       },
