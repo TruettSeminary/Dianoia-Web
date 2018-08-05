@@ -24,7 +24,7 @@ class TranslationPage extends React.Component {
         return Object.values(this.state.translation.metadata.segments).sort((segmentA, segmentB) => {
             return segmentA.index - segmentB.index
         }).map((segment) => {
-            return (<InteractiveSegment key={segment.id} segment={segment}/>);
+            return (<InteractiveSegment key={segment.id} segment={segment} cards={this.props.cards}/>);
         }); 
     }
 
