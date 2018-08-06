@@ -5,6 +5,7 @@ import { PropTypes } from 'prop-types';
 
 import { translationPageSelector } from './selectors'; 
 
+import CustomInput from "md-components/CustomInput/CustomInput.jsx";
 import InteractiveSegment from './InteractiveSegment'; 
 
 import "./styles.css";
@@ -32,11 +33,27 @@ class TranslationPage extends React.Component {
         return(
             <div className="translationPageContainer">
                 <h3>{this.state.translation.name}</h3>
-                <p>Type your translation below. Double tap on words for hints</p>
+                <p>Type your translation below. Double tap on words for hints.</p>
                 {this.state.translation.instructions && 
                     <p>Extra instructions: {this.state.translation.instructions}</p>}
+                <p>Note: Your translation will not be saved. This is purely for your own practice.</p>
                 <div className="translationContainer">
                     {this.generateTranslation()}
+                </div>
+                <div>
+                    <CustomInput 
+                        labelText="Enter your translation here"
+                        id="userTranslations"
+                        inputProps={{
+                            multiline: true,
+                            classes: {
+                                root: 'input'
+                            },
+                        }}
+                        formControlProps = {{
+                            fullWidth: true
+                        }}
+                    />
                 </div>
             </div>
         );
