@@ -145,15 +145,15 @@ class HeaderLinks extends React.Component {
       },
       {
         text: 'Study',
-        href:'/decks/study', 
+        href:'/deck/study', 
         color:'transparent', 
-        content: generateDeckLinks('/decks/study'),
+        content: generateDeckLinks('/deck/study'),
         icon: (<ViewCarousel className={this.classes.icons} />), 
         userLoggedIn: true
       },
       {
         text: 'Translations',
-        href:'/decks/translations', 
+        href:'/deck/translations', 
         color:'transparent',
         content: generateDeckLinks('/deck/translations'), 
         icon: (<Subject className={this.classes.icons} />), 

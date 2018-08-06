@@ -12,8 +12,6 @@ import {
 } from './CardQueue/CardQueue'; 
 
 // Design
-// import GridContainer from 'md-components/Grid/GridContainer'; 
-// import GridItem from 'md-components/Grid/GridItem'; 
 import Button from 'md-components/CustomButtons/Button';
 import Hidden from "material-ui/Hidden";
 
@@ -50,84 +48,65 @@ class StudyDeckPage extends React.Component {
         this.state = this.getCardState(); 
     }
 
-    // TODO: 
-    // - create new queue
-    // compare with current queue
-    // update current queue (without replacing top (current) card so user does not recognize the change)
-    componentDidUpdate(prevProps) {
-        if(prevProps.deck_id !== this.props.deck_id) {
-            this.setState(this.getCardState()); 
-        }
-    }
-
     getCardQueue(cards) {
         return new CardQueue(cards, QUEUE_STRATEGY.PRIORITY); 
     }
 
-    generateCards(cardQueue) {
-        // TODO: add priority queue support for card score
-        return cardQueue.map((card) => {
-            return (
-                <StudyCard 
-                    key={card._id}
-                    card={card}
-                    onCorrectDismiss={
-                        () => this.dismissTopCard(true)
-                    } 
-                    onIncorrectDismiss={
-                        () => this.dismissTopCard(false)
-                    }
-                />
-            );
-        });
-    }
-
     dismissTopCard(isCorrect) {
-        // TODO: determine how to adjust card score in this process
         const cardQueue = this.state.cardQueue; 
         const topCard = cardQueue.poll(); 
          
-        // TODO make this work with actual card note
         if(isCorrect) topCard.note.card_score += 3; 
         else topCard.note.card_score += 1; 
 
         this.props.addOrUpdateUserNote(topCard.note); 
 
         cardQueue.insert(topCard); 
-        this.setState({});
     }
 
-    generateCardDetails() {
-        const card = this.state.cardQueue.peek(); 
-        if(!card) return (<h4>Retrieving cards</h4>);
-
-        return (<CardDetails 
-            card={card}
-            selectedDetail={false}
-        />);
-    }
 
     render() {
+        const topCard = this.state.cardQueue.peek(); 
 
         return (
             <div className="studyContainer">
                 <div className='cardContainer'>
+                    <Hidden mdUp>
+                        <p className="instructions">Swipe right for a card you do not know. Swipe left for a card you do know.</p>
+                    </Hidden>
                     <div className='studyList'>
-                        {this.generateCards(this.state.cardQueue.getQueue())}
+                        {topCard && 
+                            <StudyCard
+                                card={topCard}
+                                onCorrectDismiss={
+                                    () => this.dismissTopCard(true)
+                                } 
+                                onIncorrectDismiss={
+                                    () => this.dismissTopCard(false)
+                                }
+                            />
+                        }
                     </div>
-                <Hidden smDown>
-                    <div className="dismissActions">
-                        <Button className="actionItem correct" color="info" justIcon round onClick={() => this.dismissTopCard(true)}>
-                            <ThumbUp/>
-                        </Button>
-                        <Button className="actionItem incorrect" color="danger" justIcon round onClick={() => this.dismissTopCard(false)}>
-                            <ThumbDown/>
-                        </Button>
-                    </div>
-                </Hidden>
+                    <Hidden smDown>
+                        <div className="dismissActions">
+                            <Button className="actionItem correct" color="info" justIcon round onClick={() => this.dismissTopCard(true)}>
+                                <ThumbUp/>
+                            </Button>
+                            <Button className="actionItem incorrect" color="danger" justIcon round onClick={() => this.dismissTopCard(false)}>
+                                <ThumbDown/>
+                            </Button>
+                        </div>
+                    </Hidden>
                 </div>
                 <div className="studyCardDetails">
-                    {this.generateCardDetails()}
+                    {topCard ? (
+                        <CardDetails 
+                            card={topCard}
+                            selectedDetail={false}
+                        />
+                    ) : (
+                        <h4>No card selected</h4>
+                    ) }
                 </div>
             </div>
 

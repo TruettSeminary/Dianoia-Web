@@ -17,30 +17,44 @@ class StudyCard extends React.Component {
         super(props); 
 
         this.state = {
+            slideDirection: 'none',
             flipped : false
         }
     }
 
-    swipeUp() {
-        console.log('swipeUp');
-        this.props.onCorrectDismiss(); 
-        this.setFlip(false); 
-    }
-
-    swipeDown() {
-        console.log('swipeDown');
-        this.props.onIncorrectDismiss();
-        this.setFlip(false); 
-    }
-
-    setFlip(val) {
+    swipeRight() {
         this.setState({
-            flipped: val
+            slideDirection: 'slide-right'
         });
+
+        setTimeout(() => {
+            this.props.onCorrectDismiss(); 
+            this.setState({
+                flipped: false,
+                slideDirection: 'none'
+            })
+        }, 500)
+        
+    }
+
+    swipeLeft() {
+        this.setState({
+            slideDirection: 'slide-left'
+        });
+
+        setTimeout(() => {
+            this.props.onIncorrectDismiss();
+            this.setState({
+                flipped: false, 
+                slideDirection: 'none'
+            })
+        }, 250)
     }
 
     flipCard() {
-        this.setFlip(!this.state.flipped);
+        this.setState({
+            flipped: !this.state.flipped
+        })
     }
 
     render() {
@@ -55,15 +69,15 @@ class StudyCard extends React.Component {
                             this.flipCard();
                         }
                     }}
-                    onSwipeUp={() => {
-                        this.swipeUp();
+                    onSwipeRight={() => {
+                        this.swipeRight();
                     }}
-                    onSwipeDown={() =>{
-                        this.swipeDown();
+                    onSwipeLeft={() =>{
+                        this.swipeLeft();
                     }}
                 >
                     <div 
-                    className={`hammerContainer ${this.state.flipped ? 'flipped' : ''}`}>
+                    className={`hammerContainer ${this.state.slideDirection} ${this.state.flipped ? 'flipped' : ''}`}>
                         <Card className='studyCard front'>
                             <CardBody className="studyCardBody" >
                                 <div className='cardText'>
@@ -81,6 +95,8 @@ class StudyCard extends React.Component {
                                     {this.props.card.back_text}
                                 </div>
                             </CardBody>
+                            <CardFooter className="studyCardFooter">
+                            </CardFooter>
                         </Card>
                     </div>
                 </Hammer>

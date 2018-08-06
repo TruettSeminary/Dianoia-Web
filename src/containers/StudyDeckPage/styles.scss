@@ -8,6 +8,10 @@
     @media (max-width: map-get($grid-breakpoints,"md")) {
        flex-direction: column;
     }
+
+    .instructions {
+        text-align: center;
+    }
 }
 
 .cardContainer {
@@ -36,9 +40,12 @@
 }
 
 .studyList {
-    padding-top: 2rem;
-    height: 100%;
+    position: relative;
     width: 100%;
+
+    @media (min-width: map-get($grid-breakpoints,"md")) {
+        padding-top: 2rem;
+     }
 }
 
 .dismissActions {
