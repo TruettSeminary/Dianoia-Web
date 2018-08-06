@@ -27,6 +27,7 @@ class Toolbar extends React.Component {
         };
         return (
             <Header
+                absolute
                 color="success"
                 brand={brand}
                 rightLinks={(<HeaderLinks/>)}
