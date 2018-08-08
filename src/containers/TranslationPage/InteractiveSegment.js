@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { PropTypes } from 'prop-types'; 
 
 import Hammer from 'react-hammerjs'; 
-import Popover from '@material-ui/core/Popover'
+import Popover from 'material-ui/Popover/Popover'
 import withStyles from 'material-ui/styles/withStyles'; 
 
 import { addOrUpdateUserNote } from 'collections/cards/notes/actions'; 
@@ -71,7 +71,9 @@ class InteractiveSegment extends React.Component {
                     horizontal: 'center'
                 }}
             >
-                {segment.translation && <h3 className={this.props.classes.popoverHeader}>{segment.translation}</h3>}
+                {segment.translation && <h3 
+                    className={this.props.classes.popoverHeader}
+                >{segment.translation}</h3>}
                 <div className={this.props.classes.popoverBody}>
                     {segment.cards.length ? 'Cards' : ''}:
                     {segment.cards && segment.cards.map(({_id, form}) =>{   
