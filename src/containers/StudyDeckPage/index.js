@@ -48,6 +48,12 @@ class StudyDeckPage extends React.Component {
         this.state = this.getCardState(); 
     }
 
+    componentDidUpdate(prevProps) {
+        if(prevProps.deck_id !== this.props.deck_id) {
+            this.setState(this.getCardState()); 
+        }
+    }
+
     getCardQueue(cards) {
         return new CardQueue(cards, QUEUE_STRATEGY.PRIORITY); 
     }
@@ -66,6 +72,14 @@ class StudyDeckPage extends React.Component {
 
 
     render() {
+
+        if(!this.state.cards.length) {
+            return (
+                <div className="studyContainer">
+                        <h2 className="emptyDeckWarning">This deck has no cards in it!</h2>
+                </div>);
+        }
+
         const topCard = this.state.cardQueue.peek(); 
 
         return (

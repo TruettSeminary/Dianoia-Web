@@ -139,7 +139,7 @@ class HeaderLinks extends React.Component {
         text: 'Decks',
         href:'/decks', 
         color:'transparent', 
-        content: generateDeckLinks('/decks'),
+        content: generateDeckLinks('/deck'),
         icon: (<ViewList className={this.classes.icons} />), 
         userLoggedIn: true
       },
