@@ -1,3 +1,56 @@
+@import 'assets/scss/core/_variables.scss';
+
 .landingContainer {
-    padding: 2rem 2rem 0 2rem;
+
+    .bannerContainer {
+        background-image: url('/images/landing-page-library-scaled.jpg');
+        background-size: cover; 
+
+        position: relative; 
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 275px; 
+
+        @media (min-width: map-get($grid-breakpoints,"sm")) {
+            min-height: 350px; 
+        }
+
+        @media (min-width: map-get($grid-breakpoints,"md")) {
+            min-height: 400px; 
+        }
+
+        @media (min-width: map-get($grid-breakpoints,"lg")) {
+            min-height: 600px; 
+        }        
+
+        .welcomeBanner {
+            padding: 1rem; 
+            border-radius: 5px; 
+            background-color: rgba(0, 0, 0, 0.6);
+            color: white; 
+            z-index: 5; 
+
+            text-align: center; 
+        }
+    }
+
+    .landingContent {
+        padding: 2rem 2rem 0 2rem;
+
+        .landingContentItem {
+            display: flex;
+            justify-content: center;
+
+            .sectionHeader {
+                text-align: center; 
+            }
+
+            .sectionDetails {
+                text-align: center;
+            }
+        }
+
+
+    }
 }
