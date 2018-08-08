@@ -11,6 +11,16 @@ const loginUI = createSelector(
     }
 )
 
+const sideMenuUI = createSelector(
+    getUI(), 
+    (ui) => {
+        return {
+            displaySideMenu: ui.displaySideMenu
+        }
+    }
+)
+
 export {
-    loginUI
+    loginUI,
+    sideMenuUI
 }; 

@@ -18,7 +18,8 @@ import ClassesPage from 'containers/ClassesPage';
 import DeckPage from 'containers/DeckPage';
 import StudyDeckPage from 'containers/StudyDeckPage'; 
 import CardPage from 'containers/CardPage'; 
-import TranslationsPage from 'containers/TranslationsPage'; 
+import TranslationDeckPage from 'containers/TranslationDeckPage'; 
+import TranslationPage from 'containers/TranslationPage'; 
 import InstructionsPage from 'containers/InstructionsPage'; 
 import SettingsPage from 'containers/SettingsPage'; 
 import LandingPage from 'containers/LandingPage'; 
@@ -58,6 +59,9 @@ class App extends React.Component {
                         <PrivateRoute path="/deck/study/:deck_id" auth={this.props.user.jwt} exact  render={(props) => {
                             return <StudyDeckPage deck_id={props.match.params.deck_id}/>
                         }}/>
+                        <PrivateRoute path="/deck/translations/:deck_id/" exact auth={this.props.user.jwt} render={(props) => {
+                            return <TranslationDeckPage deck_id={props.match.params.deck_id}/>
+                        }}/>
                         <PrivateRoute path="/deck/:deck_id/" exact auth={this.props.user.jwt} render={(props) => {
                             return <DeckPage deck_id={props.match.params.deck_id}/>
                         }}/>
@@ -67,8 +71,9 @@ class App extends React.Component {
                                 details={props.match.params.details}
                             />); 
                         }}/>
-                        <PrivateRoute path="/translations" exact auth={this.props.user.jwt} render={() => <TranslationsPage/>} />
-
+                        <PrivateRoute path="/translation/:translation_id/" exact auth={this.props.user.jwt} render={(props) => {
+                            return <TranslationPage translation_id={props.match.params.translation_id}/>
+                        }}/>
                         <PrivateRoute path="/feedback" exact auth={this.props.user.jwt} render={() => <FeedbackPage/>} />
                         <PrivateRoute path="/settings" exact auth={this.props.user.jwt} render={() => <SettingsPage/>} />
                         <Route path="/registration" exact render={() => <RegistrationPage/>} />

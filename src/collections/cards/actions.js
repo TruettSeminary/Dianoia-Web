@@ -13,9 +13,7 @@ export function getAllCards() {
 export function refreshAllCards(cards) {
     return {
         type: REFRESH_ALL_CARDS, 
-        data: {
-            cards
-        }
+        cards
     }
 }
 

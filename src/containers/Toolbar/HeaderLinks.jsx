@@ -6,7 +6,10 @@ import { compose } from 'redux';
 
 import { push } from 'connected-react-router'
 import { logout } from 'collections/user/actions'; 
-import { openLoginModal } from 'collections/ui/actions';  
+import { 
+  openLoginModal, 
+  closeSideMenu 
+} from 'collections/ui/actions';  
 
 
 
@@ -32,7 +35,8 @@ import {
   Info,
   Settings,
   Subject,
-  ViewCarousel
+  ViewCarousel,
+  ViewList
 } from "@material-ui/icons";
 
 import withStyles from "material-ui/styles/withStyles";
@@ -57,6 +61,7 @@ class HeaderLinks extends React.Component {
         onClick={() => {
           if(link.href) {
             this.props.pushPage(link.href); 
+            this.props.closeSideMenu(); 
           }
           if(link.onClick) {
             link.onClick();
@@ -70,7 +75,10 @@ class HeaderLinks extends React.Component {
     const formDropDownList = () => {
       return link.content.map((item)=> {
         return (
-          <div onClick={() => this.props.pushPage(item.href)}>
+          <div onClick={() => {
+            this.props.pushPage(item.href); 
+            this.props.closeSideMenu(); 
+          }}>
             {item.text}
           </div>
         );
@@ -108,23 +116,16 @@ class HeaderLinks extends React.Component {
 
   render() {
 
-    const deckLinks = this.props.user.decks.map((deck) => {
-      // TODO: find a more effeciant way of doing this
-
-      return {
-        text: deck.name, 
-        href: `/deck/${deck._id}`
-      }
-    });
-
-    const studyDeckLinks = this.props.user.decks.map((deck) => {
-      // TODO: find a more effeciant way of doing this
-
-      return {
-        text: deck.name, 
-        href: `/deck/study/${deck._id}`
-      }
-    });  
+    const generateDeckLinks = (path) => {
+      return this.props.user.decks.map((deck) => {
+        // TODO: find a more effeciant way of doing this
+  
+        return {
+          text: deck.name, 
+          href: `${path}/${deck._id}`
+        }
+      });
+    }
 
     const links = [
       {
@@ -138,25 +139,26 @@ class HeaderLinks extends React.Component {
         text: 'Decks',
         href:'/decks', 
         color:'transparent', 
-        content: deckLinks,
-        icon: (<ViewCarousel className={this.classes.icons} />), 
+        content: generateDeckLinks('/deck'),
+        icon: (<ViewList className={this.classes.icons} />), 
         userLoggedIn: true
       },
       {
         text: 'Study',
-        href:'/decks/study', 
+        href:'/deck/study', 
         color:'transparent', 
-        content: studyDeckLinks,
+        content: generateDeckLinks('/deck/study'),
         icon: (<ViewCarousel className={this.classes.icons} />), 
         userLoggedIn: true
       },
-      // {
-      //   text: 'Translations',
-      //   href:'/translations', 
-      //   color:'transparent', 
-      //   icon: (<Subject className={this.classes.icons} />), 
-      //   userLoggedIn: true
-      // },
+      {
+        text: 'Translations',
+        href:'/deck/translations', 
+        color:'transparent',
+        content: generateDeckLinks('/deck/translations'), 
+        icon: (<Subject className={this.classes.icons} />), 
+        userLoggedIn: true
+      },
       // {
       //   text: 'Instructions',
       //   href:'/instructions', 
@@ -229,6 +231,9 @@ const mapDispatchToProps = (dispatch) => {
     },
     openLoginModal: () => {
       dispatch(openLoginModal());
+    },
+    closeSideMenu: () => {
+      dispatch(closeSideMenu()); 
     },
     logout: () => {
       dispatch(logout()); 

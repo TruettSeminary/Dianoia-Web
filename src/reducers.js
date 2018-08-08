@@ -5,7 +5,7 @@ import user from 'collections/user/reducer';
 import classes from 'collections/classes/reducer'; 
 import decks from 'collections/decks/reducer'; 
 import cards from 'collections/cards/reducer';
-import notes from 'collections/notes/reducer'; 
+import translations from 'collections/translations/reducer'; 
 
 import notificationProvider from 'containers/NotificationProvider/reducer'; 
 import ui from 'collections/ui/reducer'; 
@@ -16,7 +16,7 @@ export default function createReducer() {
         classes,
         decks, 
         cards,
-        notes,
+        translations,
         notificationProvider, 
         ui
     }); 

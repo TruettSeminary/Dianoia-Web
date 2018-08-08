@@ -4,14 +4,21 @@ import {
     REFRESH_ALL_USER_DECKS, RESET_DECKS
 } from './constants';
 
-const decks = []; 
+const initialState = fromJS({}); 
 
-const initialState = fromJS(decks); 
+// expects an array of decks
+// returns an object with keys (of the deck id) mapped to a deck
+const getDeckMap = (decks) => {
+    return decks.reduce((deckMap, deck) => {
+        deckMap[deck._id] = deck; 
+        return deckMap; 
+    }, {});
+}
 
 function decksReducer(state = initialState, action) {
     switch(action.type) {
         case REFRESH_ALL_USER_DECKS:
-            return fromJS(action.data.decks); 
+            return fromJS(getDeckMap(action.data.decks)); 
         case RESET_DECKS: 
             return initialState; 
         default:

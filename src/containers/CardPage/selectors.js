@@ -4,16 +4,11 @@ import {
     allCardsSelector
 } from 'collections/cards/selectors';
 
-import {
-    allUserNotesSelector
-} from 'collections/notes/selectors'; 
-
 const cardPageSelector = () => createSelector(
-    [allCardsSelector, allUserNotesSelector], 
-    (cards, notes) => {
+    [allCardsSelector], 
+    (cards) => {
         return {
-            cards, 
-            notes
+            cards
         }
     }
 ); 

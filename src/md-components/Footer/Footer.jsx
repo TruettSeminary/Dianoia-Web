@@ -5,44 +5,43 @@ import PropTypes from "prop-types";
 import classNames from "classnames";
 import { 
   List, 
-  // ListItem, 
   withStyles } from "material-ui";
 
-// @material-ui/icons
-// import Favorite from "@material-ui/icons/Favorite";
 
 import footerStyle from "assets/jss/material-kit-react/components/footerStyle.jsx";
 
 function Footer({ ...props }) {
   const { classes, whiteFont } = props;
+
   const footerClasses = classNames({
     [classes.footer]: true,
     [classes.footerWhiteFont]: whiteFont
   });
+
   const aClasses = classNames({
     [classes.a]: true,
     [classes.footerWhiteFont]: whiteFont
   });
+
   return (
     <footer className={footerClasses}>
       <div className={classes.container}>
         <div className={classes.left}>
-          <List className={classes.list}>
-            {/* <ListItem className={classes.inlineBlock}>
-              <a
-                href="https://www.creative-tim.com/license"
-                className={classes.block}
-              >
-                Licenses
-              </a>
-            </ListItem> */}
-          </List>
+
         </div>
         <div className={classes.right}>
-          &copy; {1900 + new Date().getYear()},{" "}
-          <a href="https://church.technology" className={aClasses}>
-            Church.Technology
-          </a>
+          <div>
+            &copy; {1900 + new Date().getYear()},{" "}
+            <a href="https://church.technology" className={aClasses}>
+              Church.Technology
+            </a>            
+          </div>
+          <div>
+            <a href="https://baylor.edu/Truett" className={aClasses}>
+                <img src="/images/truett-dude.png" alt="" />
+                Truett Seminary
+            </a>
+          </div>
         </div>
       </div>
     </footer>

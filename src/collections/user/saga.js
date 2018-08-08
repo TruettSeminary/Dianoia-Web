@@ -44,8 +44,8 @@ import {
 
 import { getAllClasses, resetClasses } from 'collections/classes/actions'
 import { getAllUserDecks, resetDecks } from 'collections/decks/actions'; 
-import { getAllCards,resetCards } from 'collections/cards/actions'; 
-import { getAllUserNotes, resetNotes } from 'collections/notes/actions'; 
+import { getAllCards, resetCards } from 'collections/cards/actions'; 
+import { getAllTranslations, resetTranslations } from 'collections/translations/actions'; 
 
 export function* updateJWTSaga(action) {
     try {
@@ -89,7 +89,7 @@ export function* loginSucceededSaga(action) {
     yield put(getAllClasses()); 
     yield put(getAllUserDecks()); 
     yield put(getAllCards());
-    yield put(getAllUserNotes()); 
+    yield put(getAllTranslations()); 
 }
 
 export function* loginFailedSaga(action) {
@@ -105,7 +105,7 @@ export function* logoutSaga(action) {
         yield put(resetClasses());
         yield put(resetDecks());
         yield put(resetCards());
-        yield put(resetNotes()); 
+        yield put(resetTranslations()); 
     } catch(error) {
         
     }
@@ -140,7 +140,7 @@ export function* registrationSucceededSaga(action) {
         yield put(getAllClasses()); 
         yield put(getAllUserDecks()); 
         yield put(getAllCards());
-        yield put(getAllUserNotes()); 
+        yield put(getAllTranslations()); 
         yield put(push('/home'));
     } catch(error) {
         console.error(error); 
@@ -195,7 +195,7 @@ export function* submitResetPasswordSucceededSaga(action) {
         yield put(getAllClasses()); 
         yield put(getAllUserDecks()); 
         yield put(getAllCards());
-        yield put(getAllUserNotes()); 
+        yield put(getAllTranslations()); 
         yield put(push('/home'));
     } catch(error) {
         console.error(error); 

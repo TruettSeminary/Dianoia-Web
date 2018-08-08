@@ -12,13 +12,31 @@ import {
 
 export function* getAllCardsSaga(action) {
     try {
-        const response = yield Dianoia.getAllCards(); 
-        
-        if(Array.isArray(response)) {
-            yield put(refreshAllCards(response)); 
-        }
-    } catch(error) {
+        const [cards, notes] = yield Promise.all([
+            Dianoia.getAllCards(),
+            Dianoia.getAllNotes()
+        ]); 
 
+        const noteMap = notes.reduce((map, note) => {
+            map[note.card] = note; 
+            return map; 
+        }, {}); 
+
+        const cardsWithNotes = cards.map((card) => {
+            const note = noteMap[card._id]; 
+            card.note = note || {}; 
+            
+            if(card.note.card === undefined) card.note.card = card._id; 
+            if(card.note.card_score === undefined) card.note.card_score = 0; 
+            if(card.note.note === undefined) card.note.note = ''; 
+
+            return card; 
+        }); 
+
+        yield put(refreshAllCards(cardsWithNotes));
+        
+    } catch(error) {
+        console.error(error); 
     }
 }
 

@@ -1,5 +1,5 @@
-export class CardQueue {
-    constructor(cards = []) {
+export class SimpleQueue {
+    constructor(cards) {
         this.queue = [...cards];
     }
     
