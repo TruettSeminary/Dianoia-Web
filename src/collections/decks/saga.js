@@ -25,6 +25,10 @@ import  {
     getAllCards
 } from 'collections/cards/actions'; 
 
+import {
+    getAllTranslations
+} from 'collections/translations/actions'; 
+
 export function* getAllUserDecksSaga(action) {
     try {
         const response = yield Dianoia.getAllDecks(); 
@@ -71,9 +75,8 @@ export function* deckModificationSuccessSaga(action) {
         // update the decks state
         yield put(getAllUserDecks());  
 
-
-        // TODO: update cards when a deck is added/removed
         yield put(getAllCards()); 
+        yield put(getAllTranslations());
     } catch(error) {
         // Silent
     }
