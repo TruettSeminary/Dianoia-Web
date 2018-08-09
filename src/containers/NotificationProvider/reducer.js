@@ -3,7 +3,8 @@ import uuid from 'uuid/v4';
 
 import {
     SEND_NOTIFICATION, 
-    CLOSE_NOTIFICATION
+    CLOSE_NOTIFICATION,
+    CLEAR_NOTIFICATIONS
 } from './constants';
 
 const initialState = fromJS({
@@ -23,6 +24,8 @@ function notificationProviderReducer(state = initialState, action) {
             .filter((notification) => {
                 return notification.id !== action.data.notification_id; 
             }));
+        case CLEAR_NOTIFICATIONS: 
+            return initialState; 
         default: 
             return state; 
     }

@@ -11,8 +11,30 @@ import Warning from "@material-ui/icons/Warning";
 
 class Notification extends React.Component {
 
+    constructor(props)  {
+        super(props); 
+
+        this.state = {
+            timerStarted: false
+        }
+    }
+
+    componentDidMount() {
+        this.startCloseTimer(); 
+    }
+
     handleClose() {
         this.props.close(this.props.id); 
+    }
+
+    startCloseTimer() {
+        const TIMER_LENGTH = 10000; 
+        if(!this.state.timerStarted) {
+            setTimeout(() => this.handleClose(), TIMER_LENGTH);
+            this.setState({
+                timerStarted: true
+            })
+        }
     }
 
     getIcon(level) {
