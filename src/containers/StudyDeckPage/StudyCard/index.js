@@ -22,7 +22,20 @@ class StudyCard extends React.Component {
         }
     }
 
+    hapticFeedback() {
+        const FEEDBACK_LENGTH = 25; 
+
+        navigator.vibrate = navigator.vibrate || navigator.webkitVibrate || navigator.mozVibrate || navigator.msVibrate;
+
+        if (navigator.vibrate) {
+            console.log(navigator.vibrate([FEEDBACK_LENGTH])); 
+        }
+        
+    }
+
     swipeRight() {
+        this.hapticFeedback(); 
+
         this.setState({
             slideDirection: 'slide-right'
         });
@@ -38,6 +51,8 @@ class StudyCard extends React.Component {
     }
 
     swipeLeft() {
+        this.hapticFeedback(); 
+
         this.setState({
             slideDirection: 'slide-left'
         });
