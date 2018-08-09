@@ -37,6 +37,26 @@ class LoginModal extends React.Component {
         }
     }
 
+
+    handleClose() {
+        this.setState({
+            email: '',
+            password: ''
+        })
+        
+        this.props.closeLoginModal(); 
+    }
+
+    handleSubmit() {
+        const email = this.state.email.trim().toLowerCase();
+        const password = this.state.password.trim();
+        this.setState({
+            email: '', 
+            password:''
+        });
+        this.props.submitLogin(email, password); 
+    }
+
     handleChange(event, key) {
         let newState = {}; 
         newState[key] = event.target.value; 
@@ -56,13 +76,7 @@ class LoginModal extends React.Component {
 
                     <form onSubmit={(event) => {
                         event.preventDefault(); 
-                        const email = this.state.email.trim().toLowerCase();
-                        const password = this.state.password.trim();
-                        this.setState({
-                            email: '', 
-                            password:''
-                        });
-                        this.props.submitLogin(email, password); 
+                        this.handleSubmit(); 
                     }}>
                         <DialogContent
                             id="modal-slide-description"
@@ -71,6 +85,7 @@ class LoginModal extends React.Component {
                                 labelText="Email (identifier)"
                                 id="email"
                                 inputProps={{
+                                    value: this.state.email,
                                     onChange: (event) => this.handleChange(event, 'email')
                                 }}
                                 formControlProps={{
@@ -82,7 +97,8 @@ class LoginModal extends React.Component {
                                 id="password"
                                 type="password"
                                 inputProps={{
-                                    type: "password", 
+                                    type: "password",
+                                    value: this.state.password, 
                                     onChange: (event) => this.handleChange(event, 'password')
                                 }}
                                 formControlProps={{
