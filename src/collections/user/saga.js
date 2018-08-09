@@ -26,7 +26,7 @@ import {
 } from './constants'; 
 
 // Actions
-import { notify } from 'utils/notification'; 
+import { notify, clearAllNotifications } from 'utils/notification'; 
 import { closeLoginModal } from 'collections/ui/actions'; 
 
 import {
@@ -83,7 +83,8 @@ export function* loginSucceededSaga(action) {
 
     // update location and UI
     yield put(push('/home'));
-    yield put(closeLoginModal());  
+    yield put(closeLoginModal());
+    yield call(clearAllNotifications);   
 
     // Get all page data that requires authentication
     yield put(getAllClasses()); 

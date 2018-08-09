@@ -18,6 +18,16 @@ class HomePage extends React.Component {
 
 
     generateDecks() {
+        if(this.props.decks.length === 0) {
+            return (<h3>Add decks by going to the <a
+                    onClick={(event) => {
+                        event.preventDefault(); 
+                        this.props.pushPage('/classes');
+                    }}
+                >
+                classes page</a></h3>)
+        }
+
         return this.props.decks.map((deck) => {
             return (
             <GridItem 

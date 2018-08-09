@@ -1,6 +1,7 @@
 import {
     SEND_NOTIFICATION, 
-    CLOSE_NOTIFICATION
+    CLOSE_NOTIFICATION,
+    CLEAR_NOTIFICATIONS
 } from './constants'; 
 
 export function sendNotification(message, level) {
@@ -19,5 +20,11 @@ export function closeNotification(notification_id) {
         data: {
             notification_id
         }
+    }
+}
+
+export function clearNotifications() {
+    return {
+        type: CLEAR_NOTIFICATIONS
     }
 }
