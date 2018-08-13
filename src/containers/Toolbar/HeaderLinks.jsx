@@ -170,22 +170,22 @@ class HeaderLinks extends React.Component {
       //   href:'/settings', 
       //   color:'transparent', 
       //   icon: (<Settings className={this.classes.icons} />), 
-      //   userLoggedIn: true
+      //   userLoggedIn: DISPLAY_STATES.LOGGED_IN
       // },
       {
-        text: 'Feedback',
+        text: 'Send Feedback',
         href:'/feedback', 
         color:'transparent', 
         icon: (<Feedback className={this.classes.icons} />), 
         userLoggedIn: DISPLAY_STATES.INDIFFERENT
       },
-      // {
-      //   text: 'Instructions',
-      //   href:'/instructions', 
-      //   color:'transparent', 
-      //   icon: (<Info className={this.classes.icons} />), 
-      //   userLoggedIn: false
-      // },
+      {
+        text: 'Instructions',
+        href:'/instructions', 
+        color:'transparent', 
+        icon: (<Info className={this.classes.icons} />), 
+        userLoggedIn: DISPLAY_STATES.INDIFFERENT
+      },
       {
         text: 'Logout',
         href:'/', 
