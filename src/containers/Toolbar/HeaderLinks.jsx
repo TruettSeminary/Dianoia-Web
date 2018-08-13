@@ -116,6 +116,12 @@ class HeaderLinks extends React.Component {
 
   render() {
 
+    const DISPLAY_STATES = {
+      LOGGED_OUT: 0,
+      INDIFFERENT: 1, 
+      LOGGED_IN: 2
+    }
+
     const generateDeckLinks = (path) => {
       return this.props.user.decks.map((deck) => {
         // TODO: find a more effeciant way of doing this
@@ -133,7 +139,7 @@ class HeaderLinks extends React.Component {
         href:'/classes', 
         color:'transparent', 
         icon: (<Class className={this.classes.icons} />), 
-        userLoggedIn: true
+        userLoggedIn: DISPLAY_STATES.LOGGED_IN
       },
       {
         text: 'Decks',
@@ -141,7 +147,7 @@ class HeaderLinks extends React.Component {
         color:'transparent', 
         content: generateDeckLinks('/deck'),
         icon: (<ViewList className={this.classes.icons} />), 
-        userLoggedIn: true
+        userLoggedIn: DISPLAY_STATES.LOGGED_IN
       },
       {
         text: 'Study',
@@ -149,7 +155,7 @@ class HeaderLinks extends React.Component {
         color:'transparent', 
         content: generateDeckLinks('/deck/study'),
         icon: (<ViewCarousel className={this.classes.icons} />), 
-        userLoggedIn: true
+        userLoggedIn: DISPLAY_STATES.LOGGED_IN
       },
       {
         text: 'Translations',
@@ -157,36 +163,36 @@ class HeaderLinks extends React.Component {
         color:'transparent',
         content: generateDeckLinks('/deck/translations'), 
         icon: (<Subject className={this.classes.icons} />), 
-        userLoggedIn: true
+        userLoggedIn: DISPLAY_STATES.LOGGED_IN
       },
-      // {
-      //   text: 'Instructions',
-      //   href:'/instructions', 
-      //   color:'transparent', 
-      //   icon: (<Info className={this.classes.icons} />), 
-      //   userLoggedIn: true
-      // },
-      // {
-      //   text: 'Feedback',
-      //   href:'/feedback', 
-      //   color:'transparent', 
-      //   icon: (<Feedback className={this.classes.icons} />), 
-      //   userLoggedIn: true
-      // },
       // {
       //   text: 'Settings',
       //   href:'/settings', 
       //   color:'transparent', 
       //   icon: (<Settings className={this.classes.icons} />), 
-      //   userLoggedIn: true
+      //   userLoggedIn: DISPLAY_STATES.LOGGED_IN
       // },
+      {
+        text: 'Send Feedback',
+        href:'/feedback', 
+        color:'transparent', 
+        icon: (<Feedback className={this.classes.icons} />), 
+        userLoggedIn: DISPLAY_STATES.INDIFFERENT
+      },
+      {
+        text: 'Instructions',
+        href:'/instructions', 
+        color:'transparent', 
+        icon: (<Info className={this.classes.icons} />), 
+        userLoggedIn: DISPLAY_STATES.INDIFFERENT
+      },
       {
         text: 'Logout',
         href:'/', 
         color:'transparent', 
         icon: (<ExitToApp className={this.classes.icons} />), 
         onClick:() => this.props.logout(),
-        userLoggedIn: true
+        userLoggedIn: DISPLAY_STATES.LOGGED_IN
       },
       {
         text: 'Login',
@@ -194,14 +200,14 @@ class HeaderLinks extends React.Component {
         color:'transparent', 
         icon: (<AccountCircle className={this.classes.icons} />),
         onClick: this.props.openLoginModal, 
-        userLoggedIn: false
+        userLoggedIn: DISPLAY_STATES.LOGGED_OUT
       }
     ];  
 
     const userLoggedIn = (this.props.user.jwt !== null && this.props.user.jwt !== ""); 
     const renderLinks = links.filter((link) => {
-      
-      return link.userLoggedIn == userLoggedIn; 
+      if(userLoggedIn) return link.userLoggedIn >= DISPLAY_STATES.INDIFFERENT; 
+      else return link.userLoggedIn <= DISPLAY_STATES.INDIFFERENT; 
     }).map((link) => {
       return this.formLink(link);
     });

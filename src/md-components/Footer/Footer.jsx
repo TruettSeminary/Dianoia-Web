@@ -3,9 +3,7 @@ import React from "react";
 import PropTypes from "prop-types";
 // nodejs library that concatenates classes
 import classNames from "classnames";
-import { 
-  List, 
-  withStyles } from "material-ui";
+import { withStyles } from "material-ui";
 
 
 import footerStyle from "assets/jss/material-kit-react/components/footerStyle.jsx";

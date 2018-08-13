@@ -52,7 +52,7 @@ class App extends React.Component {
                 </div>
                 <div className="content">
                     <Switch>
-                        <Route path="/" exact render={() => <LandingPage/>} />
+                        <Route path="/" exact render={() => <LandingPage auth={this.props.user.jwt}/>} />
 
                         <PrivateRoute path="/home" auth={this.props.user.jwt} exact  render={() => <HomePage {...this.props}/>} />
                         <PrivateRoute path="/classes" auth={this.props.user.jwt} exact render={() => <ClassesPage/>} />
@@ -74,8 +74,8 @@ class App extends React.Component {
                         <PrivateRoute path="/translation/:translation_id/" exact auth={this.props.user.jwt} render={(props) => {
                             return <TranslationPage translation_id={props.match.params.translation_id}/>
                         }}/>
-                        <PrivateRoute path="/feedback" exact auth={this.props.user.jwt} render={() => <FeedbackPage/>} />
                         <PrivateRoute path="/settings" exact auth={this.props.user.jwt} render={() => <SettingsPage/>} />
+                        <Route path="/feedback" exact auth={this.props.user.jwt} render={() => <FeedbackPage/>} />
                         <Route path="/registration" exact render={() => <RegistrationPage/>} />
                         <Route path="/forgot-password" exact render={() => <ForgotPasswordPage/>} />
                         <Route path="/reset-password/" exact render={(props) => {
