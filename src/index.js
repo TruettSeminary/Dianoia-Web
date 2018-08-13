@@ -4,6 +4,8 @@ import React from 'react';
 import ReactDOM from 'react-dom'; 
 import { ConnectedRouter } from "connected-react-router";
 import createHistory from 'history/createBrowserHistory'; 
+import LogRocket from 'logrocket'; 
+import setupLogRocketReact from 'logrocket-react'; 
 
 import { PersistGate } from 'redux-persist/integration/react'; 
 
@@ -39,6 +41,10 @@ import {
 } from 'collections/user/actions'; 
 
 
+// Initialize LogRocket
+LogRocket.init('oydbco/dianoiachurchtechnology');
+setupLogRocketReact(LogRocket); 
+
 // Create redux store with history
 const basename = "/"
 const history = createHistory({
@@ -52,7 +58,8 @@ const { store, persistor} = configureStore(history);
 const onBeforeLift = () => { 
     const state = store.getState();   
     if(state.user) {
-        const jwt = state.user.toJS().jwt; 
+        const user = state.user.toJS(); 
+        const jwt = user.jwt; 
         store.dispatch(updateJWT(jwt)); 
         
         // Refresh Data
@@ -61,6 +68,12 @@ const onBeforeLift = () => {
             store.dispatch(getAllUserDecks()); 
             store.dispatch(getAllCards()); 
             store.dispatch(getAllTranslations()); 
+
+            LogRocket.identify(user._id, {
+                userID: user._id,
+                name: `${user.first_name} ${user.last_name}`, 
+                email: user.email
+            })
         }
 
         // TODO: figure out how to get user info (without necessarily having the JWT already set)

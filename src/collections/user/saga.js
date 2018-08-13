@@ -7,6 +7,7 @@ import Dianoia from 'utils/API/index';
 
 // App "Connections" 
 import { push } from 'connected-react-router'; 
+import LogRocket from 'logrocket'; 
 
 // Constants
 import {
@@ -80,6 +81,10 @@ export function* loginSucceededSaga(action) {
     
     // update API JWT
     yield put(refreshUser(action.user)); 
+    LogRocket.identify(`${action.user._id}`, {
+        name: `${action.user.first_name} ${action.user.last_name}`, 
+        email: action.user.email
+    });
 
     // update location and UI
     yield put(push('/home'));
@@ -138,6 +143,11 @@ export function* submitRegistrationSaga(action) {
 export function* registrationSucceededSaga(action) {
     try {
         yield put(refreshUser(action.user)); 
+        LogRocket.identify(`${action.user._id}`, {
+            name: `${action.user.first_name} ${action.user.last_name}`, 
+            email: action.user.email
+        });
+        
         yield put(getAllClasses()); 
         yield put(getAllUserDecks()); 
         yield put(getAllCards());
@@ -193,6 +203,11 @@ export function* submitResetPasswordSaga(action) {
 export function* submitResetPasswordSucceededSaga(action) {
     try {
         yield put(refreshUser(action.user)); 
+        LogRocket.identify(`${action.user._id}`, {
+            name: `${action.user.first_name} ${action.user.last_name}`, 
+            email: action.user.email
+        });
+
         yield put(getAllClasses()); 
         yield put(getAllUserDecks()); 
         yield put(getAllCards());

@@ -1,5 +1,6 @@
 import { createStore, applyMiddleware } from 'redux'; 
 import { connectRouter, routerMiddleware } from 'connected-react-router';  
+import LogRocket from 'logrocket'; 
 import { composeWithDevTools } from 'redux-devtools-extension';
 
 import { persistStore, persistReducer } from 'redux-persist';
@@ -28,7 +29,8 @@ export default function configureStore(history) {
   // 2. routerMiddleware: Syncs the location/URL path to the state
   const middlewares = [
       sagaMiddleware, 
-      routerMiddleware(history)
+      routerMiddleware(history), 
+      LogRocket.reduxMiddleware()
   ];
 
   const enhancers = [
