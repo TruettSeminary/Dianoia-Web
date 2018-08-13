@@ -74,8 +74,8 @@ class App extends React.Component {
                         <PrivateRoute path="/translation/:translation_id/" exact auth={this.props.user.jwt} render={(props) => {
                             return <TranslationPage translation_id={props.match.params.translation_id}/>
                         }}/>
-                        <PrivateRoute path="/feedback" exact auth={this.props.user.jwt} render={() => <FeedbackPage/>} />
                         <PrivateRoute path="/settings" exact auth={this.props.user.jwt} render={() => <SettingsPage/>} />
+                        <Route path="/feedback" exact auth={this.props.user.jwt} render={() => <FeedbackPage/>} />
                         <Route path="/registration" exact render={() => <RegistrationPage/>} />
                         <Route path="/forgot-password" exact render={() => <ForgotPasswordPage/>} />
                         <Route path="/reset-password/" exact render={(props) => {
