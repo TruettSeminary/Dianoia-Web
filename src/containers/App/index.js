@@ -52,7 +52,7 @@ class App extends React.Component {
                 </div>
                 <div className="content">
                     <Switch>
-                        <Route path="/" exact render={() => <LandingPage/>} />
+                        <Route path="/" exact render={() => <LandingPage auth={this.props.user.jwt}/>} />
 
                         <PrivateRoute path="/home" auth={this.props.user.jwt} exact  render={() => <HomePage {...this.props}/>} />
                         <PrivateRoute path="/classes" auth={this.props.user.jwt} exact render={() => <ClassesPage/>} />

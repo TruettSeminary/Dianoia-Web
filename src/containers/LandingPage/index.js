@@ -1,5 +1,7 @@
 // React/Redux
 import React from 'react'; 
+import { connect } from 'react-redux';
+import { compose } from 'redux'; 
 
 import GridContainer from 'md-components/Grid/GridContainer'; 
 import GridItem from 'md-components/Grid/GridItem'; 
@@ -7,10 +9,39 @@ import Button from 'md-components/CustomButtons/Button';
 
 import { Router } from 'utils/router'; 
 import { UIManager } from 'utils/ui'; 
+import { logout } from 'collections/user/actions'; 
 
 import './styles.css'; 
 
 class LandingPage extends React.Component {
+
+    getHeaderButtons() {
+        if(this.props.auth) {
+            return (
+                <div>
+                    <Button onClick={()=> Router.pushPage('/home')}>
+                        Home
+                    </Button>
+                    <Button onClick={() => this.props.logout() }>
+                        Logout
+                    </Button>
+                </div>
+            );
+        }
+        else {
+            return (
+                <div>
+                    <Button onClick={()=> UIManager.openLogin()}>
+                        Login
+                    </Button>
+                    <Button onClick={() => Router.pushPage('/registration') }>
+                        Register
+                    </Button>
+                </div>
+            );   
+        }
+    }
+
     render() {
         return (
             <div className="landingContainer">
@@ -18,16 +49,7 @@ class LandingPage extends React.Component {
                     <div className="welcomeBanner">
                             <h1>Dianoia</h1>
                             <h3>Deep language learning</h3>
-                            <Button
-                                onClick={()=> UIManager.openLogin()}
-                            >
-                                Login
-                            </Button>
-                            <Button
-                                onClick={() => Router.pushPage('/registration') }
-                            >
-                                Register
-                            </Button>
+                            {this.getHeaderButtons()}
                     </div>
                 </div>
                 <div className="landingContent">
@@ -72,6 +94,14 @@ class LandingPage extends React.Component {
                                     subscribing to them. Once you do so, they will show up in the menu bar
                                     for you to choose from. 
                                 </p>
+                                <p className="sectionDetails">
+                                    For more information, head to the{' '}<a onClick={(event) => {
+                                        event.preventDefault(); 
+                                        Router.pushPage('/instructions');
+                                    }}>
+                                        instructions page. 
+                                    </a>
+                                </p>
                             </div>
                         </GridItem>
                         <GridItem
@@ -96,4 +126,17 @@ class LandingPage extends React.Component {
     }
 }
 
-export default LandingPage; 
+const mapDispatchToProps = (dispatch) => {
+  return {
+    logout: () => {
+      dispatch(logout()); 
+    },
+    dispatch
+  }
+}
+
+const withConnect = connect(null, mapDispatchToProps);
+
+export default compose (
+    withConnect
+)(LandingPage);
