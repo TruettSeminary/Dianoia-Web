@@ -41,7 +41,7 @@ class StudyCard extends React.Component {
         });
 
         setTimeout(() => {
-            this.props.onCorrectDismiss(); 
+            this.props.onIncorrectDismiss(); 
             this.setState({
                 flipped: false,
                 slideDirection: 'none'
@@ -58,7 +58,7 @@ class StudyCard extends React.Component {
         });
 
         setTimeout(() => {
-            this.props.onIncorrectDismiss();
+            this.props.onCorrectDismiss();
             this.setState({
                 flipped: false, 
                 slideDirection: 'none'
