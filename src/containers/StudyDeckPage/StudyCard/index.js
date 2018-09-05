@@ -41,12 +41,15 @@ class StudyCard extends React.Component {
         });
 
         setTimeout(() => {
-            this.props.onCorrectDismiss(); 
             this.setState({
                 flipped: false,
                 slideDirection: 'none'
+            }, () => {
+                // Temp fix to handle asynchronous nature of setState
+                // Better way would be to refactor state and move it up a level
+                setTimeout(() => this.props.onIncorrectDismiss(), 250); 
             })
-        }, 500)
+        }, 250)
         
     }
 
@@ -58,10 +61,13 @@ class StudyCard extends React.Component {
         });
 
         setTimeout(() => {
-            this.props.onIncorrectDismiss();
             this.setState({
-                flipped: false, 
+                flipped: false,
                 slideDirection: 'none'
+            }, () => {
+                // Temp fix to handle asynchronous nature of setState
+                // Better way would be to refactor state and move it up a level 
+                setTimeout(() => this.props.onCorrectDismiss(), 250); 
             })
         }, 250)
     }
